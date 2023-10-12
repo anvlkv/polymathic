@@ -1,0 +1,19 @@
+name = "polymathic"
+description = "A portfolio theme for person of many talents"
+license = "Attribution-ShareAlike 4.0 International"
+homepage = "https://github.com/anvlkv/polymathic"
+# The minimum version of Zola required
+min_version = "0.17.2"
+# An optional live demo URL
+demo = "https://a.nvlkv.xyz"
+
+# Any variable there can be overridden in the end user `config.toml`
+# You don't need to prefix variables by the theme name but as this will
+# be merged with user data, some kind of prefix or nesting is preferable
+# Use snake_casing to be consistent with the rest of Zola
+[extra]
+
+# The theme author info: you!
+[author]
+name = "Aleksandr Novolokov"
+homepage = "https://a.nvlkv.xyz"
