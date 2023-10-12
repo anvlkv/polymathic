@@ -7,10 +7,35 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
+taxonomies = [
+    { name = "project_taxonomy", feed = false, render = false },
+    { name = "resume_taxonomy", feed = false, render = false },
+    { name = "shared_taxonomy", feed = false, render = true },
+]
+
+
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
 highlight_code = false
 
+
 [extra]
+[extra.poly]
 # Put all your custom variables here
+favicon = [{rel = "icon", type = "image/x-icon", size = "", path = "/favicon.ico"}]
+include_styles = true
+manifest = "/webmanifest.json"
+app_name = "polymathic"
+logo = "/logo.png"
+og_image= "/og.png"
+menu_order = [
+  "resume/_index.md",
+  "projects/_index.md",
+  "contact.md"
+]
+social_outlink = [
+  {href="https://www.linkedin.com/", title="LinkedIn", icon=false},
+  {href="mailto:email@domain.com", title="Email", icon=false},
+  {href="tel:+05890000111", title="0-589-0000111", icon=false},
+]

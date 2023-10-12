@@ -12,6 +12,23 @@ demo = "https://a.nvlkv.xyz"
 # be merged with user data, some kind of prefix or nesting is preferable
 # Use snake_casing to be consistent with the rest of Zola
 [extra]
+[extra.poly]
+favicon = [{rel = "icon", type = "image/x-icon", size = "", path = "/favicon.ico"}]
+include_styles = true
+manifest = "/webmanifest.json"
+app_name = "polymathic"
+logo = "/logo.png"
+og_image= "/og.png"
+menu_order = [
+  "resume/_index.md",
+  "projects/_index.md",
+  "contact.md"
+]
+social_outlink = [
+  {href="https://www.linkedin.com/", title="LinkedIn", icon=false},
+  {href="mailto:email@domain.com", title="Email", icon=false},
+  {href="tel:+05890000111", title="0-589-0000111", icon=false},
+]
 
 # The theme author info: you!
 [author]

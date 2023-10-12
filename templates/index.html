@@ -1,0 +1,96 @@
+{% import "navigation.html" as navigation %}
+{% import "macros.html" as macros %}
+{% extends "base.html" %} 
+
+
+{% block page_meta %}
+<title>{{ section.title }}</title>
+<meta name="description" content="{{ section.description }}" />
+<meta property="og:title" content="{{ section.title }}" />
+<meta property="og:description" content="{{ section.description }}" />
+  {% if config.extra.poly.og_image %}
+  <meta
+    property="og:image"
+    content="{{ get_url(path=config.extra.poly.og_image) }}"
+  />
+  {% endif %} 
+{% endblock page_meta%} 
+
+{% block page_style %}
+{% if config.extra.poly.include_styles %}
+<link rel="stylesheet" href="{{ get_url(path='index.css') | safe }}" />
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <section class="hero is-halfheight">
+    <div class="hero-head">
+      <nav class="navbar">
+        <div class="container">
+          <div class="navbar-brand">
+            <a class="navbar-item">
+              <img src="{{get_url(path=config.extra.poly.logo)}}" alt="Logo">
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div
+      class="hero-body {%if section.extra.hero %} poly-with-image{%endif%}"
+      {%
+      if
+      section.extra.hero
+      %}
+      style="{{macros::background_image_vars(path=section.extra.hero)}}"
+      {%
+      endif
+      %}
+    >
+    <div class="container poly-content">
+      <div class="section">
+        <p class="title">{{section.title}}</h1>
+        <p class="subtitle">{{section.description}}</p>
+      </div>
+    </div>
+    </div>
+  </section>
+</div>
+
+<div class="container is-fluid poly-navigation-blocks">
+  <section>
+    {{navigation::macro()}}
+  </section>
+</div>
+
+<div class="container">
+  <section class="section">
+    {{section.content | safe}}
+  </section>
+</div>
+
+<footer class="container poly-navigation-footer is-fluid">
+  <div class="container">
+    <div class="section">
+      {{navigation::macro(id="footer")}}
+    </div>
+    {% if config.extra.poly.social_outlink%}
+    <div class="section poly-outlink-footer">
+      {% for link in config.extra.poly.social_outlink %}
+      {% set is_outside = link.href is starting_with('http://') or link.href is starting_with('https://') %}
+      <a href="{{link.href}}" class="poly-out-link" target="{% if is_outside %} _blank {% else %} _self {% endif %}">
+        {{link.title}}
+        {% if link.icon %}
+        <span class="icon">
+          <i class="{{link.icon}}"></i>
+        </span>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</footer>
+
+{% endblock content %}

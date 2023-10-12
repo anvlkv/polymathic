@@ -1,0 +1,22 @@
+
+
+// poly variables;
+$poly-font-url: 'https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap' !default;
+$poly-font-family: 'AR One Sans', sans-serif !default;
+$poly-background-color: #E2DFD6 !default;
+$poly-text-color: #141B32 !default;
+$poly-primary: #7257BC !default;
+$poly-ui-transition-time: 250ms !default;
+$poly-ui-transition-fn: ease-out !default;
+
+// Update Bulma's global defaults to poly defaults;
+$family-primary: $poly-font-family;
+$body-background-color: $poly-background-color;
+$scheme-main: lighten($poly-background-color, 7.4%);
+$text: $poly-text-color; 
+$primary: $poly-primary;
+$link: darken($poly-primary, 10%);
+$box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text-color, 0.15), 0 0 0 1px $link;
+
+@import "../node_modules/bulma/sass/utilities/initial-variables.sass";
+@import "../node_modules/bulma/sass/utilities/derived-variables.sass";
