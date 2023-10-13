@@ -6,74 +6,27 @@
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/helpers/_all.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/elements/button.sass";
+@import "../node_modules/bulma/sass/elements/content.sass";
 @import "../node_modules/bulma/sass/elements/container.sass";
 @import "../node_modules/bulma/sass/elements/box.sass";
-@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/layout/section.sass";
+@import "../node_modules/bulma/sass/layout/hero.sass";
+@import "../node_modules/bulma/sass/grid/columns.sass";
+@import "../node_modules/bulma/sass/grid/tiles.sass";
+@import "../node_modules/bulma/sass/components/navbar.sass";
+@import "../node_modules/bulma/sass/components/dropdown.sass";
 
-.container {
-  h1 {
-    @extend .title;
-    @extend .is-1;
-    & + h2 {
-      @extend .subtitle;
-    }
-  }
-  h2 {
-    @extend .title;
-    @extend .is-2;
-    & + h3 {
-      @extend .subtitle;
-    }
-  }
-  h3 {
-    @extend .title;
-    @extend .is-3;
-    & + h4 {
-      @extend .subtitle;
-    }
-  }
-  h4 {
-    @extend .title;
-    @extend .is-4;
-    & + h5 {
-      @extend .subtitle;
-    }
-  }
-  h5 {
-    @extend .title;
-    @extend .is-5;
-    & + h6 {
-      @extend .subtitle;
-    }
-  }
-  h6 {
-    @extend .title;
-    @extend .is-6;
-  }
+// used in shortcodes
 
-  blockquote {
-    @extend .box;
-  }
+@import "../node_modules/bulma/sass/form/_all.sass";
 
-  p {
-    @extend .content;
-  }
-}
 
-.poly-section-link,
-.poly-taxonomy-term-link,
-.poly-page-link,
-.poly-link {
-  @media not (prefers-reduced-motion) {
-    transition-property: box-shadow, color, background-color;
-    transition-duration: $poly-ui-transition-time;
-    transition-timing-function: $poly-ui-transition-fn;
-  }
-  &:hover {
-    @extend .has-background-primary;
-    &,
-    * {
-      @extend .has-text-white;
-    }
-  }
-}
+// polymathic styles
+@import "./poly";
+
+
+
+
+

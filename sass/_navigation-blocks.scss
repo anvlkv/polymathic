@@ -1,0 +1,118 @@
+.poly-navigation-blocks {
+  @extend .container, .is-fluid;
+
+  > section {
+    .poly-nav {
+      @extend .is-ancestor;
+      flex-wrap: wrap;
+      .poly-section-nav-wrapper {
+        display: contents;
+      }
+      &,
+      .poly-taxonomy-nav-wrapper,
+      .poly-taxonomy-nav,
+      .poly-section-link,
+      .poly-taxonomy-term-link,
+      .poly-page-link,
+      .poly-taxonomy-extra-wrapper {
+        @extend .tile;
+        
+      }
+      .poly-section-link,
+      .poly-taxonomy-term-link,
+      .poly-page-link {
+        @extend .is-child, .box;
+        @include until($desktop) {
+          @include from($tablet) {
+            min-width: 25vw;
+            margin-bottom: 2rem !important;
+          }
+        }
+        @include from($desktop) {
+          @include until($widescreen) {
+            min-width: 20vw;
+            margin-bottom: 1rem !important;
+          }
+          padding: 0.75rem;
+        }
+      }
+      .poly-section-link + .poly-section-link,
+      .poly-page-link + .poly-section-link,
+      .poly-section-link + .poly-page-link,
+      .poly-page-link + .poly-page-link {
+        margin-left: 0.75rem !important;
+      }
+
+      .poly-taxonomy-nav-wrapper {
+        @extend .is-parent;
+      }
+      .poly-taxonomy-nav {
+        @extend .is-parent, .is-vertical;
+      }
+      .poly-navigation-title {
+        @extend .title, .is-3;
+        width: 100%;
+        display: block;
+      }
+      .poly-navigation-description {
+        @extend .subtitle, .is-4;
+        width: 100%;
+        display: block;
+      }
+      .poly-taxonomy-term-link {
+        color: $primary;
+      }
+      .poly-taxonomy-extra-wrapper {
+        @extend .is-parent;
+        @extend .dropdown, .is-hoverable;
+        @extend .p-0;
+        width: 100%;
+      }
+      .poly-taxonomy-extra-menu {
+        @extend .dropdown-menu;
+        min-width: 100%;
+        @include until($desktop) {
+          @include from($tablet) {
+            margin-top: -2rem !important;
+          }
+        }
+      }
+      .poly-taxonomy-extra {
+        @extend .dropdown-content;
+        .poly-link {
+          @extend .dropdown-item;
+          display: block;
+        }
+      }
+      .poly-taxonomy-title {
+        display: contents;
+        .poly-link, .poly-content {
+          @extend .dropdown-trigger, .tile, .is-child, .box;
+          width: 100%;
+          @include until($desktop) {
+            @include from($tablet) {
+              min-width: 25vw;
+              margin-bottom: 2rem !important;
+            }
+          }
+          @include from($desktop) {
+            @include until($widescreen) {
+              min-width: 20vw;
+              margin-bottom: 1rem !important;
+            }
+          }
+          .button-arrow {
+            @include arrow($primary);
+            right: 1rem;
+          }
+        }
+      }
+    }
+
+    .poly-content {
+      @extend .content;
+    }
+  }
+}
+
+

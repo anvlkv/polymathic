@@ -1,0 +1,6 @@
+.poly-brand {
+  @extend .navbar-brand;
+  .poly-logo-link {
+    @extend .navbar-item;
+  }
+}

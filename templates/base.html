@@ -17,7 +17,7 @@
     
 
     {% block page_style %}
-
+      <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
     {% endblock %}
 
     {% for f in config.extra.poly.favicon %}
@@ -34,7 +34,7 @@
     <meta name="application-name" content="{{config.extra.poly.app_name | default(value='polymathic')}}" />
   </head>
 
-  <body class="is-family-primary">
+  <body>
     {% block content %} {% endblock %}
   </body>
   {% block scripts %} {% endblock %}

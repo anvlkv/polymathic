@@ -1,0 +1,65 @@
+.poly-navigation-footer {
+  @extend .container, .is-fluid, .has-text-centered-mobile;
+  background-color: darken($poly-muted-bg, 7%);
+
+  .poly-navigation-container {
+    @extend .container;
+    > section {
+      @extend .section;
+    }
+  }
+
+  .poly-nav {
+    @extend .columns, .is-tablet;
+  }
+  .poly-section-nav-wrapper {
+    display: contents;
+  }
+  .poly-taxonomy-nav-wrapper {
+    @extend .column, .p-0, .is-flex, .is-flex-direction-column;
+  }
+  .poly-section-link,
+  .poly-page-link {
+    display: contents;
+    .content {
+      display: contents;
+      @include from($tablet) {
+        text-align: right;
+      }
+    }
+  }
+  .poly-taxonomy-nav {
+    display: contents;
+  }
+  .poly-navigation-title {
+    @extend .column, .is-flex-grow-0;
+    order: 0;
+    height: fit-content;
+
+    &:hover {
+      @extend .has-background-primary;
+    }
+  }
+  .poly-taxonomy-term-link {
+    @extend .p-3;
+    width: auto;
+  }
+  .poly-navigation-description,
+  .poly-taxonomy-extra-wrapper {
+    @extend .is-hidden;
+  }
+
+  .poly-outlink-footer {
+    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap;
+  }
+
+  .poly-out-link {
+    @extend .py-2, .px-4;
+    @include until($tablet) {
+      width: 100%;
+    }
+  }
+  .poly-content {
+    display: contents;
+  }
+}

@@ -1,0 +1,27 @@
+{% import "macros.html" as macros %}
+{% import "navigation.html" as navigation %}
+
+
+{% macro macro() %}
+<footer class="poly-navigation-footer">
+  <div class="poly-navigation-container">
+    <section>
+      {{navigation::macro(id="footer")}}
+    </section>
+    {% if config.extra.poly.social_outlink %}
+    <section class="poly-outlink-footer">
+      {% for link in config.extra.poly.social_outlink %}
+      <a {{macros::link_attrs(type="out", href=link.href, title=link.title, current_url=current_path)}} >
+        {{link.title}}
+        {% if link.icon %}
+        <span class="icon">
+          <i class="{{link.icon}}"></i>
+        </span>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </section>
+    {% endif %}
+  </div>
+</footer>
+{% endmacro %}

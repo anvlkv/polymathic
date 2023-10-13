@@ -22,4 +22,74 @@
 {% endmacro %}
 
 
+{% macro brand_bar(menu_id=false) %}
+<div class="poly-brand">
+  <a class="poly-logo-link" href="{{config.base_url}}" title="{{config.extra.poly.app_name}}">
+    <img src="{{get_url(path=config.extra.poly.logo)}}" alt="Logo">
+  </a>
+  {% if menu_id %} 
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const $burger = document.querySelector('#menu-trigger-{{menu_id}}')
+        $burger.addEventListener('click', () => {
+          // Get the target from the "data-target" attribute
+          const target = $burger.dataset.target;
+          const $target = document.getElementById(target);
+    
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          $burger.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    </script>
+    <a id="menu-trigger-{{menu_id}}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="{{menu_id}}">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  {% endif %}
+</div>
+{% endmacro %}
 
+
+{% macro content_meta(content) %}
+<title>{{ content.title }}</title>
+<meta name="description" content="{{ content.description }}" />
+<meta property="og:title" content="{{ content.title }}" />
+<meta property="og:description" content="{{ content.description }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
+  {% if content.extra.poly.hero %}
+    {% set image_meta = get_image_metadata(path=content.extra.poly.hero) %}
+    {% if image_meta.height > 630 or image_meta.width > 1200 %} 
+      {% set ratio = image_meta.width / image_meta.height %}
+      {% set width = (630 * ratio) | int %}
+      {% set height = (1200 / ratio) | int %}
+      {% if image_meta.width > image_meta.height %}
+        {% set op = 'fit_width' %}
+      {% else %}
+        {% set op = 'fit_height' %}
+      {% endif %}
+      {% set image = resize_image(path=content.extra.poly.hero, width=width, height=height, op=op, format='webp') %}
+    {% else %}
+      {% set image = resize_image(path=content.extra.poly.hero, width=image_meta.width, height=image_meta.height, op='scale', format='webp') %}
+    {% endif %}
+    <meta
+      property="og:image"
+      content="{{ image.url | safe }}"
+    />
+  {% elif config.extra.poly.og_image %}
+    <meta
+      property="og:image"
+      content="{{ get_url(path=config.extra.poly.og_image) | safe }}"
+    />
+  {% endif %} 
+{% endmacro %}
+
+{% macro link_attrs(type=false, href, title=false, current_url=false) %}
+  class="poly-{% if type %}{{type}}-{% endif %}link{% if current_url and current_url == href %} poly-active-link{% endif %}"
+  href="{{href | safe}}"
+  {% if title %}
+  title="{{title}}"
+  {% endif %}
+{% endmacro %}

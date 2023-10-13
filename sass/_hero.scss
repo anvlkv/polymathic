@@ -1,0 +1,55 @@
+.poly-hero {
+  @extend .container;
+  > section {
+    @extend .hero, .is-halfheight;
+    > header {
+      @extend .hero-head;
+      > nav {
+        @extend .navbar;
+        @include until($desktop) {
+          box-shadow: 0 0.01rem 0.125rem darken($poly-muted-bg, 50%);
+          position: fixed;
+          background-color: $poly-muted-bg;
+          width: 100%;
+        }
+        @include from($desktop) {
+          background-color: transparent !important;
+        }
+      }
+    }
+    .poly-hero-body {
+      @extend .hero-body;
+
+      &.poly-with-image {
+        background-image: var(--background-sm);
+      
+        @include from($tablet) {
+          background-image: var(--background-tablet);
+        }
+        @include from($desktop) {
+          background-image: var(--background-desktop);
+        }
+        @include from($widescreen) {
+          background-image: var(--background-widescreen);
+        }
+        @include from($fullhd) {
+          background-image: var(--background-fullhd);
+        }
+      
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: left top;
+        padding: 0;
+      
+        .poly-content {
+          @extend .container;
+          width: 100%;
+          background-color: $poly-muted-bg;
+          align-self: end;
+          flex-direction: column;
+          align-items: start;
+        }
+      }
+    }
+  }
+}

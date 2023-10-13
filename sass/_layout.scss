@@ -1,0 +1,57 @@
+.poly-header {
+  @extend .navbar;
+  > nav {
+    @extend .container;
+    > nav {
+      @extend .navbar-menu;
+      .poly-nav {
+        @extend .navbar-start;
+        .poly-navigation-description {
+          @extend .is-hidden;
+        }
+        .poly-section-nav-wrapper,
+        .poly-page-link {
+          @extend .navbar-item;
+        }
+        .poly-section-link {
+          @extend .navbar-link;
+          .poly-content {
+            display: contents;
+          }
+        }
+        .poly-section-nav-wrapper {
+          @extend .has-dropdown, .is-hoverable;
+        }
+        .poly-taxonomy-nav-wrapper {
+          @extend .navbar-dropdown;
+          .poly-taxonomy-term-link {
+            @extend .navbar-item;
+          }
+        }
+        .poly-taxonomy-extra-wrapper {
+          @extend .navbar-item, .has-dropdown, .is-hoverable;
+          .poly-taxonomy-title {
+            display: contents;
+          }
+          .poly-content,
+          .poly-link {
+            @extend .navbar-item;
+          }
+          .poly-taxonomy-extra-menu {
+            @extend .navbar-dropdown;
+          }
+          .poly-taxonomy-extra {
+            display: contents;
+            .poly-link {
+              @extend .navbar-item;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.poly-main {
+  display: contents;
+}

@@ -1,0 +1,22 @@
+.poly-section-link,
+.poly-taxonomy-term-link,
+.poly-page-link,
+.poly-out-link,
+.poly-link {
+  @media not (prefers-reduced-motion) {
+    transition-property: box-shadow, color, background-color;
+    transition-duration: $poly-ui-transition-time;
+    transition-timing-function: $poly-ui-transition-fn;
+  }
+
+  color: $primary !important;
+  position: relative;
+
+  &:hover {
+    @extend .has-background-primary;
+    &,
+    * {
+      @extend .has-text-white;
+    }
+  }
+}

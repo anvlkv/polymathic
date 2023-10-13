@@ -1,0 +1,35 @@
+.poly-page-content {
+  @extend .container;
+  > section {
+    @extend .section;
+    @extend .columns, .is-multiline, .is-flex;
+    @include until($desktop) {
+      flex-direction: column;
+    }
+  }
+  &.large {
+    > section {
+      @extend .section, .is-large;
+    }
+  }
+
+  .poly-page-aside, .poly-container {
+    @extend .column;
+  }
+
+  .poly-page-aside {
+    @extend .is-two-fifths-widescreen, .is-one-third-desktop, .is-12-tablet;
+
+  }
+
+
+  .poly-page-aside {
+    order: -1;
+    @include until($desktop) {
+      border-bottom: .1px solid $grey-light;
+    }
+    @include from($desktop){
+      border-right: .1px solid $grey-light;
+    }
+  }
+}

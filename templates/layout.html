@@ -1,0 +1,20 @@
+{% import "navigation.html" as navigation %}
+{% import "footer.html" as footer %}
+{% import "macros.html" as macros %}
+{% extends "base.html" %} 
+
+{% block content %}
+  <header class="poly-header">
+    <nav>
+      {{macros::brand_bar(menu_id="poly-layout-header")}}
+      <nav id="poly-layout-header">
+        {{navigation::macro(id="poly-layout-header")}}
+      </nav>
+    </nav>
+  </header>
+  <main class="poly-main">
+    {% block layout_main %} {% endblock %}
+  </main>
+
+  {{ footer::macro() }}
+{% endblock %}

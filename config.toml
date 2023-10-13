@@ -13,6 +13,7 @@ taxonomies = [
     { name = "shared_taxonomy", feed = false, render = true },
 ]
 
+external_links_target_blank = true
 
 [markdown]
 # Whether to do syntax highlighting
@@ -24,7 +25,6 @@ highlight_code = false
 [extra.poly]
 # Put all your custom variables here
 favicon = [{rel = "icon", type = "image/x-icon", size = "", path = "/favicon.ico"}]
-include_styles = true
 manifest = "/webmanifest.json"
 app_name = "polymathic"
 logo = "/logo.png"

@@ -6,62 +6,73 @@
   {% for nav in config.extra.poly.menu_order %}
     {% if nav is ending_with("_index.md")%}
       {% set section = get_section(path=nav) %}
-      <a class="poly-section-link" href="{{section.path}}">
-        <div class="content">
-          <span class="poly-navigation-title">{{section.title}}</span>
-          {% if section.description %}
-          <span class="poly-navigation-description">{{section.description}}</span>
-          {% endif %}
-        </div>
-      </a>
-
-      {% if section.extra.use_taxonomies %}
-        <nav class="poly-taxonomy-nav-wrapper">
-          {% for tx in section.extra.use_taxonomies %} 
-            {% set taxonomy = get_taxonomy(kind=tx) %}
-            {% if taxonomy.items | length > 0 %}
-              <nav class="poly-taxonomy-nav">
-                {% set_global taxonomy_secondary_terms = [] %}
-                {% for term in taxonomy.items %}
-                  {% if rendered_terms is not containing(term.path)%}
-                    {% set_global has_tx = false %}
-                    {% for pg in term.pages %}
-                      {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx %}
-                    {% endfor %}
-                    {% if has_tx %}
-                      <a class="poly-taxonomy-term-link" href="{{term.path}}">{{term.name}}</a>
-                      {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) %}
-                    {% endif %}
-                  {% else %}
-                    {% set_global taxonomy_secondary_terms = taxonomy_secondary_terms | concat(with=[term]) %}
-                  {% endif %}
-                {% endfor %}
-                {% if taxonomy_secondary_terms | length > 0 %}
-                  <nav class="poly-taxonomy-extra-wrapper">
-                    <div class="poly-taxonomy-title">
-                      <button class="button" aria-haspopup="true" aria-controls="{{taxonomy.kind.name}}-secondary-menu-{{id}}">
-                        {{ taxonomy.kind.name | split(pat="_") | join(sep=" ") | title }}
-                        <span class="button-arrow"></span>
-                      </button>
-                    </div>
-                    <div class="poly-taxonomy-extra-menu" id="{{taxonomy.kind.name}}-secondary-menu-{{id}}" role="menu">
-                      <nav class="poly-taxonomy-extra">
-                        {% for term in taxonomy_secondary_terms %}
-                          <a class="poly-link" href="{{term.path}}">{{term.name}}</a>
-                        {% endfor %}
-                      </nav>
-                    </div>
-                  </nav>
-                {% endif %}
-              </nav>
+      <div class="poly-section-nav-wrapper">
+        <a {{macros::link_attrs(type="section", href=section.path, title=section.title, current_url=current_path)}}>
+          <div class="poly-content">
+            <span class="poly-navigation-title">{{section.title}}</span>
+            {% if section.description %}
+            <span class="poly-navigation-description">{{section.description}}</span>
             {% endif %}
-          {% endfor %}
-        </nav>
-      {% endif %}
+          </div>
+        </a>
+  
+        {% if section.extra.poly.use_taxonomies %}
+          <nav class="poly-taxonomy-nav-wrapper">
+            {% for tx in section.extra.poly.use_taxonomies %} 
+              {% set taxonomy = get_taxonomy(kind=tx) %}
+              {% if taxonomy.items | length > 0 %}
+                <nav class="poly-taxonomy-nav">
+                  {% set_global taxonomy_secondary_terms = [] %}
+                  {% for term in taxonomy.items %}
+                    {% if rendered_terms is not containing(term.path)%}
+                      {% set_global has_tx = false %}
+                      {% for pg in term.pages %}
+                        {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx %}
+                      {% endfor %}
+                      {% if has_tx %}
+                        <a {{macros::link_attrs(type="taxonomy-term", href=term.path, title=term.name, current_url=current_path)}}>{{term.name}}</a>
+                        {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) %}
+                      {% endif %}
+                    {% else %}
+                      {% set_global taxonomy_secondary_terms = taxonomy_secondary_terms | concat(with=[term]) %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if taxonomy_secondary_terms | length > 0 %}
+                    <nav class="poly-taxonomy-extra-wrapper">
+                      <div class="poly-taxonomy-title">
+                        {% if taxonomy.kind.render %}
+                        {% set taxonomy_title = taxonomy.kind.name | split(pat="_") | join(sep=" ") | title %}
+                        <a {{macros::link_attrs(href="/"~taxonomy.kind.slug, title=taxonomy_title, current_url=current_path)}}
+                           aria-haspopup="true" aria-controls="{{taxonomy.kind.name}}-secondary-menu-{{id}}">
+                          {{ taxonomy_title }}
+                          <span class="button-arrow"></span>
+                        </a>
+                        {% else %}
+                        <div class="poly-content" aria-haspopup="true" aria-controls="{{taxonomy.kind.name}}-secondary-menu-{{id}}">
+                          {{ taxonomy_title }}
+                          <span class="button-arrow"></span>
+                        </div>
+                        {% endif %}
+                      </div>
+                      <div class="poly-taxonomy-extra-menu" id="{{taxonomy.kind.name}}-secondary-menu-{{id}}" role="menu">
+                        <nav class="poly-taxonomy-extra">
+                          {% for term in taxonomy_secondary_terms %}
+                            <a {{macros::link_attrs(href=term.path, title=term.name, current_url=current_path)}}>{{term.name}}</a>
+                          {% endfor %}
+                        </nav>
+                      </div>
+                    </nav>
+                  {% endif %}
+                </nav>
+              {% endif %}
+            {% endfor %}
+          </nav>
+        {% endif %}
+      </div>
     {% else %}
       {% set page = get_page(path=nav) %}
-      <a class="poly-page-link" href="{{page.path}}">
-        <div class="content">
+      <a {{macros::link_attrs(type="page", href=page.path, title=page.title, current_url=current_path)}} >
+        <div class="poly-content">
           <span class="poly-navigation-title">{{page.title}}</span>
           {% if page.description %}
           <span class="poly-navigation-description">{{page.description}}</span>

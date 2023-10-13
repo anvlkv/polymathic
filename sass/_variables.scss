@@ -7,11 +7,19 @@ $poly-font-url: map.get($poly-config, "font-url") or
   "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap" !default;
 $poly-font-family: map.get($poly-config, "font-family") or "AR One Sans",
   sans-serif !default;
+
+$poly-primary: map.get($poly-config, "primary-color") or #7257bc !default;
+
 $poly-background-color: map.get($poly-config, "background-color") or #e2dfd6 !default;
 $poly-text-color: map.get($poly-config, "text-color") or #141b32 !default;
-$poly-primary: map.get($poly-config, "primary-color") or #7257bc !default;
 $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !default;
 $poly-ui-transition-fn: map.get($poly-config, "ui-transition-fn") or ease-out !default;
+
+$poly-muted-bg: map.get($poly-config, "muted-background-color") or
+  rgba(
+    $color: $poly-background-color,
+    $alpha: 0.72,
+  ) !default;
 
 // Update Bulma's global defaults to poly defaults;
 $family-primary: $poly-font-family;

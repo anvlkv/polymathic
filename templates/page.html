@@ -1,0 +1,26 @@
+{% import "navigation.html" as navigation %}
+{% import "macros.html" as macros %}
+{% extends "layout.html" %} 
+
+{% block page_meta %}
+
+  {{ macros::content_meta(content=page) }}
+
+{% endblock %}
+
+{% block layout_main %}
+  <div class="poly-page-content">
+    <section>
+      <article class="poly-container">
+        {{page.content | safe}}
+      </article>
+      <aside class="poly-page-aside">
+        {% block page_aside %}
+          {% if page.extra.poly.aside %}
+          <p>{{ page.extra.poly.aside }}</p>
+          {% endif %}
+        {% endblock %}
+      </aside>
+    </section>
+  </div>
+{% endblock %}
