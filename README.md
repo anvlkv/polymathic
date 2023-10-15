@@ -220,6 +220,14 @@ Whether to include a webmanifest file and path to it. Example can be found in th
 
 To customize theme styles you can define a configuration map. This will allow you to change all theme variables, along with those of [bulma](https://bulma.io/documentation/customize/variables/). 
 
+#### Adding font
+
+To change a preloaded font set `font_url` and update your `$theme-config:("font-family": 'My font', monospace);`.
+
+    [extra]
+    [extra.poly]
+    font_url="https://font.hosting.com"
+
 #### Extending templates
 
 Override theme default templates. For example `templates/index.html`
@@ -266,6 +274,7 @@ Last step for this template is to use the theme with provided config. For exampl
         $warning: orange,
         $desktop: 1080px
     );
+
 
 #### More components
 ##### Import all

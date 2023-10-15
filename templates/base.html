@@ -14,7 +14,11 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
 
-    
+    {% if config.extra.poly.font_url %}
+    <style>
+      @import url('{{config.extra.poly.font_url | safe}}');
+    </style>
+    {% endif %}
 
     {% block page_style %}
       <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />

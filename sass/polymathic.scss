@@ -1,7 +1,5 @@
 @import "./variables";
 
-@import url($poly-font-url);
-
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/base/_all.sass";
 @import "../node_modules/bulma/sass/utilities/_all.sass";
@@ -23,6 +21,7 @@
 @import "../node_modules/bulma/sass/components/pagination.sass";
 @import "../node_modules/bulma/sass/components/modal.sass";
 @import "../node_modules/bulma/sass/components/card.sass";
+@import "../node_modules/bulma/sass/components/message.sass";
 
 // used in shortcodes
 

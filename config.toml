@@ -23,8 +23,8 @@ highlight_code = true
 
 [extra]
 [extra.poly]
-# Put all your custom variables here
 favicon = [{rel = "icon", type = "image/x-icon", size = "", path = "/favicon.ico"}]
+font_url = "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap"
 manifest = "/webmanifest.json"
 app_name = "polymathic"
 logo = "/logo.png"

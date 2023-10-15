@@ -13,6 +13,7 @@ demo = "https://a.nvlkv.xyz"
 # Use snake_casing to be consistent with the rest of Zola
 [extra]
 [extra.poly]
+font_url = "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap"
 favicon = [{rel = "icon", type = "image/x-icon", size = "", path = "/favicon.ico"}]
 manifest = "/webmanifest.json"
 app_name = "polymathic"
