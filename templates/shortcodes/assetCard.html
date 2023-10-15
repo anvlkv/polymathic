@@ -1,23 +1,21 @@
+{% import "macros.html" as macros %}
+
 {% set alt = alt | default(value="") %}
 {% set content = page | default(value=section) %}
 {% set id = "content-asset-modal-"~image | slugify %}
 
-
 <div class="poly-container-block" id="trigger-{{id}}">
   <a class="poly-asset-card">
     {% if image %}
-      {% set_global path = image %}
-      {% if image is not starting_with("/") and content.assets is defined %}
-        {% for asset in content.assets %}
-          {% if asset is ending_with(image) %}
-            {% set_global path = asset %}
-          {% endif %}
-        {% endfor %}
-      {% endif %}
-      {% set card_image = resize_image(path=path, width=600, height=337, format='webp') %}
       <div class="card-image">
         <figure class="image is-16by9">
-          <img src="{{card_image.url}}" alt="{{alt}}">
+          <img {{macros::img_src(
+            src=macros::poly_path(value=image, assets=content.assets) | trim, 
+            ratio=16.0/9.0,
+            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
+            sizes=[200, 400, 600, 900],
+          ) }} 
+           alt="{{alt}}">
         </figure>
       </div>
     {% endif %}

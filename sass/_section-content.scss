@@ -26,12 +26,10 @@
       @include hover() {
         .poly-hero-card {
           @extend .has-background-primary;
+          background-image: none;
           &,* {
             @extend .has-text-white;
           }
-        }
-        .poly-hero-card {
-          background-image: none;
         }
       }
       .poly-with-image {

@@ -63,6 +63,24 @@
   .poly-container-block {
     @extend .column, .is-full-mobile, .is-half-tablet, .is-one-third-desktop;
 
+    &.poly-link {
+      @include hover() {
+        .poly-hero-card {
+          @extend .has-background-primary;
+          background-image: none;
+          &,* {
+            @extend .has-text-white;
+          }
+        }
+      }
+      .poly-with-image {
+        &, * {
+          color: $primary !important;
+        } 
+      }
+
+    }
+
     #{$child-selector} {
       @extend .column, .is-full;
     }

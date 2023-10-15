@@ -1,0 +1,38 @@
+{% import "macros.html" as macros %}
+
+{% set banner = true %}
+{% set content = page | default(value=section) %}
+{% set class_name = "poly-hero-card" %}
+
+{% if hero and banner == true %}
+  {% set class_name = class_name~" poly-with-image" %}
+{% endif %}
+
+<a href="{{href | safe}}"
+  class="poly-container-block poly-link"
+>
+  <div class="{{class_name}}"
+    {% if hero and banner == true %}
+    style="{{macros::background_image_vars(path=macros::poly_path(value=hero, assets=content.assets) | trim)}}"
+    {% endif %}
+  >
+    {% if banner == false and hero is defined %} 
+      {% set alt = alt | default(value= hero | split(pat=".") | first | replace(from="_", to=" ") | title ) %}
+      <div class="card-image">
+        <figure class="poly-image is-4by3">
+          <img {{macros::img_src(
+            src=macros::poly_path(value=hero, assets=content.assets) | trim, 
+            ratio=4.0/3.0,
+            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
+            sizes=[200, 400, 600, 900],
+          ) }} 
+          alt="{{alt}}"
+          />
+        </figure>
+      </div>
+    {% endif %}
+    <div class="poly-content">
+      {{body | markdown(inline=true) | safe}}
+    </div>
+  </div>
+</a>

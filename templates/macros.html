@@ -1,4 +1,4 @@
-{% macro _poly_path(value, assets) %}
+{% macro poly_path(value, assets) %}
   {% set_global path = value %}
   {% if value is not starting_with("/") and assets is defined %}
     {% for asset in assets %}
@@ -10,7 +10,6 @@
   {{ path }}
 {% endmacro %}
 
-{% macro poly_path(value, assets) %}{{macros::_poly_path(value=value, assets=assets) | trim}}{% endmacro %}
 
 
 {% macro background_image_vars(path) %}
@@ -59,7 +58,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
   {% if content.extra.poly.hero %}
-    {% set path = macros::poly_path(value=content.extra.poly.hero, assets=content.assets) %}
+    {% set path = macros::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim %}
     {% set image_meta = get_image_metadata(path=path) %}
     {% if image_meta.height > 630 or image_meta.width > 1200 %} 
       {% set image = resize_image(path=path, width=1200, height=630, op='fill', format='webp') %}
@@ -105,7 +104,7 @@
   {% endif %}
   <a {{macros::link_attrs(type=type, href=content.path, title=content.title, current_url=current_path, class=link_class)}}
     {% if content.extra.poly.hero and banner == true %}
-    style="{{macros::background_image_vars(path=macros::poly_path(value=content.extra.poly.hero, assets=content.assets))}}"
+    style="{{macros::background_image_vars(path=macros::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim)}}"
     {% endif %}
   >
     <div class="{{class_name}}">
@@ -113,7 +112,7 @@
         <div class="card-image">
           <figure class="poly-image is-4by3">
             <img {{macros::img_src(
-              src=macros::poly_path(value=content.extra.poly.hero, assets=content.assets), 
+              src=macros::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim, 
               ratio=4.0/3.0,
               breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
               sizes=[200, 400, 600, 900],
