@@ -21,27 +21,16 @@
         </figure>
       </div>
     {% endif %}
+    <!-- TODO: Handle other asset types ... -->
     <div class="card-content">
-      <!-- <div class="media">
-        <div class="media-left">
-          <figure class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-          </figure>
-        </div>
-        <div class="media-content">
-          <p class="title is-4">John Smith</p>
-          <p class="subtitle is-6">@johnsmith</p>
-        </div>
-      </div> -->
-
-      <div class="content">
-        {{body | safe}}
+      <div class="poly-content">
+        {{body | markdown(inline=true) | safe}}
       </div>
     </div>
   </a>
 </div>
 
-=%P%=%0%=%L%=%Y%==%S%=%C%=%R%=%I%=%P%=%T%=
+=#PO@L!Y#==#$C^R*1!P+T#=
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('#{{id}}');
@@ -62,4 +51,4 @@
     })
   })
 </script>
-=%S%=%C%=%R%=%I%=%P%=%T%==%P%=%0%=%L%=%Y%=
+=#$C^R*1!P+T#==#PO@L!Y#=

@@ -3,25 +3,29 @@
   flex-basis: 100%;
   flex-shrink: 0.5;
 
-  @for $i from 1 through 6 {
-    > h#{$i} {
-      @extend .title, .is-size-#{$i};
-      width: 100%;
-      @if $i < 6 {
-        & + h#{$i + 1} {
-          @extend .subtitle;
+  &,
+  .poly-content {
+    @for $i from 1 through 6 {
+      > h#{$i} {
+        @extend .title, .is-size-#{$i};
+        width: 100%;
+        color: inherit;
+        @if $i < 6 {
+          & + h#{$i + 1} {
+            @extend .subtitle;
+          }
         }
       }
     }
-  }
 
-  > blockquote,
-  > pre {
-    @extend .box;
+    > blockquote,
+    > pre {
+      @extend .box;
+    }
   }
 
   $selector: "";
-  $child-selector: "& + div:not([class^=\"poly-\"]):not([class~=\" poly-\"]),";
+  $child-selector: '& + div:not([class^="poly-"]):not([class~=" poly-"]),';
 
   $first: true;
   @each $el in $poly-container-elements {
@@ -36,14 +40,21 @@
 
   #{$selector} {
     @extend .column;
-    
+    flex-grow: 1;
+
     @include until($tablet) {
       flex-basis: 100%;
     }
     @include from($tablet) {
-      &:first-child, #{$child-selector} {
+      &:first-child,
+      #{$child-selector} {
         &:not(:has(+ .poly-container-block)) {
           flex-basis: 100%;
+        }
+        @include from($desktop) {
+          &:has(+ .poly-container-block) {
+            flex-basis: calc(2 / 3 * 100%);
+          }
         }
       }
     }
@@ -71,5 +82,9 @@
         @extend .has-text-white;
       }
     }
+  }
+
+  .poly-message {
+    @extend .message, .is-info;
   }
 }

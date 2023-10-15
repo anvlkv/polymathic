@@ -1,0 +1,17 @@
+{% set title = title | default(value=false) %}
+<div class="poly-container-block">
+  <article class="poly-message">
+    {% if title %}
+    <div class="message-header">
+      {%if title %}
+        <p>{{title}}</p>
+      {% endif %}
+    </div>
+    {% endif %}
+    <div class="message-body">
+      <div class="poly-content">
+        {{body | markdown(inline=true) | safe}}
+      </div>
+    </div>
+  </article>
+</div>

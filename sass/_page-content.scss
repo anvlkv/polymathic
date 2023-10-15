@@ -14,9 +14,7 @@
       @extend .column, .is-flex;
     }
     .poly-page-aside {
-      @extend .column, .is-3-widescreen, .is-one-fifths-desktop, .is-12-tablet;
-    }
-    .poly-page-aside {
+      @extend .column, .is-full-tablet, .is-one-fifth-desktop, .is-3-widescreen;
       order: -1;
       @include until($desktop) {
         border-bottom: .1px solid $grey-light;

@@ -199,7 +199,7 @@
 {% endmacro %}
 
 {% macro poly_content(text) %}
-  {% set split_poly = text | split(pat="=%P%=%0%=%L%=%Y%=") %}
+  {% set split_poly = text | split(pat="=#PO@L!Y#=") %}
   {% set_global body_content = ""  %}
   {% for pol in split_poly %}
     {% if loop.index is odd %}
@@ -210,11 +210,11 @@
 {% endmacro %}
 
 {% macro poly_scripts(text) %}
-  {% set split_poly = text | split(pat="=%P%=%0%=%L%=%Y%=") %}
+  {% set split_poly = text | split(pat="=#PO@L!Y#=") %}
   {% set_global script_content = "" %}
   {% for pol in split_poly  %}
     {% if loop.index is even %}
-      {% set split_script = pol | split(pat="=%S%=%C%=%R%=%I%=%P%=%T%=") %}
+      {% set split_script = pol | split(pat="=#$C^R*1!P+T#=") %}
       {% for script_entry in split_script %}
       {% if loop.index is even %}
           {% set_global script_content = script_content~script_entry %}

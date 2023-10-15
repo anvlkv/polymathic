@@ -1,4 +1,4 @@
-{% set id = id | default(value="") %}
+{% set id = id | default(value=name | slugify) %}
 {% set type = type | default(value="text") %}
 {% set icons_left = icons_left | default(value=false) %}
 {% set icons_right = icons_right | default(value=false) %}
@@ -8,7 +8,7 @@
 {% if type != "file" %}
 <div class="field">
   {% if label %}
-    <label class="label" for="{{ name }}">{{label}}</label>
+    <label class="label" for="{{ id }}">{{label}}</label>
   {% endif %}
   <div class="control{% if icons_left %} has-icons-left{% endif %}{% if icons_right %} has-icons-right{% endif %}">
     {% if type == "select" %}
@@ -44,7 +44,7 @@
         {{ body | safe }}
       </button>
     {% else %}
-      <input class="input" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="{{ type | default(value='text') }}" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
+      <input autocomplete="{{autocomplete | default(value='on')}}" class="input" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="{{ type | default(value='text') }}" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
     {% endif %}
     {% if icons_left is iterable %}
       {% for ic in icons_left %}

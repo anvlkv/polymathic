@@ -36,3 +36,21 @@ plain text
 
 
 and some text after
+
+{% message(title="with title") %}
+
+<h4>inside the message</h4>
+
+plain text
+
+{% end %}
+
+
+{% message() %}
+
+### Inside the message
+
+    some code?
+
+
+{% end %}
