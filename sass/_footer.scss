@@ -1,9 +1,8 @@
 .poly-navigation-footer {
-  @extend .container, .is-fluid, .has-text-centered-mobile;
-  background-color: darken($poly-muted-bg, 7%);
+  @extend .footer;
 
   .poly-navigation-container {
-    @extend .container;
+    @extend .container, .has-text-centered-mobile;
     > section {
       @extend .section;
     }
@@ -61,5 +60,13 @@
   }
   .poly-content {
     display: contents;
+  }
+
+  .poly-section-link,
+  .poly-taxonomy-term-link,
+  .poly-page-link,
+  .poly-out-link,
+  .poly-link {
+    @extend .poly-link-hover;
   }
 }

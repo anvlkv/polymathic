@@ -1,45 +1,80 @@
 .poly-container {
+  @extend .columns, .is-multiline, .is-centered, .is-tablet;
   flex-basis: 100%;
-  flex-shrink: .5;
-  > h1 {
-    @extend .title, .is-1;
-    & + h2 {
-      @extend .subtitle;
+  flex-shrink: 0.5;
+
+  @for $i from 1 through 6 {
+    > h#{$i} {
+      @extend .title, .is-size-#{$i};
+      width: 100%;
+      @if $i < 6 {
+        & + h#{$i + 1} {
+          @extend .subtitle;
+        }
+      }
     }
-  }
-  > h2 {
-    @extend .title, .is-2;
-    & + h3 {
-      @extend .subtitle;
-    }
-  }
-  > h3 {
-    @extend .title, .is-3;
-    & + h4 {
-      @extend .subtitle;
-    }
-  }
-  > h4 {
-    @extend .title, .is-4;
-    & + h5 {
-      @extend .subtitle;
-    }
-  }
-  > h5 {
-    @extend .title, .is-5;
-    & + h6 {
-      @extend .subtitle;
-    }
-  }
-  > h6 {
-    @extend .title, .is-6;
   }
 
-  > blockquote {
+  > blockquote,
+  > pre {
     @extend .box;
   }
 
-  > p {
-    @extend .content;
+  $selector: "";
+  $child-selector: "& + div:not([class^=\"poly-\"]):not([class~=\" poly-\"]),";
+
+  $first: true;
+  @each $el in $poly-container-elements {
+    @if $first == false {
+      $selector: $selector + ",";
+      $child-selector: $child-selector + ",";
+    }
+    $selector: $selector + "> #{$el}";
+    $child-selector: $child-selector + "& + #{$el}";
+    $first: false;
+  }
+
+  @debug $selector;
+
+  #{$selector} {
+    
+    
+
+    @debug $child-selector;
+
+    &:first-child, #{$child-selector} {
+      @extend .column, .is-full;
+    }
+  }
+
+  // > * {
+  //   @extend .column, .is-half-tablet;
+  //   & + &:not(.poly-container-block) {
+  //     @extend .column, .is-full;
+  //   }
+  // }
+
+  .poly-container-block {
+    @extend .column, .is-full-mobile, .is-half-tablet, .is-one-third-desktop;
+
+    #{$child-selector} {
+      @extend .column, .is-full;
+    }
+  }
+
+  .poly-asset-card {
+    @extend .card;
+  }
+
+  a.poly-asset-card {
+    @extend .is-block;
+
+    @include hover() {
+      @extend .has-background-primary;
+      &,
+      * {
+        @extend .has-text-white;
+      }
+    }
   }
 }

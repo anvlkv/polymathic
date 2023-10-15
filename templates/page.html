@@ -12,15 +12,19 @@
   <div class="poly-page-content">
     <section>
       <article class="poly-container">
-        {{page.content | safe}}
+        {{ page.content | safe}}
       </article>
-      <aside class="poly-page-aside">
-        {% block page_aside %}
-          {% if page.extra.poly.aside %}
-          <p>{{ page.extra.poly.aside }}</p>
-          {% endif %}
-        {% endblock %}
-      </aside>
+      {% if page.extra.poly.aside %}
+        <aside class="poly-page-aside">
+          {% block page_aside %}
+            <p>{{ page.extra.poly.aside }}</p>
+          {% endblock %}
+        </aside>
+      {% endif %}
     </section>
   </div>
+{% endblock %}
+
+{% block modals %}
+  {{macros::content_modals(assets=page.assets)}}
 {% endblock %}

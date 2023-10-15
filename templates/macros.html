@@ -1,3 +1,16 @@
+{% macro _poly_path(value, assets) %}
+  {% set_global path = value %}
+  {% if value is not starting_with("/") and assets is defined %}
+    {% for asset in assets %}
+      {% if asset is ending_with(value) %}
+        {% set_global path = asset %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  {{ path }}
+{% endmacro %}
+
+{% macro poly_path(value, assets) %}{{macros::_poly_path(value=value, assets=assets) | trim}}{% endmacro %}
 
 
 {% macro background_image_vars(path) %}
@@ -53,26 +66,23 @@
 
 
 {% macro content_meta(content) %}
-<title>{{ content.title }}</title>
+<title>{{ content.title }}{% if config.extra.poly.app_name %} | {{config.extra.poly.app_name}}{% endif %}</title>
 <meta name="description" content="{{ content.description }}" />
 <meta property="og:title" content="{{ content.title }}" />
 <meta property="og:description" content="{{ content.description }}" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
   {% if content.extra.poly.hero %}
-    {% set image_meta = get_image_metadata(path=content.extra.poly.hero) %}
+    {% set path = macros::poly_path(value=content.extra.poly.hero, assets=content.assets) %}
+    {% set image_meta = get_image_metadata(path=path) %}
     {% if image_meta.height > 630 or image_meta.width > 1200 %} 
-      {% set ratio = image_meta.width / image_meta.height %}
-      {% set width = (630 * ratio) | int %}
-      {% set height = (1200 / ratio) | int %}
-      {% if image_meta.width > image_meta.height %}
-        {% set op = 'fit_width' %}
-      {% else %}
-        {% set op = 'fit_height' %}
-      {% endif %}
-      {% set image = resize_image(path=content.extra.poly.hero, width=width, height=height, op=op, format='webp') %}
+      {% set image = resize_image(path=path, width=1200, height=630, op='fill', format='webp') %}
     {% else %}
-      {% set image = resize_image(path=content.extra.poly.hero, width=image_meta.width, height=image_meta.height, op='scale', format='webp') %}
+      {% set side = image_meta.width %}
+      {% if image_meta.width > image_meta.height %}
+        {% set side = image_meta.height %}
+      {% endif %}
+      {% set image = resize_image(path=path, width=side, height=side, op='fill', format='webp') %}
     {% endif %}
     <meta
       property="og:image"
@@ -86,10 +96,125 @@
   {% endif %} 
 {% endmacro %}
 
-{% macro link_attrs(type=false, href, title=false, current_url=false) %}
-  class="poly-{% if type %}{{type}}-{% endif %}link{% if current_url and current_url == href %} poly-active-link{% endif %}"
+{% macro link_attrs(type=false, href, title=false, current_url=false, class=false) %}
+  class="poly-{% if type %}{{type}}-{% endif %}link{% if current_url and current_url == href %} poly-active-link{% endif %}{% if class %} {{class}}{% endif %}"
   href="{{href | safe}}"
   {% if title %}
   title="{{title}}"
   {% endif %}
+{% endmacro %}
+
+{% macro link_hero_card(content, type, banner=false) %}
+  {% set link_class = "" %}
+  {% set class_name = "poly-hero-card" %}
+  {% if content.extra.poly.block %}
+    {% set class_name = "poly-hero-block" %}
+    {% set link_class = "poly-block-link" %}
+  {% endif %}
+  {% if content.extra.poly.hero and banner == true %}
+    {% set class_name = class_name~" poly-with-image" %}
+  {% endif %}
+  {% if content.extra.poly.pop %}
+    {% set link_class = link_class~" poly-pop" %}
+  {% endif %}
+  <a {{macros::link_attrs(type=type, href=content.path, title=content.title, current_url=current_path, class=link_class)}}
+    {% if content.extra.poly.hero and banner == true %}
+    style="{{macros::background_image_vars(path=macros::poly_path(value=content.extra.poly.hero, assets=content.assets))}}"
+    {% endif %}
+  >
+    <div class="{{class_name}}">
+      {% if banner == false and content.extra.poly.hero is defined %} 
+        <div class="card-image">
+          <figure class="poly-image is-4by3">
+            <img {{macros::img_src(
+              src=macros::poly_path(value=content.extra.poly.hero, assets=content.assets), 
+              ratio=4.0/3.0,
+              breakpoints=["max-width: 769px", "max-width: 960px", "max-width: 1152px"],
+              sizes=[200, 400, 600, 900],
+            ) }} 
+            alt="{{content.title}}"
+            />
+          </figure>
+        </div>
+      {% endif %}
+      <div class="poly-content">
+        <p class="title is-4 is-subtitle">{{ content.title }}</p>
+        {% if content.description %}
+          <p>{{ content.description }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+{% macro img_src(src, sizes, breakpoints, ratio) %}
+  sizes="{% for size in sizes %}
+    {% if breakpoints[loop.index0] %}
+      ({{breakpoints[loop.index0]}}) {{size}}px,
+    {% else %}
+      {{size}}
+    {% endif %}
+  {% endfor %}"
+  srcset="{% for size in sizes %}"
+    {% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill')%}
+  {% endfor %}"
+  src="{{src}}"  
+{% endmacro %}
+
+{% macro pager(pagination)%}
+  <nav class="poly-pager is-rounded" role="navigation" aria-label="pagination">
+    {% if pagination.previous %}
+      <a href="{{pagination.previous}}" class="pagination-previous">Previous</a>
+    {% endif %}
+    {% if pagination.next %}
+      <a href="{{pagination.next}}" class="pagination-next">Next page</a>
+    {% endif %}
+    <ul class="pagination-list">
+      {% for pg in range(start=1, end=pagination.number_pagers+1) %}
+        <li>
+          <a href="{%if pg > 1%}{{pagination.base_url~pg}}{%else%}{{pagination.first}}{%endif%}" class="pagination-link{% if pg == pagination.current_index %} is-current{% endif %}" aria-label="Goto page {{pg}}">
+            {{pg}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endmacro %}
+
+{% macro content_modals(assets) %}
+{% for asset in assets %}
+  {% if asset is matching(".(png|jpeg|jpg|gif|webp)$")%}
+    {% set name = asset | split(pat="/") | last %}
+    <div class="modal" id="content-asset-modal-{{name | slugify}}">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        {% set image_meta = get_image_metadata(path=asset) %}
+        {% if image_meta.width > image_meta.height %}
+        <figure class="image is-3by2">
+          <img {{macros::img_src(
+            src=asset, 
+            ratio=3.0/2.0,
+            breakpoints=["max-width: 769px", "max-width: 960px", "max-width: 1152px"],
+            sizes=[769, 960, 1152, 1344],
+          ) }} 
+            alt="{{name | split(pat=".") | first | title}}"
+          />
+          </figure>
+        {% else %}
+        <figure class="image is-2by3">
+          <img {{macros::img_src(
+            src=asset, 
+            ratio=2.0/3.0,
+            breakpoints=["max-width: 769px", "max-width: 960px", "max-width: 1152px"],
+            sizes=[769, 960, 1152, 1344],
+          ) }}
+            alt="{{name | split(pat=".") | first | title}}" 
+          />
+          </figure>
+        {% endif %}
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+  {% endif %}
+{% endfor %}
 {% endmacro %}

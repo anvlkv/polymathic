@@ -16,7 +16,6 @@
       .poly-page-link,
       .poly-taxonomy-extra-wrapper {
         @extend .tile;
-        
       }
       .poly-section-link,
       .poly-taxonomy-term-link,
@@ -111,6 +110,13 @@
 
     .poly-content {
       @extend .content;
+    }
+
+    .poly-section-link,
+    .poly-taxonomy-term-link,
+    .poly-page-link,
+    .poly-link {
+      @extend .poly-link-hover;
     }
   }
 }

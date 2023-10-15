@@ -29,7 +29,7 @@
           }
         }
         .poly-taxonomy-extra-wrapper {
-          @extend .navbar-item, .has-dropdown, .is-hoverable;
+          @extend .navbar-item, .has-dropdown, .is-hoverable, .p-0;
           .poly-taxonomy-title {
             display: contents;
           }
@@ -49,6 +49,13 @@
         }
       }
     }
+  }
+
+  .poly-section-link,
+  .poly-taxonomy-term-link,
+  .poly-page-link,
+  .poly-link {
+    @extend .poly-link-hover;
   }
 }
 

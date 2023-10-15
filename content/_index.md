@@ -44,4 +44,11 @@ Or a Bulma component.
   <button class="button is-link">Link</button>
 </div>
 
-Example images for this preview are generated using [OpenAI DALL·E 2](https://openai.com/dall-e-2).
+
+```html
+  <!-- code block -->
+  <div class="buttons">
+    <button class="button is-primary">Primary</button>
+    <button class="button is-link">Link</button>
+  </div>
+```

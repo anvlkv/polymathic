@@ -1,0 +1,29 @@
+@mixin backgrounds() {
+  background-image: var(--background-sm);
+      
+  @include from($tablet) {
+    background-image: var(--background-tablet);
+  }
+  @include from($desktop) {
+    background-image: var(--background-desktop);
+  }
+  @include from($widescreen) {
+    background-image: var(--background-widescreen);
+  }
+  @include from($fullhd) {
+    background-image: var(--background-fullhd);
+  }
+}
+
+@mixin hover() {
+  &, * {
+    @media not (prefers-reduced-motion) {
+      transition-property: box-shadow, color, background-color;
+      transition-duration: $poly-ui-transition-time;
+      transition-timing-function: $poly-ui-transition-fn;
+    }
+  }
+  &:hover {
+    @content;
+  }
+}

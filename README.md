@@ -2,6 +2,8 @@
 
 Polymathic is a [Zola](https://www.getzola.org/) portfolio theme. I made it for my own portfolio.
 
+Docs and theme demo are available here 
+
 The theme is called `polymathic`, inspired by individuals with a wide range of talents. 
 
 This theme uses [Bulma](https://bulma.io/) scss framework, making the theme styles highly customizable.
@@ -12,7 +14,7 @@ Besides the styles, you can customize navigation, the theme relies on zola `[tax
 
 You can quickly deploy the theme to [netlify](https://docs.netlify.com/site-deploys/create-deploys/), theme comes with a config file.
 
-Example images for this preview are generated using [OpenAI DALL·E 2](https://openai.com/dall-e-2).
+Example images for the theme preview are generated using [OpenAI DALL·E 2](https://openai.com/dall-e-2).
 
 ## Install
 

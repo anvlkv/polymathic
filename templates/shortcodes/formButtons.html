@@ -1,0 +1,18 @@
+{% set submit = submit | default(value="Submit") %}
+{% set cancel = cancel | default(value=false) %}
+{% set centered = centered | default(value=true) %}
+
+<div class="field{% if cancel != false %} is-grouped{% if centered %} is-grouped-centered{% endif %}{% endif %}">
+  <p class="control">
+    <button type="submit" class="button is-primary">
+      {{ submit }}
+    </button>
+  </p>
+  {% if cancel != false %}
+    <p class="control">
+      <button type="reset" class="button is-light">
+        {{ cancel }}
+      </button>
+    </p>
+  {% endif %}
+</div>

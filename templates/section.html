@@ -1,0 +1,50 @@
+{% import "navigation.html" as navigation %}
+{% import "macros.html" as macros %}
+{% extends "layout.html" %} 
+
+{% block page_meta %}
+
+  {{ macros::content_meta(content=section) }}
+
+{% endblock %}
+
+{% block layout_main %}
+  <div class="poly-sections-content large">
+    <section>
+      <article class="poly-container">
+        {% block section_pages %}
+          {% for sub in section.subsections %}
+            {% set section = get_section(path=sub) %}
+              {{macros::link_hero_card(content=section, type="section", banner=true)}}
+            {% if loop.last %}
+              <hr/>
+            {% endif %}
+          {% endfor %}
+          {% for page in section.pages %}
+            {{macros::link_hero_card(content=page, type="page")}}
+          {% else %}
+            {% if paginator.pages is defined %}
+              {% for page in paginator.pages %}
+                {{macros::link_hero_card(content=page, type="page")}}
+              {% endfor %}
+              {{macros::pager(pagination=paginator)}}
+            {% endif %}
+          {% endfor %}
+        {% endblock %}
+      </article>
+      {% if section.content | length > 0 %}
+        <aside class="poly-page-aside">
+          {% block section_aside %}
+            <article class="poly-container">
+              {{section.content | safe}}
+            </article>
+          {% endblock %}
+        </aside>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}
+
+{% block modals %}
+  {{macros::content_modals(assets=section.assets)}}
+{% endblock %}

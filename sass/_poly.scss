@@ -1,8 +1,17 @@
+@import "./utils";
 @import "./brand";
-@import "./container";
 @import "./footer";
 @import "./hero";
 @import "./layout";
 @import "./link";
 @import "./navigation-blocks";
 @import "./page-content";
+@import "./section-content";
+@import "./pager";
+
+@import "./container";
+
+hr {
+  background-color: transparent;
+  border-bottom: .5px solid $grey-light;
+}

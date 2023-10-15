@@ -1,7 +1,6 @@
 +++
 title="Contact"
 description="Let's talk!"
-template="page.html"
 [extra]
 [extra.poly]
 aside = "A plain text content in page aside"
@@ -11,28 +10,17 @@ aside = "A plain text content in page aside"
 
 <form>
 
-{{ field(name="test", label="Name") }}
+  {{ field(name="test", label="Name") }}
 
-{{ field(name="email", label="Email", type="email", required=true) }}
+  {{ field(name="email", label="Email", type="email", required=true) }}
 
-{% field(name="text", label="Message", type="textarea") %}
-  Some text
-{% end %}
+  {% field(name="text", label="Message", type="textarea") %}
+    Some text
+  {% end %}
 
-{{ field(name="foto", label="Photo", type="file") }}
+  {{ field(name="foto", label="Photo", type="file") }}
 
-<div class="field is-grouped is-grouped-centered">
-  <p class="control">
-    <a class="button is-primary">
-      Submit
-    </a>
-  </p>
-  <p class="control">
-    <a class="button is-light">
-      Cancel
-    </a>
-  </p>
-</div>
+  {{ formButtons(cancel="Reset") }}
 
 </form>
 

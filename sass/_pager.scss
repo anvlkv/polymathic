@@ -1,0 +1,4 @@
+.poly-pager {
+  @extend .pagination;
+  @extend .column, .is-full;
+}

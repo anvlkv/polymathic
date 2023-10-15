@@ -5,21 +5,3 @@ description="Example 1 project description"
 project_taxonomy=["project category 1"]
 shared_taxonomy=["shared category 1"]
 +++
-
-
-## renders some content too
-
-hello
-
-now
-
-{% assetCard(image="subsection-hero.png") %}
-
-<h4>inside the card</h4>
-
-plain text
-
-{% end %}
-
-
-and some text after

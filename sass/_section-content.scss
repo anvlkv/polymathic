@@ -1,0 +1,65 @@
+.poly-sections-content {
+  @extend .poly-page-content;
+
+  > section > .poly-container {
+    @extend .columns, .is-multiline, .is-mobile, .is-centered;
+
+    .poly-page-link, 
+    .poly-section-link {
+      @extend .column;
+      &.poly-pop {
+        @extend .is-full-mobile, .is-full-tablet, .is-two-thirds-desktop;
+      }
+      &.poly-block-link {
+        @extend .is-full, .mt-4;
+        &::after{
+          @extend .is-column, .is-full, hr;
+          display: block;
+          content: "";
+        }
+        .poly-content {
+          p {
+            color: $text !important;
+          }
+        }
+      }
+      @include hover() {
+        .poly-hero-card {
+          @extend .has-background-primary;
+          &,* {
+            @extend .has-text-white;
+          }
+        }
+        .poly-hero-card {
+          background-image: none;
+        }
+      }
+      .poly-with-image {
+        &, * {
+          color: $primary !important;
+        } 
+      }
+
+      .poly-hero-card {
+        @extend .is-hoverable;
+        height: 100%;
+      }
+    }
+
+    // .poly-section-link {
+    //   @extend .column;
+    // }
+    .poly-page-link {
+      @extend .is-half-mobile, .is-one-third-desktop;
+      // aspect-ratio: 1 / 1;
+    }
+
+    hr {
+      @extend .column, .is-12;
+      padding: 0 !important;
+    }
+
+
+
+  }
+}

@@ -3,13 +3,14 @@
 $poly-config: () !default;
 
 // poly variables;
+$poly-primary: map.get($poly-config, "primary-color") or #7257bc !default;
 $poly-font-url: map.get($poly-config, "font-url") or
   "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap" !default;
 $poly-font-family: map.get($poly-config, "font-family") or "AR One Sans",
   sans-serif !default;
-
-$poly-primary: map.get($poly-config, "primary-color") or #7257bc !default;
-
+$poly-container-elements: map.get($poly-config, "container-elements") or "h1", "h2", "h3", "h4", "h5", "h6", "p", "pre", "blockquote", "form", "address", "section", "table", "iframe", "img", "audio", "video", "figure", "ul", "ol", "dl" !default;
+  
+// todo: derive colors
 $poly-background-color: map.get($poly-config, "background-color") or #e2dfd6 !default;
 $poly-text-color: map.get($poly-config, "text-color") or #141b32 !default;
 $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !default;
@@ -24,6 +25,7 @@ $poly-muted-bg: map.get($poly-config, "muted-background-color") or
 // Update Bulma's global defaults to poly defaults;
 $family-primary: $poly-font-family;
 $body-background-color: $poly-background-color;
+$footer-background-color: darken($poly-muted-bg, 7%);
 $scheme-main: lighten($poly-background-color, 7.4%);
 $text: $poly-text-color;
 $primary: $poly-primary;

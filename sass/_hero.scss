@@ -21,20 +21,8 @@
       @extend .hero-body;
 
       &.poly-with-image {
-        background-image: var(--background-sm);
-      
-        @include from($tablet) {
-          background-image: var(--background-tablet);
-        }
-        @include from($desktop) {
-          background-image: var(--background-desktop);
-        }
-        @include from($widescreen) {
-          background-image: var(--background-widescreen);
-        }
-        @include from($fullhd) {
-          background-image: var(--background-fullhd);
-        }
+        
+        @include backgrounds();
       
         background-size: cover;
         background-repeat: no-repeat;
@@ -52,4 +40,24 @@
       }
     }
   }
+}
+
+.poly-hero-card {
+  @extend .card;
+  &.poly-with-image {
+    @include backgrounds();
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left top;
+  }
+  .poly-content {
+    @extend .card-content;
+  }
+  .poly-image {
+    @extend .image;
+  }
+}
+
+.poly-hero-block {
+  @extend .section;
 }

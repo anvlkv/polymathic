@@ -12,9 +12,6 @@
 
 {% block content %}
 
-<main>
-
-</main>
 <div class="poly-hero">
   <section>
     {% if config.extra.poly.logo %}
@@ -32,7 +29,7 @@
       if
       section.extra.poly.hero
       %}
-      style="{{macros::background_image_vars(path=section.extra.poly.hero)}}"
+      style="{{macros::background_image_vars(path=macros::poly_path(value=section.extra.poly.hero, assets=section.assets))}}"
       {%
       endif
       %}
@@ -62,6 +59,12 @@
   </section>
 </main>
 
-{{footer::macro()}}
+  {% block footer %}
+    {{ footer::macro() }}
+  {% endblock %}
 
 {% endblock content %}
+
+{% block modals %}
+  {{macros::content_modals(assets=section.assets)}}
+{% endblock %}

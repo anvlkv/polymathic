@@ -1,0 +1,64 @@
+{% set alt = alt | default(value="") %}
+{% set content = page | default(value=section) %}
+{% set id = "content-asset-modal-"~image | slugify %}
+
+
+<div class="poly-container-block" id="trigger-{{id}}">
+  <a class="poly-asset-card">
+    {% if image %}
+      {% set_global path = image %}
+      {% if image is not starting_with("/") and content.assets is defined %}
+        {% for asset in content.assets %}
+          {% if asset is ending_with(image) %}
+            {% set_global path = asset %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% set card_image = resize_image(path=path, width=600, height=450, format='webp') %}
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img src="{{card_image.url}}" alt="{{alt}}">
+        </figure>
+      </div>
+    {% endif %}
+    <div class="card-content">
+      <!-- <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">John Smith</p>
+          <p class="subtitle is-6">@johnsmith</p>
+        </div>
+      </div> -->
+
+      <div class="content">
+        {{body | safe}}
+      </div>
+    </div>
+  </a>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('#{{id}}');
+    const trigger = document.querySelector('#trigger-{{id}}');
+    trigger.addEventListener('click', () => {
+      modal.classList.add('is-active');
+    });
+    const closeTriggers = document.querySelectorAll('#{{id}} .modal-background, #{{id}} .modal-close');
+    closeTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+      });
+    })
+    document.addEventListener('keydown', (event) => {
+      if (event.code === 'Escape') {
+        modal.classList.remove('is-active');
+      }
+    })
+  })
+</script>

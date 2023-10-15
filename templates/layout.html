@@ -15,6 +15,7 @@
   <main class="poly-main">
     {% block layout_main %} {% endblock %}
   </main>
-
-  {{ footer::macro() }}
+  {% block footer %}
+    {{ footer::macro() }}
+  {% endblock %}
 {% endblock %}
