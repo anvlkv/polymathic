@@ -14,8 +14,6 @@ Besides the styles, you can customize navigation, the theme relies on zola `[tax
 
 You can quickly deploy the theme to [netlify](https://docs.netlify.com/site-deploys/create-deploys/), theme comes with a config file.
 
-Example images for the theme preview are generated using [OpenAI DALL·E 2](https://openai.com/dall-e-2).
-
 ## Install
 
 Once you already have zola installed and ran `zola init`, then run from your project directory
@@ -230,9 +228,9 @@ To change a preloaded font set `font_url` and update your `$theme-config:("font-
 
 #### Extending templates
 
-Override theme default templates. For example `templates/index.html`
+Override theme default templates. For example `templates/base.html`
 
-    {% extends "polymathic/templates/index.html" %}
+    {% extends "polymathic/templates/base.html" %}
     {% block page_style %}
         <link rel="stylesheet" href="{{ get_url(path='your-file-name.css') | safe }}" />
     {% endblock %}

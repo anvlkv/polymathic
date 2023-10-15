@@ -36,8 +36,14 @@
 
 {% macro brand_bar(menu_id=false) %}
 <div class="poly-brand">
-  <a class="poly-logo-link" href="{{config.base_url}}" title="{{config.extra.poly.app_name}}">
+  <a class="poly-logo-link" href="{{config.base_url}}" {% if config.extra.poly.app_name %} title="{{config.extra.poly.app_name}}" {% endif %}>
+    {% if config.extra.poly.logo %}
     <img src="{{get_url(path=config.extra.poly.logo)}}" alt="Logo">
+    {% elif config.extra.poly.app_name %}
+    <h2>{{config.extra.poly.app_name}}</h2>
+    {% else %}
+    <h2>Polymathic</h2>
+    {% endif %}
   </a>
   {% if menu_id %} 
     <a id="menu-trigger-{{menu_id}}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="{{menu_id}}">

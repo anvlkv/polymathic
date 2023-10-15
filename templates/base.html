@@ -24,14 +24,16 @@
       <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
     {% endblock %}
 
-    {% for f in config.extra.poly.favicon %}
-      <link
-        rel="{{f.rel}}"
-        type="{{f.type}}"
-        sizes="{{f.size}}"
-        href="{{f.path}}"
-      />
-    {% endfor %}
+    {% if config.extra.poly.favicon %}
+      {% for f in config.extra.poly.favicon %}
+        <link
+          rel="{{f.rel}}"
+          type="{{f.type}}"
+          sizes="{{f.size}}"
+          href="{{f.path}}"
+        />
+      {% endfor %}
+    {% endif %}
     {% if config.extra.poly.manifest %}
       <link rel="manifest" href="{{config.extra.poly.manifest}}" />
     {% endif %}
