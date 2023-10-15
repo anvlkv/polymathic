@@ -32,6 +32,7 @@ $primary: $poly-primary;
 $link: darken($poly-primary, 10%);
 $box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text-color, 0.15),
   0 0 0 1px $link;
+$modal-content-width: 80vw;
 
 @import "../node_modules/bulma/sass/utilities/initial-variables.sass";
 @import "../node_modules/bulma/sass/utilities/derived-variables.sass";

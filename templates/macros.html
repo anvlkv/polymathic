@@ -41,20 +41,6 @@
     <img src="{{get_url(path=config.extra.poly.logo)}}" alt="Logo">
   </a>
   {% if menu_id %} 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const $burger = document.querySelector('#menu-trigger-{{menu_id}}')
-        $burger.addEventListener('click', () => {
-          // Get the target from the "data-target" attribute
-          const target = $burger.dataset.target;
-          const $target = document.getElementById(target);
-    
-          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-          $burger.classList.toggle('is-active');
-          $target.classList.toggle('is-active');
-        });
-      });
-    </script>
     <a id="menu-trigger-{{menu_id}}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="{{menu_id}}">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -129,7 +115,7 @@
             <img {{macros::img_src(
               src=macros::poly_path(value=content.extra.poly.hero, assets=content.assets), 
               ratio=4.0/3.0,
-              breakpoints=["max-width: 769px", "max-width: 960px", "max-width: 1152px"],
+              breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
               sizes=[200, 400, 600, 900],
             ) }} 
             alt="{{content.title}}"
@@ -148,16 +134,8 @@
 {% endmacro %}
 
 {% macro img_src(src, sizes, breakpoints, ratio) %}
-  sizes="{% for size in sizes %}
-    {% if breakpoints[loop.index0] %}
-      ({{breakpoints[loop.index0]}}) {{size}}px,
-    {% else %}
-      {{size}}
-    {% endif %}
-  {% endfor %}"
-  srcset="{% for size in sizes %}"
-    {% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill')%}
-  {% endfor %}"
+  sizes="{% for size in sizes %}{% if breakpoints[loop.index0] %}({{breakpoints[loop.index0]}}) {{size}}px,{% else %}{{size}}px{% endif %}{% endfor %}"
+  srcset="{% for size in sizes %}{% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill')%}{{image.url}} {{size}}w{% if loop.last == false%},{% endif %}{% endfor %}"
   src="{{src}}"  
 {% endmacro %}
 
@@ -185,6 +163,7 @@
 {% for asset in assets %}
   {% if asset is matching(".(png|jpeg|jpg|gif|webp)$")%}
     {% set name = asset | split(pat="/") | last %}
+    {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title%}
     <div class="modal" id="content-asset-modal-{{name | slugify}}">
       <div class="modal-background"></div>
       <div class="modal-content">
@@ -194,10 +173,10 @@
           <img {{macros::img_src(
             src=asset, 
             ratio=3.0/2.0,
-            breakpoints=["max-width: 769px", "max-width: 960px", "max-width: 1152px"],
+            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
             sizes=[769, 960, 1152, 1344],
           ) }} 
-            alt="{{name | split(pat=".") | first | title}}"
+            alt="{{alt}}"
           />
           </figure>
         {% else %}
@@ -205,10 +184,10 @@
           <img {{macros::img_src(
             src=asset, 
             ratio=2.0/3.0,
-            breakpoints=["max-width: 769px", "max-width: 960px", "max-width: 1152px"],
+            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
             sizes=[769, 960, 1152, 1344],
           ) }}
-            alt="{{name | split(pat=".") | first | title}}" 
+            alt="{{alt}}" 
           />
           </figure>
         {% endif %}
@@ -218,3 +197,31 @@
   {% endif %}
 {% endfor %}
 {% endmacro %}
+
+{% macro poly_content(text) %}
+  {% set split_poly = text | split(pat="=%P%=%0%=%L%=%Y%=") %}
+  {% set_global body_content = ""  %}
+  {% for pol in split_poly %}
+    {% if loop.index is odd %}
+      {% set_global body_content = body_content~pol%}
+    {% endif %}
+  {% endfor %}
+  {{body_content | safe}}
+{% endmacro %}
+
+{% macro poly_scripts(text) %}
+  {% set split_poly = text | split(pat="=%P%=%0%=%L%=%Y%=") %}
+  {% set_global script_content = "" %}
+  {% for pol in split_poly  %}
+    {% if loop.index is even %}
+      {% set split_script = pol | split(pat="=%S%=%C%=%R%=%I%=%P%=%T%=") %}
+      {% for script_entry in split_script %}
+      {% if loop.index is even %}
+          {% set_global script_content = script_content~script_entry %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  {{script_content | safe}}
+{% endmacro %}
+

@@ -46,12 +46,12 @@
       }
     }
 
-    // .poly-section-link {
-    //   @extend .column;
-    // }
+    .poly-section-link {
+      @extend .is-half-tablet, .is-full-mobile;
+    }
+
     .poly-page-link {
       @extend .is-half-mobile, .is-one-third-desktop;
-      // aspect-ratio: 1 / 1;
     }
 
     hr {

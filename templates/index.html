@@ -53,7 +53,7 @@
 <main class="poly-page-content">
   <section>
     <article class="poly-container">
-      {{section.content | safe}}
+      {{macros::poly_content(text=section.content) | safe}}
     </article>
 
   </section>
@@ -67,4 +67,9 @@
 
 {% block modals %}
   {{macros::content_modals(assets=section.assets)}}
+{% endblock %}
+
+{% block scripts %}
+  {{super()}}
+  {{macros::poly_scripts(text=section.content) | safe}}
 {% endblock %}

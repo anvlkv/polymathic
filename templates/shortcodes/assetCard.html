@@ -14,9 +14,9 @@
           {% endif %}
         {% endfor %}
       {% endif %}
-      {% set card_image = resize_image(path=path, width=600, height=450, format='webp') %}
+      {% set card_image = resize_image(path=path, width=600, height=337, format='webp') %}
       <div class="card-image">
-        <figure class="image is-4by3">
+        <figure class="image is-16by9">
           <img src="{{card_image.url}}" alt="{{alt}}">
         </figure>
       </div>
@@ -41,7 +41,7 @@
   </a>
 </div>
 
-
+=%P%=%0%=%L%=%Y%==%S%=%C%=%R%=%I%=%P%=%T%=
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('#{{id}}');
@@ -62,3 +62,4 @@
     })
   })
 </script>
+=%S%=%C%=%R%=%I%=%P%=%T%==%P%=%0%=%L%=%Y%=

@@ -8,11 +8,12 @@
 
 {% endblock %}
 
+
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
       <article class="poly-container">
-        {{ page.content | safe}}
+        {{macros::poly_content(text=page.content) | safe}}
       </article>
       {% if page.extra.poly.aside %}
         <aside class="poly-page-aside">
@@ -27,4 +28,9 @@
 
 {% block modals %}
   {{macros::content_modals(assets=page.assets)}}
+{% endblock %}
+
+{% block scripts %} 
+  {{super()}}
+  {{macros::poly_scripts(text=page.content) | safe}}
 {% endblock %}

@@ -34,25 +34,20 @@
     $first: false;
   }
 
-  @debug $selector;
-
   #{$selector} {
+    @extend .column;
     
-    
-
-    @debug $child-selector;
-
-    &:first-child, #{$child-selector} {
-      @extend .column, .is-full;
+    @include until($tablet) {
+      flex-basis: 100%;
+    }
+    @include from($tablet) {
+      &:first-child, #{$child-selector} {
+        &:not(:has(+ .poly-container-block)) {
+          flex-basis: 100%;
+        }
+      }
     }
   }
-
-  // > * {
-  //   @extend .column, .is-half-tablet;
-  //   & + &:not(.poly-container-block) {
-  //     @extend .column, .is-full;
-  //   }
-  // }
 
   .poly-container-block {
     @extend .column, .is-full-mobile, .is-half-tablet, .is-one-third-desktop;

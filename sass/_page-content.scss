@@ -14,7 +14,7 @@
       @extend .column, .is-flex;
     }
     .poly-page-aside {
-      @extend .column, .is-two-fifths-widescreen, .is-one-third-desktop, .is-12-tablet;
+      @extend .column, .is-3-widescreen, .is-one-fifths-desktop, .is-12-tablet;
     }
     .poly-page-aside {
       order: -1;

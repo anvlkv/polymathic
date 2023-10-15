@@ -23,3 +23,16 @@ plain text
 
 
 and some text after
+
+more text before
+
+{% assetCard(image="subsection-hero_copy.png") %}
+
+<h4>inside the card</h4>
+
+plain text
+
+{% end %}
+
+
+and some text after
