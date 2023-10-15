@@ -14,21 +14,13 @@ demo = "https://a.nvlkv.xyz"
 [extra]
 [extra.poly]
 font_url = "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap"
-favicon = [{rel = "icon", type = "image/x-icon", size = "", path = "/favicon.ico"}]
-manifest = "/webmanifest.json"
-app_name = "polymathic"
-logo = "/logo.png"
-og_image= "/og.png"
-menu_order = [
-  "resume/_index.md",
-  "projects/_index.md",
-  "contact.md"
-]
-social_outlink = [
-  {href="https://www.linkedin.com/", title="LinkedIn", icon=false},
-  {href="mailto:email@domain.com", title="Email", icon=false},
-  {href="tel:+05890000111", title="0-589-0000111", icon=false},
-]
+favicon = false
+manifest = false
+app_name = false
+logo = false
+og_image= false
+menu_order = false
+social_outlink = false
 
 # The theme author info: you!
 [author]
