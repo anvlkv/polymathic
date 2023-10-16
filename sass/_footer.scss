@@ -31,11 +31,12 @@
     display: contents;
   }
   .poly-navigation-title {
-    @extend .column, .is-flex-grow-0;
+    @extend .column, .is-flex-grow-0, .is-flex-shrink-0;
     order: 0;
     height: fit-content;
+    white-space: nowrap;
 
-    &:hover {
+    @include hover() {
       @extend .has-background-primary;
     }
   }
