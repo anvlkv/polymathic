@@ -1,5 +1,5 @@
 .poly-hero {
-  @extend .container;
+  @extend .container, .is-fluid, .px-0;
   > section {
     @extend .hero, .is-halfheight;
     > header {
