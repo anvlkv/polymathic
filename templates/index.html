@@ -35,8 +35,8 @@
     >
     <div class="poly-content">
       <div class="section">
-        <p class="title">{{section.title}}</h1>
-        <p class="subtitle">{{section.description}}</p>
+        <p class="title">{{section.title | default(value="polymathic")}}</h1>
+        <p class="subtitle">{{section.description | default(value="Zola portfolio theme for those with many talents")}}</p>
       </div>
     </div>
     </div>
@@ -54,7 +54,26 @@
 <main class="poly-page-content">
   <section>
     <article class="poly-container">
+      {%if section.content %}
       {{macros::poly_content(text=section.content) | safe}}
+      {% else %}
+        <div class="poly-container-block">
+          <article class="poly-message">
+            <div class="message-header">
+              <p>Welcome to Zola with polymathic!</p>
+            </div>
+            <div class="message-body">
+              <div class="poly-content">
+                <p>Start by adding your own <code>content/_index.md</code></p>
+                <p>Here's the read me <a href="https://github.com/anvlkv/polymathic/blob/main/README.md">for polymathic</a>, 
+                <br/>
+                <br/>
+                and <a href="https://www.getzola.org/documentation/getting-started/overview/">one for Zola</a>.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      {%endif%}
     </article>
   </section>
 </main>

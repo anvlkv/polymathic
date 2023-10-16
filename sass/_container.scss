@@ -104,5 +104,8 @@
 
   .poly-message {
     @extend .message, .is-info;
+    .message-body {
+      color: darken($poly-info, 10%);
+    }
   }
 }

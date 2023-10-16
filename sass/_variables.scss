@@ -20,7 +20,7 @@ $poly-muted-bg: map.get($poly-config, "muted-background-color") or
     $alpha: 0.72,
   ) !default;
 
-$poly-info: map.get($poly-config, "info-color") or rgb(138, 138, 5) !default;
+$poly-info: map.get($poly-config, "info-color") or rgb(108, 108, 18) !default;
 
 // Update Bulma's global defaults to poly defaults;
 $family-primary: $poly-font-family;
