@@ -129,7 +129,7 @@
         </div>
       {% endif %}
       <div class="poly-content">
-        <p class="title is-4 is-subtitle">{{ content.title }}</p>
+        <p class="title is-4 is-subtitle">{{ content.title | default(value="(untitled)") }}</p>
         {% if content.description %}
           <p>{{ content.description }}</p>
         {% endif %}
@@ -164,43 +164,20 @@
   </nav>
 {% endmacro %}
 
-{% macro content_modals(assets) %}
-{% for asset in assets %}
-  {% if asset is matching(".(png|jpeg|jpg|gif|webp)$")%}
-    {% set name = asset | split(pat="/") | last %}
-    {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title%}
-    <div class="modal" id="content-asset-modal-{{name | slugify}}">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-        {% set image_meta = get_image_metadata(path=asset) %}
-        {% if image_meta.width > image_meta.height %}
-        <figure class="image is-3by2">
-          <img {{macros::img_src(
-            src=asset, 
-            ratio=3.0/2.0,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-            sizes=[769, 960, 1152, 1344],
-          ) }} 
-            alt="{{alt}}"
-          />
-          </figure>
-        {% else %}
-        <figure class="image is-2by3">
-          <img {{macros::img_src(
-            src=asset, 
-            ratio=2.0/3.0,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-            sizes=[769, 960, 1152, 1344],
-          ) }}
-            alt="{{alt}}" 
-          />
-          </figure>
+{% macro poly_modals(text) %}
+  {% set split_poly = text | split(pat="=#PO@L!Y#=") %}
+  {% set_global modals_content = "" %}
+  {% for pol in split_poly  %}
+    {% if loop.index is even %}
+      {% set split_script = pol | split(pat="=#@M$O^D&@A%L!#=") %}
+      {% for modal_entry in split_script %}
+      {% if loop.index is even %}
+          {% set_global modals_content = modals_content~modal_entry %}
         {% endif %}
-      </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-  {% endif %}
-{% endfor %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  {{modals_content | safe}}
 {% endmacro %}
 
 {% macro poly_content(text) %}
