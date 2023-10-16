@@ -1,9 +1,9 @@
 {% import "macros.html" as macros %}
 
-{% macro macro(id="navigation") %}
+{% macro macro(id="navigation", menu) %}
 <nav class="poly-nav">
   {% set_global rendered_terms = [] %}
-  {% for nav in config.extra.poly.menu_order %}
+  {% for nav in menu %}
     {% if nav is ending_with("_index.md")%}
       {% set section = get_section(path=nav) %}
       <div class="poly-section-nav-wrapper">

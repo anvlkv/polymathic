@@ -28,6 +28,10 @@ For those using netlify deployments config is available here
 
     $ cp themes/polymathic/netlify.toml netlify.toml
 
+In your `config.toml` Set zola theme to polymathic
+
+    theme = "polymathic"
+
 ## Content
 
 Building this theme I kept it as flexible as Zola 💖 allows, which is very flexible.
