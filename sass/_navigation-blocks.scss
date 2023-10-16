@@ -3,10 +3,10 @@
 
   > section {
     .poly-nav {
-      @extend .is-ancestor;
-      flex-wrap: wrap;
-      .poly-section-nav-wrapper {
-        display: contents;
+      @extend .is-flex;
+
+      @include until($tablet) {
+        flex-direction: column;
       }
       &,
       .poly-taxonomy-nav-wrapper,
@@ -17,6 +17,36 @@
       .poly-taxonomy-extra-wrapper {
         @extend .tile;
       }
+      @extend .is-ancestor;
+      flex-wrap: wrap;
+      .poly-section-nav-wrapper {
+        display: contents;
+        @include until($tablet) {
+          display: flex;
+          flex-direction: column;
+          &:not(:hover):not(:focus) {
+            .poly-taxonomy-nav {
+              margin-top: -100vh;
+              display: none;
+            }
+          }
+          .poly-taxonomy-nav {
+            @include transition(
+              $props: (
+                margin,
+              ),
+              $multiplier: 2.5
+            );
+            &:hover, &:focus {
+              margin-top: 0;
+              transition-delay: 0;
+            }
+          }
+          .poly-taxonomy-nav-wrapper {
+            padding: 0;
+          }
+        }
+      }
       .poly-section-link,
       .poly-taxonomy-term-link,
       .poly-page-link {
@@ -24,23 +54,18 @@
         @include until($desktop) {
           @include from($tablet) {
             min-width: 25vw;
-            margin-bottom: 2rem !important;
           }
         }
         @include from($desktop) {
           @include until($widescreen) {
             min-width: 20vw;
-            margin-bottom: 1rem !important;
           }
           padding: 0.75rem;
         }
       }
-      .poly-section-nav-wrapper + .poly-section-nav-wrapper,
-      .poly-page-link + .poly-section-nav-wrapper,
-      .poly-section-nav-wrapper + .poly-page-link,
-      .poly-page-link + .poly-page-link {
-        margin-left: 0.75rem !important;
-      }
+
+      gap: .75rem;
+
 
       .poly-taxonomy-nav-wrapper {
         @extend .is-parent;
@@ -85,19 +110,18 @@
       }
       .poly-taxonomy-title {
         display: contents;
-        .poly-link, .poly-content {
+        .poly-link,
+        .poly-content {
           @extend .dropdown-trigger, .tile, .is-child, .box;
           width: 100%;
           @include until($desktop) {
             @include from($tablet) {
               min-width: 25vw;
-              margin-bottom: 2rem !important;
             }
           }
           @include from($desktop) {
             @include until($widescreen) {
               min-width: 20vw;
-              margin-bottom: 1rem !important;
             }
           }
           .button-arrow {
@@ -120,5 +144,3 @@
     }
   }
 }
-
-
