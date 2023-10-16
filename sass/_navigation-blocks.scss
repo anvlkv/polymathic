@@ -35,9 +35,9 @@
           padding: 0.75rem;
         }
       }
-      .poly-section-link + .poly-section-link,
-      .poly-page-link + .poly-section-link,
-      .poly-section-link + .poly-page-link,
+      .poly-section-nav-wrapper + .poly-section-nav-wrapper,
+      .poly-page-link + .poly-section-nav-wrapper,
+      .poly-section-nav-wrapper + .poly-page-link,
       .poly-page-link + .poly-page-link {
         margin-left: 0.75rem !important;
       }
