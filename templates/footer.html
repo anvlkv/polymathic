@@ -3,13 +3,14 @@
 
 
 {% macro macro() %}
+{% if config.extra.poly.menu_order or config.extra.poly.social_outlink %}
 <footer class="poly-navigation-footer">
   <div class="poly-navigation-container">
-    <section>
-      {% if config.extra.poly.menu_order %}
+    {% if config.extra.poly.menu_order %}
+      <section>
         {{navigation::macro(menu=config.extra.poly.menu_order, id="footer")}}
-      {% endif %}
-    </section>
+      </section>
+    {% endif %}
     {% if config.extra.poly.social_outlink %}
     <section class="poly-outlink-footer">
       {% for link in config.extra.poly.social_outlink %}
@@ -26,4 +27,5 @@
     {% endif %}
   </div>
 </footer>
+{% endif %}
 {% endmacro %}
