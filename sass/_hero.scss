@@ -1,15 +1,15 @@
 .poly-hero {
   @extend .container, .is-fluid, .px-0;
   > section {
-    @extend .hero, .is-halfheight;
+    @extend .hero, .is-halfheight, .is-primary;;
     > header {
       @extend .hero-head;
       > nav {
         @extend .navbar;
         @include until($desktop) {
-          box-shadow: 0 0.01rem 0.125rem darken($poly-muted-bg, 50%);
+          box-shadow: 0 0.01rem 0.125rem darken($background, 50%);
           position: fixed;
-          background-color: $poly-muted-bg;
+          background-color: $background;
           width: 100%;
         }
         @include from($desktop) {
@@ -32,7 +32,7 @@
         .poly-content {
           @extend .container;
           width: 100%;
-          background-color: $poly-muted-bg;
+          background-color: $background;
           align-self: end;
           flex-direction: column;
           align-items: start;
