@@ -2,7 +2,7 @@
 
 Polymathic is a [Zola](https://www.getzola.org/) portfolio theme. I made it for my own portfolio.
 
-Docs and theme demo are available here [polymathic-demo.netlify.app](https://polymathic-demo.netlify.app/) 
+Docs and theme demo are available here [polymathic-demo.netlify.app](https://main--polymathic-demo.netlify.app/) 
 
 The theme is called `polymathic`, inspired by individuals with a wide range of talents. 
 
