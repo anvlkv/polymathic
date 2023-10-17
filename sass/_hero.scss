@@ -1,7 +1,7 @@
 .poly-hero {
   @extend .container, .is-fluid, .px-0;
   > section {
-    @extend .hero, .is-halfheight, .is-primary;;
+    @extend .hero, .is-halfheight, .is-primary;
     > header {
       @extend .hero-head;
       > nav {

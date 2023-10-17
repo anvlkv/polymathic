@@ -84,7 +84,7 @@
         display: block;
       }
       .poly-taxonomy-term-link {
-        color: $primary;
+        color: $link;
       }
       .poly-taxonomy-extra-wrapper {
         @extend .is-parent;
@@ -125,7 +125,7 @@
             }
           }
           .button-arrow {
-            @include arrow($primary);
+            @include arrow($link);
             right: 1rem;
           }
         }

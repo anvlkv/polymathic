@@ -3,7 +3,7 @@
 .poly-page-link,
 .poly-out-link,
 .poly-link {
-  color: $primary !important;
+  color: $link !important;
   position: relative;
 
   &.poly-active-link {
@@ -15,7 +15,7 @@
 
 .poly-link-hover {
   @include hover() {
-    @extend .has-background-primary;
+    background-color: $link !important;
     &,* {
       @extend .has-text-white;
     }

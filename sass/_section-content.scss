@@ -25,7 +25,7 @@
       }
       @include hover() {
         .poly-hero-card {
-          @extend .has-background-primary;
+          background-color: $link;
           background-image: none;
           &,* {
             @extend .has-text-white;
@@ -34,7 +34,7 @@
       }
       .poly-with-image {
         &, * {
-          color: $primary !important;
+          color: $link !important;
         } 
       }
 
