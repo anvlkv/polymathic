@@ -43,6 +43,8 @@
   <body>
     {% block content %} {% endblock %}
     {% block modals %} {% endblock %}
-    {% block scripts %} {% endblock %}
+    {% block scripts %} 
+      <script src="{{ get_url(path='polymathic.js') | safe }}"></script>
+    {% endblock %}
   </body>
 </html>

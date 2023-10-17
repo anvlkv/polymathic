@@ -4,15 +4,15 @@
 {% set content = page | default(value=section) %}
 {% set id = "content-asset-modal-"~image | slugify %}
 
-<div class="poly-container-block" id="trigger-{{id}}">
-  <a class="poly-asset-card">
+<div class="poly-container-block">
+  <a class="poly-asset-card js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=macros::poly_path(value=image, assets=content.assets)) | safe}}" {% endif %}>
     {% if image %}
       <div class="card-image">
         <figure class="image is-16by9">
           <img {{macros::img_src(
             src=macros::poly_path(value=image, assets=content.assets) | trim, 
             ratio=16.0/9.0,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
+            breakpoints=["min-width: 200px", "min-width: 400px", "min-width: 600px"],
             sizes=[200, 400, 600, 900],
           ) }} 
            alt="{{alt}}">
@@ -28,25 +28,3 @@
   </a>
 </div>
 
-=#PO@L!Y#==#$C^R*1!P+T#=
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.querySelector('#{{id}}');
-    const trigger = document.querySelector('#trigger-{{id}}');
-    trigger.addEventListener('click', () => {
-      modal.classList.add('is-active');
-    });
-    const closeTriggers = document.querySelectorAll('#{{id}} .modal-background, #{{id}} .modal-close');
-    closeTriggers.forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        modal.classList.remove('is-active');
-      });
-    })
-    document.addEventListener('keydown', (event) => {
-      if (event.code === 'Escape') {
-        modal.classList.remove('is-active');
-      }
-    })
-  })
-</script>
-=#$C^R*1!P+T#==#PO@L!Y#=

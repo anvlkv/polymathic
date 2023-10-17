@@ -172,9 +172,7 @@
     <div class="modal" id="content-asset-modal-{{name | slugify}}">
       <div class="modal-background"></div>
       <div class="modal-content">
-        {% set image_meta = get_image_metadata(path=asset) %}
-        {% if image_meta.width > image_meta.height %}
-        <figure class="image is-3by2">
+        <figure class="image">
           <img {{macros::img_src(
             src=asset, 
             ratio=3.0/2.0,
@@ -183,50 +181,11 @@
           ) }} 
             alt="{{alt}}"
           />
-          </figure>
-        {% else %}
-        <figure class="image is-2by3">
-          <img {{macros::img_src(
-            src=asset, 
-            ratio=2.0/3.0,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-            sizes=[769, 960, 1152, 1344],
-          ) }}
-            alt="{{alt}}" 
-          />
-          </figure>
-        {% endif %}
+        </figure>
       </div>
       <button class="modal-close is-large" aria-label="close"></button>
     </div>
   {% endif %}
 {% endfor %}
-{% endmacro %}
-
-{% macro poly_content(text) %}
-  {% set split_poly = text | split(pat="=#PO@L!Y#=") %}
-  {% set_global body_content = ""  %}
-  {% for pol in split_poly %}
-    {% if loop.index is odd %}
-      {% set_global body_content = body_content~pol%}
-    {% endif %}
-  {% endfor %}
-  {{body_content | safe}}
-{% endmacro %}
-
-{% macro poly_scripts(text) %}
-  {% set split_poly = text | split(pat="=#PO@L!Y#=") %}
-  {% set_global script_content = "" %}
-  {% for pol in split_poly  %}
-    {% if loop.index is even %}
-      {% set split_script = pol | split(pat="=#$C^R*1!P+T#=") %}
-      {% for script_entry in split_script %}
-      {% if loop.index is even %}
-          {% set_global script_content = script_content~script_entry %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
-  {{script_content | safe}}
 {% endmacro %}
 

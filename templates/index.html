@@ -59,7 +59,7 @@
   <section>
     <article class="poly-container">
       {%if section.content %}
-      {{macros::poly_content(text=section.content) | safe}}
+      {{section.content | safe}}
       {% else %}
         <div class="poly-container-block">
           <article class="poly-message">
@@ -102,9 +102,4 @@ Hello there
 
 {% block modals %}
   {{macros::content_modals(assets=section.assets)}}
-{% endblock %}
-
-{% block scripts %}
-  {{super()}}
-  {{macros::poly_scripts(text=section.content) | safe}}
 {% endblock %}

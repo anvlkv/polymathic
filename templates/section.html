@@ -36,7 +36,7 @@
         <aside class="poly-page-aside">
           {% block section_aside %}
             <article class="poly-container">
-              {{macros::poly_content(text=section.content) | safe}}
+              {{section.content | safe}}
             </article>
           {% endblock %}
         </aside>
@@ -47,9 +47,4 @@
 
 {% block modals %}
   {{macros::content_modals(assets=section.assets)}}
-{% endblock %}
-
-{% block scripts %}
-  {{super()}}
-  {{macros::poly_scripts(text=section.content) | safe}}
 {% endblock %}
