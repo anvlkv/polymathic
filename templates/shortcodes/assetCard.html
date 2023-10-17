@@ -50,39 +50,3 @@
   })
 </script>
 =#$C^R*1!P+T#==#PO@L!Y#=
-
-=#PO@L!Y#==#@M$O^D&@A%L!#=
-<div class="modal" id="content-asset-modal-{{name | slugify}}">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    {% if image %}
-      {% set asset = macros::poly_path(value=image, assets=content.assets) | trim%}
-      {% set image_meta = get_image_metadata(path=asset) %}
-      {% if image_meta.width > image_meta.height %}
-        <figure class="image is-3by2">
-          <img {{macros::img_src(
-            src=asset, 
-            ratio=3.0/2.0,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-            sizes=[769, 960, 1152, 1344],
-          ) }} 
-            alt="{{alt}}"
-          />
-        </figure>
-      {% else %}
-        <figure class="image is-2by3">
-          <img {{macros::img_src(
-            src=asset, 
-            ratio=2.0/3.0,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-            sizes=[769, 960, 1152, 1344],
-          ) }}
-            alt="{{alt}}" 
-          />
-        </figure>
-      {% endif %}
-    {% endif %}
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
-</div>
-=#@M$O^D&@A%L!#==#PO@L!Y#=
