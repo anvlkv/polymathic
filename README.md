@@ -1,10 +1,10 @@
-# Polymathic
+# polymathic
 
-Polymathic is a [Zola](https://www.getzola.org/) portfolio theme. I made it for my own portfolio.
+polymathic is a [Zola](https://www.getzola.org/) portfolio theme. 
+
+I made it for my own portfolio. The theme is called `polymathic`, inspired by individuals with a wide range of talents. The theme focuses on rich and consistent navigation experience, exposing the variety of topics to chose from, yet allowing the user to focus on a single thread of your story once they've made a choice. 
 
 Docs and theme demo are available here [main--polymathic-demo.netlify.app](https://main--polymathic-demo.netlify.app/) 
-
-The theme is called `polymathic`, inspired by individuals with a wide range of talents. 
 
 This theme uses [Bulma](https://bulma.io/) scss framework, making the theme styles highly customizable.
 
@@ -74,7 +74,7 @@ Beyond that you can use Bulma components in your content. This theme does not im
 
 ### Landing page
 
-Theme builds landing page using contents from `content/_index.md`, extended version of site [global navigation](#global-navigation-level-1), previews of subsections.
+Theme builds landing page using contents from `content/_index.md`, extended version of site [global navigation](#global-navigation-level-1).
 
 ### Titles and description
 
@@ -287,6 +287,7 @@ Last step for this template is to use the theme with provided config. For exampl
 
 
 #### More components
+
 ##### Import all
 
 This theme does not import all bulma components. Should you need more components, you may `@use` the `themes/polymathic/sass/all_bulma.scss`. If you're not using any style customization then simply link to `all_bulma.css` file. See [extending templates](#extending-templates)

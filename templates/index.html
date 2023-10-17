@@ -36,20 +36,24 @@
     <div class="poly-content">
       <div class="section">
         <p class="title">{{section.title | default(value="polymathic")}}</h1>
-        <p class="subtitle">{{section.description | default(value="Zola portfolio theme for those with many talents")}}</p>
+          {% if section.title %}
+            <p class="subtitle">{{section.description}}</p>
+          {% else %}
+            <p class="subtitle">{{section.description | default(value="Zola portfolio theme for those with many talents")}}</p>
+          {% endif %}
       </div>
     </div>
     </div>
   </section>
 </div>
 
+{% if config.extra.poly.menu_order %}
 <div class="poly-navigation-blocks">
   <section>
-    {% if config.extra.poly.menu_order %}
-      {{navigation::macro(menu=config.extra.poly.menu_order)}}
-    {% endif %}
+    {{navigation::macro(menu=config.extra.poly.menu_order)}}
   </section>
 </div>
+{% endif %}
 
 <main class="poly-page-content">
   <section>
