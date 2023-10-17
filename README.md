@@ -2,7 +2,7 @@
 
 Polymathic is a [Zola](https://www.getzola.org/) portfolio theme. I made it for my own portfolio.
 
-Docs and theme demo are available here 
+Docs and theme demo are available here [polymathic-demo.netlify.app](https://polymathic-demo.netlify.app/) 
 
 The theme is called `polymathic`, inspired by individuals with a wide range of talents. 
 
@@ -168,7 +168,7 @@ To add an icons to links in footer add an [icon font](https://bulma.io/documenta
 
 ### Shortcodes
 
-#### Form field
+#### Form field and buttons
 
 Renders some simple bulma fields
 
@@ -178,6 +178,8 @@ Renders some simple bulma fields
 
     # Page title
 
+    <form>
+
     {{ field(name="test", label="Name") }}
 
     {{ field(name="email", label="Email", type="email", required=true) }}
@@ -185,6 +187,12 @@ Renders some simple bulma fields
     {% field(name="text", label="Message", type="textarea") %}
         Some text
     {% end %}
+
+    {{ formButtons(submit="Send", cancel="Reset", centered=false) }}
+
+    </form>
+
+
 
 ## Customization
 
