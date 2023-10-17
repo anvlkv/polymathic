@@ -173,9 +173,10 @@
       <div class="modal-background"></div>
       <div class="modal-content">
         <figure class="image">
+          {% set image_meta = get_image_metadata(path=asset) %}
           <img {{macros::img_src(
             src=asset, 
-            ratio=3.0/2.0,
+            ratio=image_meta.width/image_meta.height,
             breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
             sizes=[769, 960, 1152, 1344],
           ) }} 
