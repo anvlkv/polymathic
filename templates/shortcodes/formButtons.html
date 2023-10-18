@@ -2,7 +2,7 @@
 {% set cancel = cancel | default(value=false) %}
 {% set centered = centered | default(value=true) %}
 
-<div class="field{% if cancel != false %} is-grouped{% if centered %} is-grouped-centered{% endif %}{% endif %}">
+<div class="field is-grouped{% if centered %} is-grouped-centered{% endif %} mb-3">
   <p class="control">
     <button type="submit" class="button is-primary">
       {{ submit }}

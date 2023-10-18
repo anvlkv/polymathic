@@ -2,7 +2,7 @@
   {% set_global path = value %}
   {% if value is not starting_with("/") and assets is defined %}
     {% for asset in assets %}
-      {% if asset is ending_with(value) %}
+      {% if asset is ending_with("/"~value) %}
         {% set_global path = asset %}
       {% endif %}
     {% endfor %}
@@ -95,43 +95,46 @@
   {% endif %}
 {% endmacro %}
 
-{% macro link_hero_card(content, type, banner=false) %}
+{% macro link_hero_card(title, path, type, hero=false, description=false, block=false, banner=false, pop=false) %}
   {% set link_class = "" %}
   {% set class_name = "poly-hero-card" %}
-  {% if content.extra.poly.block %}
+  {% if block == true %}
     {% set class_name = "poly-hero-block" %}
     {% set link_class = "poly-block-link" %}
+    {% if hero != false %}
+      {% set banner = true %}
+    {% endif %}
   {% endif %}
-  {% if content.extra.poly.hero and banner == true %}
+  {% if hero != false and banner == true %}
     {% set class_name = class_name~" poly-with-image" %}
   {% endif %}
-  {% if content.extra.poly.pop %}
+  {% if pop == true %}
     {% set link_class = link_class~" poly-pop" %}
   {% endif %}
-  <a {{macros::link_attrs(type=type, href=content.path, title=content.title, current_url=current_path, class=link_class)}}
-    {% if content.extra.poly.hero and banner == true %}
-    style="{{macros::background_image_vars(path=macros::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim)}}"
+  <a {{macros::link_attrs(type=type, href=path, title=title, current_url=current_path, class=link_class)}}
+    {% if hero != false and banner == true %}
+    style="{{macros::background_image_vars(path=hero)}}"
     {% endif %}
   >
     <div class="{{class_name}}">
-      {% if banner == false and content.extra.poly.hero is defined %} 
+      {% if banner == false and hero != false %} 
         <div class="card-image">
           <figure class="poly-image is-4by3">
             <img {{macros::img_src(
-              src=macros::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim, 
+              src=hero, 
               ratio=4.0/3.0,
               breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
               sizes=[200, 400, 600, 900],
             ) }} 
-            alt="{{content.title}}"
+            alt="{{title}}"
             />
           </figure>
         </div>
       {% endif %}
       <div class="poly-content">
-        <p class="title is-4 is-subtitle">{{ content.title }}</p>
-        {% if content.description %}
-          <p>{{ content.description }}</p>
+        <p class="title is-4 is-subtitle">{{ title }}</p>
+        {% if description != false %}
+          <p>{{ description }}</p>
         {% endif %}
       </div>
     </div>

@@ -15,17 +15,29 @@
         {% block section_pages %}
           {% for sub in section.subsections %}
             {% set section = get_section(path=sub) %}
-              {{macros::link_hero_card(content=section, type="section", banner=true)}}
+              {% set hero = false %}
+              {% if section.extra.poly.hero %}
+                {% set hero = macros::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim %}
+              {% endif %}
+              {{macros::link_hero_card(type="section", path=section.path, hero=hero, title=section.title, description = section.description, block = section.extra.poly.block | default(value=false), banner = section.extra.poly.banner | default(value=true), pop = section.extra.poly.pop | default(value=false))}}
             {% if loop.last %}
               <hr/>
             {% endif %}
           {% endfor %}
           {% for page in section.pages %}
-            {{macros::link_hero_card(content=page, type="page")}}
+              {% set hero = false %}
+              {% if page.extra.poly.hero %}
+                {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+              {% endif %}
+            {{macros::link_hero_card(type="page",path=page.path,  hero=hero, title=page.title, description=page.description, block= page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
           {% else %}
             {% if paginator.pages is defined %}
               {% for page in paginator.pages %}
-                {{macros::link_hero_card(content=page, type="page")}}
+                {% set hero = false %}
+                {% if page.extra.poly.hero %}
+                  {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+                {% endif %}
+                {{macros::link_hero_card(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block= page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
               {% endfor %}
               {{macros::pager(pagination=paginator)}}
             {% endif %}

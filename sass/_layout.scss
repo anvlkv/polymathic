@@ -1,7 +1,7 @@
 .poly-header {
   @extend .navbar;
   > nav {
-    @extend .container;
+    @extend .container, .is-fluid;
     > nav {
       @extend .navbar-menu;
       .poly-nav {
@@ -18,9 +18,6 @@
           .poly-content {
             display: contents;
           }
-        }
-        .poly-section-nav-wrapper {
-          @extend .has-dropdown, .is-hoverable;
         }
         .poly-taxonomy-nav-wrapper {
           @extend .navbar-dropdown;

@@ -7,9 +7,7 @@
 <footer class="poly-navigation-footer">
   <div class="poly-navigation-container">
     {% if config.extra.poly.menu_order %}
-      <section>
-        {{navigation::macro(menu=config.extra.poly.menu_order, id="footer")}}
-      </section>
+      {{navigation::macro(menu=config.extra.poly.menu_order, id="footer")}}
     {% endif %}
     {% if config.extra.poly.social_outlink %}
     <section class="poly-outlink-footer">

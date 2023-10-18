@@ -2,10 +2,7 @@
   @extend .footer;
 
   .poly-navigation-container {
-    @extend .container, .has-text-centered-mobile;
-    > section {
-      @extend .section;
-    }
+    @extend .container, .is-container, .is-fullhd, .has-text-centered-mobile;
   }
 
   .poly-nav {
@@ -37,7 +34,7 @@
     white-space: nowrap;
 
     @include hover() {
-      background-color: $link;
+      background-color: $link-light;
     }
   }
   .poly-taxonomy-term-link {

@@ -60,7 +60,7 @@
           @include until($widescreen) {
             min-width: 20vw;
           }
-          padding: 0.75rem;
+          // padding: 0.75rem;
         }
       }
 
@@ -74,12 +74,12 @@
         @extend .is-parent, .is-vertical;
       }
       .poly-navigation-title {
-        @extend .title, .is-3;
+        @extend .title, .is-4;
         width: 100%;
         display: block;
       }
       .poly-navigation-description {
-        @extend .subtitle, .is-4;
+        @extend .subtitle, .is-5;
         width: 100%;
         display: block;
       }

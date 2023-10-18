@@ -6,8 +6,12 @@
   {% for nav in menu %}
     {% if nav is ending_with("_index.md")%}
       {% set section = get_section(path=nav) %}
-      <div class="poly-section-nav-wrapper">
-        <a {{macros::link_attrs(type="section", href=section.path, title=section.title, current_url=current_path)}}>
+      {% set link_class = "is-arrowless" %}
+      {% if section.extra.poly.use_taxonomies %} 
+        {% set link_class = false %}
+      {% endif %}
+      <div class="poly-section-nav-wrapper{% if link_class %} has-dropdown is-hoverable{% endif %}">
+        <a {{macros::link_attrs(type="section", href=section.path, title=section.title, current_url=current_path, class=link_class)}}>
           <div class="poly-content">
             <span class="poly-navigation-title">{{section.title}}</span>
             {% if section.description %}

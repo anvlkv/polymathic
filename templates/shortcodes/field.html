@@ -1,3 +1,5 @@
+{% set name = name | default(value="field") %}
+{% set horizontal = horizontal | default(value=false) %}
 {% set id = id | default(value=name | slugify) %}
 {% set type = type | default(value="text") %}
 {% set icons_left = icons_left | default(value=false) %}
@@ -5,105 +7,107 @@
 {% set body = body | default(value="") %}
 
 
-{% if type != "file" %}
-<div class="field">
+<div class="field{% if horizontal == true %} is-horizontal{% endif %}">
   {% if label %}
-    <label class="label" for="{{ id }}">{{label}}</label>
+    <div class="field-label">
+      <label class="label" for="{{ id }}">{{label}}</label>
+    </div>
   {% endif %}
-  <div class="control{% if icons_left %} has-icons-left{% endif %}{% if icons_right %} has-icons-right{% endif %}">
-    {% if type == "select" %}
-      <div class="select">
-        <select name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
-          {{ body | safe }}
-        </select>
+  <div class="field-body">
+    <div class="field">
+      <div class="control{% if icons_left %} has-icons-left{% endif %}{% if icons_right %} has-icons-right{% endif %}{%if horizontal == true %} is-expanded{% endif %}">
+        {% if type == "select" %}
+          <div class="select">
+            <select name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
+              {{ body | markdown(inline=true) | safe }}
+            </select>
+          </div>
+        {% elif type == "textarea" %}
+          <textarea name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" class="textarea" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
+            {{ body | markdown(inline=true) | safe }}
+          </textarea>
+        {% elif type == "checkbox" %}
+          <label class="checkbox">
+            <input name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="checkbox">
+            {{ body | markdown(inline=true) | safe }}
+          </label>
+        {% elif type == "radio" %}
+          {% for option in options %}
+            <label class="checkbox">
+              <input type="radio" name="{{name}}" {% if required %} required="required" {% endif %} value="{{option}}">
+              {{ option }}
+            </label>
+          {% endfor %}
+        {% elif type == "submit" %}
+          <button id="{{id}}" type="submit" class="button is-primary">
+            {{ body | markdown(inline=true) | safe }}
+          </button>
+        {% elif type == "reset" %}
+          <button id="{{id}}" type="reset" class="button is-link is-light">
+            {{ body | markdown(inline=true) | safe }}
+          </button>
+        {% elif type == "file" %} 
+          <div class="file">
+            <label class="file-label">
+              <input class="file-input" type="file" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}">
+              <span class="file-cta">
+                {% if icons_left is iterable %}
+                  {% for ic in icons_left %}
+                    <span class="file-icon">
+                      <i class="{{ic}}"></i>
+                    </span>
+                  {% endfor %}
+                {% elif icons_left %}
+                  <span class="file-icon">
+                    <i class="{{icons_left}}"></i>
+                  </span>
+                {% endif %}
+                {% if icons_right is iterable %}
+                  {% for ic in icons_right %}
+                    <span class="file-icon">
+                      <i class="{{ic}}"></i>
+                    </span>
+                  {% endfor %}
+                {% elif icons_right %}
+                  <span class="file-icon">
+                    <i class="{{icons_right}}"></i>
+                  </span>
+                {% endif %}
+                <span class="file-label">
+                  {{ placeholder | default(value="Choose a file…")}}
+                </span>
+              </span>
+            </label>
+          </div>
+        {% else %}
+          <input autocomplete="{{autocomplete | default(value='on')}}" class="input" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="{{ type | default(value='text') }}" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
+        {% endif %}
+        {% if icons_left is iterable and type != "file" %}
+          {% for ic in icons_left %}
+            <span class="icon is-small is-left">
+              <i class="{{ic}}"></i>
+            </span>
+          {% endfor %}
+        {% elif icons_left %}
+          <span class="icon is-small is-left">
+            <i class="{{icons_left}}"></i>
+          </span>
+        {% endif %}
+        {% if icons_right is iterable %}
+          {% for ic in icons_right %}
+            <span class="icon is-small is-right">
+              <i class="{{ic}}"></i>
+            </span>
+          {% endfor %}
+        {% elif icons_right %}
+          <span class="icon is-small is-right">
+            <i class="{{icons_right}}"></i>
+          </span>
+        {% endif %}
       </div>
-    {% elif type == "textarea" %}
-      <textarea name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" class="textarea" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
-        {{ body | safe }}
-      </textarea>
-    {% elif type == "checkbox" %}
-      <label class="checkbox">
-        <input name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="checkbox">
-        {{ body | safe }}
-      </label>
-    {% elif type == "radio" %}
-      {% for option in options %}
-      <label class="checkbox">
-        <input type="radio" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" value="{{option.value}}">
-        {{ option.label }}
-      </label>
-      {% else %}
-        {{ throw(message="expected list of options") }}
-      {% endfor %}
-    {% elif type == "submit" %}
-      <button id="{{id}}" type="submit" class="button is-primary">
-        {{ body | safe }}
-      </button>
-    {% elif type == "reset" %}
-      <button id="{{id}}" type="reset" class="button is-link is-light">
-        {{ body | safe }}
-      </button>
-    {% else %}
-      <input autocomplete="{{autocomplete | default(value='on')}}" class="input" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="{{ type | default(value='text') }}" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
-    {% endif %}
-    {% if icons_left is iterable %}
-      {% for ic in icons_left %}
-        <span class="icon is-small is-left">
-          <i class="{{ic}}"></i>
-        </span>
-      {% endfor %}
-    {% elif icons_left %}
-      <span class="icon is-small is-left">
-        <i class="{{icons_left}}"></i>
-      </span>
-    {% endif %}
-    {% if icons_right is iterable %}
-      {% for ic in icons_right %}
-        <span class="icon is-small is-right">
-          <i class="{{ic}}"></i>
-        </span>
-      {% endfor %}
-    {% elif icons_right %}
-      <span class="icon is-small is-right">
-        <i class="{{icons_right}}"></i>
-      </span>
+    </div>
+    {% if help %}
+      <p class="help">{{help}}</p>
     {% endif %}
   </div>
-  {% if help %}
-    <p class="help">{{help}}</p>
-  {% endif %}
 </div>
-{% else %}
-<div class="file">
-  <label class="file-label">
-    <input class="file-input" type="file" name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}">
-    <span class="file-cta">
-      {% if icons_left is iterable %}
-        {% for ic in icons_left %}
-          <span class="file-icon">
-            <i class="{{ic}}"></i>
-          </span>
-        {% endfor %}
-      {% elif icons_left %}
-        <span class="file-icon">
-          <i class="{{icons_left}}"></i>
-        </span>
-      {% endif %}
-      {% if icons_right is iterable %}
-        {% for ic in icons_right %}
-          <span class="file-icon">
-            <i class="{{ic}}"></i>
-          </span>
-        {% endfor %}
-      {% elif icons_right %}
-        <span class="file-icon">
-          <i class="{{icons_right}}"></i>
-        </span>
-      {% endif %}
-      <span class="file-label">
-        {{placeholder | default(value="Choose a file…")}}
-      </span>
-    </span>
-  </label>
-</div>
-{% endif %}

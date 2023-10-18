@@ -1,8 +1,7 @@
 .poly-container {
-  @extend .columns, .is-multiline, .is-centered, .is-tablet;
   flex-basis: 100%;
   flex-shrink: 0.5;
-
+  display: block;
   &,
   .poly-content {
     @for $i from 1 through 6 {
@@ -11,7 +10,7 @@
         width: 100%;
         color: inherit;
         @if $i < 6 {
-          & + h#{$i + 1} {
+          & ~ h#{$i + 1} {
             @extend .subtitle;
           }
         }
@@ -20,69 +19,65 @@
 
     > blockquote,
     > pre {
-      @extend .box;
-    }
-  }
-
-  $selector: "";
-  $child-selector: '& + div:not([class^="poly-"]):not([class~=" poly-"]),';
-
-  $first: true;
-  @each $el in $poly-container-elements {
-    @if $first == false {
-      $selector: $selector + ",";
-      $child-selector: $child-selector + ",";
-    }
-    $selector: $selector + "> #{$el}";
-    $child-selector: $child-selector + "& + #{$el}";
-    $first: false;
-  }
-
-  #{$selector} {
-    @extend .column;
-    flex-grow: 1;
-
-    @include until($tablet) {
-      flex-basis: 100%;
-    }
-    @include from($tablet) {
-      &:first-child,
-      #{$child-selector} {
-        &:not(:has(+ .poly-container-block)) {
-          flex-basis: 100%;
-        }
-        @include from($desktop) {
-          &:has(+ .poly-container-block) {
-            flex-basis: calc(2 / 3 * 100%);
-          }
+      @extend .box, .mx-auto;
+      @include from ($tablet) {
+        &:has(+ .poly-container-block) {
+          width: calc(50% - .75rem);
+          float: left;
+          clear: left;
         }
       }
+      @include from ($desktop) {
+        &, &:has(+ .poly-container-block) {
+          width: calc(60% - .75rem);
+        }
+      }
+      @include from ($widescreen) {
+        &, &:has(+ .poly-container-block) {
+          width: calc(65% - .75rem);
+        }
+      }
+      @include from ($fullhd) {
+        &, &:has(+ .poly-container-block) {
+          width: calc(70% - .75rem);
+        }
+      }
+    }
+    > p {
+      @extend .content;
     }
   }
 
   .poly-container-block {
-    @extend .column, .is-full-mobile, .is-half-tablet, .is-one-third-desktop;
-
+    @extend .my-4;
+    display: block;
+    @include clearfix();
+    @include until($tablet) {
+      width: 100%;
+    }
+    @include from ($tablet) {
+      float: right;
+      clear:right;
+      margin-left: .75rem !important;
+      width: 50%
+    }
+    @include from ($desktop) {
+      width: 40%
+    }
+    @include from ($widescreen) {
+      width: 35%;
+    }
+    @include from ($fullhd) {
+      width: 30%;
+    }
     &.poly-link {
       @include hover() {
         .poly-hero-card {
-          background-color: $link;
+          background-color: $link-light;
           background-image: none;
-          &,* {
-            @extend .has-text-white;
-          }
+          color: $link;
         }
       }
-      .poly-with-image {
-        &, * {
-          color: $link !important;
-        } 
-      }
-
-    }
-
-    #{$child-selector} {
-      @extend .column, .is-full;
     }
   }
 
@@ -94,11 +89,7 @@
     @extend .is-block;
 
     @include hover() {
-      background-color: $link;
-      &,
-      * {
-        @extend .has-text-white;
-      }
+      background-color: $link-light;
     }
   }
 

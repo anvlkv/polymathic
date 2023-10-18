@@ -1,6 +1,7 @@
 {% import "macros.html" as macros %}
 
-{% set banner = true %}
+{% set banner = banner | default(value=true) %}
+{% set color = color | default(value=false) %}
 {% set content = page | default(value=section) %}
 {% set class_name = "poly-hero-card" %}
 
@@ -31,7 +32,7 @@
         </figure>
       </div>
     {% endif %}
-    <div class="poly-content">
+    <div class="poly-content" {% if color %}style="color:{{color}}; text-shadow:none;"{% endif %}>
       {{body | markdown(inline=true) | safe}}
     </div>
   </div>

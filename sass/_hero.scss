@@ -48,7 +48,10 @@
     @include backgrounds();
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: left top;
+    background-position: center center;
+    .poly-content {
+      text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white, 1px 1px 0 $white;
+    }
   }
   .poly-content {
     @extend .card-content;
@@ -60,4 +63,14 @@
 
 .poly-hero-block {
   @extend .section;
+
+  &.poly-with-image {
+    @include backgrounds();
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    .poly-content {
+      text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white, 1px 1px 0 $white;
+    }
+  }
 }

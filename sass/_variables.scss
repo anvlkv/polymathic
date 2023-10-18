@@ -7,10 +7,6 @@ $poly-config: () !default;
 $poly-primary: map.get($poly-config, "primary-color") or #7257bc !default;
 $poly-font-family: map.get($poly-config, "font-family") or "AR One Sans",
   sans-serif !default;
-$poly-container-elements: map.get($poly-config, "container-elements") or "h1",
-  "h2", "h3", "h4", "h5", "h6", "p", "pre", "blockquote", "form", "address",
-  "section", "table", "iframe", "img", "audio", "video", "figure", "ul", "ol",
-  "dl" !default;
 $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !default;
 $poly-ui-transition-fn: map.get($poly-config, "ui-transition-fn") or ease-out !default;
 

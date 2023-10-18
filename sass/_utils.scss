@@ -23,9 +23,9 @@
   }
 }
 
-@mixin hover() {
+@mixin hover($transition-props: (box-shadow, color, background-color)) {
   &, * {
-    @include transition($props: (box-shadow, color, background-color))
+    @include transition($props: $transition-props)
   }
   &:hover {
     @content;

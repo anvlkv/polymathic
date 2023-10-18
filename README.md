@@ -220,7 +220,7 @@ Logo
     [extra.poly]
     logo = "/your-logo.png"
 
-Whether to include a webmanifest file and path to it. Example can be found in this repo.
+Whether to include a webmanifest file and path to it.
 
     [extra]
     [extra.poly]

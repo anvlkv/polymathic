@@ -15,9 +15,9 @@
 
 .poly-link-hover {
   @include hover() {
-    background-color: $link !important;
-    &,* {
-      @extend .has-text-white;
+    background-color: $link-light !important;
+    &, * {
+      color: $link;
     }
   }
 }

@@ -1,5 +1,5 @@
 .poly-sections-content {
-  @extend .poly-page-content;
+  @extend .poly-page-content, .is-container, .is-fullhd;
 
   > section > .poly-container {
     @extend .columns, .is-multiline, .is-mobile, .is-centered;
@@ -8,34 +8,59 @@
     .poly-section-link {
       @extend .column;
       &.poly-pop {
-        @extend .is-full-mobile, .is-full-tablet, .is-two-thirds-desktop;
+        @extend .is-full-mobile, .is-two-thirds-tablet, .is-four-fifths-desktop;
       }
       &.poly-block-link {
         @extend .is-full, .mt-4;
-        &::after{
-          @extend .is-column, .is-full, hr;
-          display: block;
-          content: "";
-        }
         .poly-content {
           p {
             color: $text !important;
           }
         }
-      }
-      @include hover() {
-        .poly-hero-card {
-          background-color: $link;
-          background-image: none;
-          &,* {
-            @extend .has-text-white;
+        &.poly-pop {
+          @extend .is-full, .mt-4;
+          .poly-hero-block {
+            @extend .is-medium;
+            @include until($desktop) {
+              min-height: 40vh;
+            }
+          }
+        }
+
+        &:not(:has(+ .poly-block-link)) {
+          @extend .mb-4;
+          &::after{
+            @extend hr;
+            position: absolute;
+            bottom: -1.5rem;
+            left:0;
+            width: 100%;
+            display: block;
+            content: "";
+          }
+        }
+
+        @include hover() {
+          background-color: $link-light;
+          .poly-hero-block {
+            .title {
+              text-decoration: underline;
+              color: $link !important;
+            }
+          }
+          &::after {
+            border-bottom-color: $link !important;
           }
         }
       }
-      .poly-with-image {
-        &, * {
-          color: $link !important;
-        } 
+      @include hover() {
+        .poly-hero-card {
+          background-color: $link-light;
+          background-image: none;
+          &, * {
+            color: $link !important;
+          }
+        }
       }
 
       .poly-hero-card {
@@ -44,20 +69,14 @@
       }
     }
 
-    .poly-section-link {
-      @extend .is-half-tablet, .is-full-mobile;
-    }
-
-    .poly-page-link {
-      @extend .is-half-mobile, .is-one-third-desktop;
+    .poly-section-link, .poly-page-link {
+      @extend .is-one-third-tablet, .is-full-mobile,.is-two-fifths-desktop;
     }
 
     hr {
       @extend .column, .is-12;
       padding: 0 !important;
     }
-
-
 
   }
 }

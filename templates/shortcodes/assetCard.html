@@ -1,12 +1,13 @@
 {% import "macros.html" as macros %}
 
-{% set alt = alt | default(value="") %}
+
 {% set content = page | default(value=section) %}
 {% set id = "content-asset-modal-"~image | slugify %}
 
 <div class="poly-container-block">
   <a class="poly-asset-card js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=macros::poly_path(value=image, assets=content.assets)) | safe}}" {% endif %}>
     {% if image %}
+      {% set alt = alt | default(value= image | split(pat=".") | first | replace(from="_", to=" ") | title ) %}
       <div class="card-image">
         <figure class="image is-16by9">
           <img {{macros::img_src(
