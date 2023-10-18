@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/anvlkv/polymathic#readme",
   "dependencies": {
-    "bulma": "^0.9.4"
+    "bulma": "^0.9.4",
+    "scss-reset": "^1.4.2"
   }
 }
