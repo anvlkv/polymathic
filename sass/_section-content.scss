@@ -12,6 +12,7 @@
       }
       &.poly-block-link {
         @extend .is-full, .mt-4;
+        flex-basis: 100%;
         .poly-content {
           p {
             color: $text !important;
