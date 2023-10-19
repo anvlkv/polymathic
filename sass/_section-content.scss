@@ -4,15 +4,32 @@
   > section > .poly-container {
     @extend .columns, .is-multiline, .is-mobile, .is-centered;
 
+    --animate-delay: calc(var(--animate-duration) / 4);
     .poly-page-link, 
     .poly-section-link {
       @extend .column;
+      @extend .animate__animated;
+
+      .poly-hero-card {
+        @extend .animate__animated, .animate__fadeIn;
+      }
+
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i+1}n) {
+          &, .poly-hero-card {
+            @extend .animate__delay-#{$i}s;
+          }
+        }
+      }
+      
       &.poly-pop {
         @extend .is-full-mobile, .is-two-thirds-tablet, .is-four-fifths-desktop;
       }
       &.poly-block-link {
         @extend .is-full, .mt-4;
+        @extend .animate__fadeInRight;
         flex-basis: 100%;
+
         .poly-content {
           p {
             color: $text !important;

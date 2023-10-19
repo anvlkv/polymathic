@@ -15,19 +15,21 @@
     <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
 
     {% if config.extra.poly.font_url %}
-    <style>
-      @import url('{{config.extra.poly.font_url | safe}}');
-    </style>
+      <style>
+        @import url('{{config.extra.poly.font_url | safe}}');
+      </style>
     {% endif %}
 
-    {% block page_style %}
-      <style>
-        .poly-load-style {
-          visibility: hidden;
-        }
-      </style>
-      <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
-    {% endblock %}
+    <style>
+      .poly-load-style > * {
+        visibility: hidden;
+      }
+      .poly-load-style::before {
+        content: "LOADING...";
+        font-family: monospace;
+        visibility: visible;
+      }
+    </style>
 
     {% if config.extra.poly.favicon %}
       {% for f in config.extra.poly.favicon %}
@@ -45,11 +47,17 @@
     <meta name="application-name" content="{{config.extra.poly.app_name | default(value='polymathic')}}" />
   </head>
 
-  <body class="poly-load-style">
+  <body class="poly-load-style" style="--animate-duration: {{config.extra.poly.animate_duration}};
+  --animate-delay: {{config.extra.poly.animate_delay}};
+  --animate-repeat: {{config.extra.poly.animate_repeat}};">
     {% block content %} {% endblock %}
     {% block modals %} {% endblock %}
     {% block scripts %} 
       <script src="{{ get_url(path='polymathic.js') | safe }}"></script>
     {% endblock %}
   </body>
+
+  {% block page_style %}
+    <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
+  {% endblock %}
 </html>

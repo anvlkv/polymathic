@@ -1,6 +1,5 @@
 .poly-navigation-blocks {
   @extend .container, .is-fluid;
-
   > section {
     .poly-nav {
       @extend .is-flex;
@@ -20,7 +19,7 @@
       @extend .is-ancestor;
       flex-wrap: wrap;
       .poly-section-nav-wrapper {
-        display: contents;
+        @extend .tile, .p-0;
         @include until($tablet) {
           display: flex;
           flex-direction: column;
@@ -37,7 +36,8 @@
               ),
               $multiplier: 2.5
             );
-            &:hover, &:focus {
+            &:hover,
+            &:focus {
               margin-top: 0;
               transition-delay: 0;
             }
@@ -64,8 +64,23 @@
         }
       }
 
-      gap: .75rem;
+      .poly-section-nav-wrapper, .poly-page-link {
+        @extend .animate__animated, .animate__delay-2s, .animate__fast;
+        &:nth-child(odd) {
+          @extend .animate__fadeInLeft;
+        }
+        &:nth-child(even) {
+          @extend .animate__fadeInRight;
+        }
+      }
 
+      .poly-taxonomy-nav-wrapper {
+        @extend .animate__animated, .animate__delay-3s, .animate__fadeInUp, .animate__faster;
+      }
+
+      
+
+      gap: 0.75rem;
 
       .poly-taxonomy-nav-wrapper {
         @extend .is-parent;

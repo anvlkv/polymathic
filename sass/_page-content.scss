@@ -1,7 +1,8 @@
 .poly-page-content {
   @extend .container, .is-container, .is-fullhd;
   min-height: calc(100vh - 13rem);
-
+  overflow: hidden;
+  
   > section {
     @extend .columns, .is-flex, .mb-4, .mt-6;
     @include until($desktop) {

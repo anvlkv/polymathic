@@ -38,5 +38,11 @@ hr {
 }
 
 .poly-load-style {
-  visibility: visible !important;
+  > * {
+    visibility: visible !important;
+  }
+  &::before {
+    content: none;
+    visibility: hidden;
+  }
 }

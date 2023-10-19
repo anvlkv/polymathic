@@ -14,7 +14,7 @@
 <div class="poly-hero">
   <section>
     {% if config.extra.poly.logo %}
-    <header>
+    <header class="animate__animated animate__slideInDown">
       <nav>
         <nav>
           {{macros::brand_bar()}}
@@ -56,7 +56,7 @@
 {% endif %}
 
 <main class="poly-page-content">
-  <section>
+  <section class="animate__animated animate__fadeIn animate__delay-1s animate__faster">
     <article class="poly-container">
       {%if section.content %}
       {{section.content | safe}}
@@ -95,7 +95,7 @@ Hello there
 </main>
 
   {% block footer %}
-    {{ footer::macro() }}
+    {{ footer::macro(class="animate__animated animate__slideInUp") }}
   {% endblock %}
 
 {% endblock content %}

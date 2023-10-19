@@ -2,9 +2,9 @@
 {% import "navigation.html" as navigation %}
 
 
-{% macro macro() %}
+{% macro macro(class="") %}
 {% if config.extra.poly.menu_order or config.extra.poly.social_outlink %}
-<footer class="poly-navigation-footer">
+<footer class="poly-navigation-footer {{class}}">
   <div class="poly-navigation-container">
     {% if config.extra.poly.menu_order %}
       {{navigation::macro(menu=config.extra.poly.menu_order, id="footer")}}

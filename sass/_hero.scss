@@ -19,6 +19,7 @@
     }
     .poly-hero-body {
       @extend .hero-body;
+      overflow: hidden;
 
       &.poly-with-image {
         
@@ -36,6 +37,13 @@
           align-self: end;
           flex-direction: column;
           align-items: start;
+        }
+      }
+
+      .poly-content {
+        overflow: hidden;
+        > * {
+          @extend .animate__animated, .animate__slideInUp;
         }
       }
     }
