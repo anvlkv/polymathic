@@ -13,7 +13,7 @@
       .poly-section-link,
       .poly-taxonomy-term-link,
       .poly-page-link,
-      .poly-taxonomy-extra-wrapper {
+      .poly-taxonomy-kind-link {
         @extend .tile;
       }
       @extend .is-ancestor;
@@ -49,7 +49,8 @@
       }
       .poly-section-link,
       .poly-taxonomy-term-link,
-      .poly-page-link {
+      .poly-page-link,
+      .poly-taxonomy-kind-link {
         @extend .is-child, .box;
         @include until($desktop) {
           @include from($tablet) {
@@ -62,6 +63,12 @@
           }
           // padding: 0.75rem;
         }
+      }
+
+      .poly-taxonomy-kind-link {
+        font-size: larger;
+        font-weight: $title-weight;
+        color: $link;
       }
 
       .poly-section-nav-wrapper, .poly-page-link {
@@ -87,6 +94,7 @@
       }
       .poly-taxonomy-nav {
         @extend .is-parent, .is-vertical;
+        gap: 0.75rem;
       }
       .poly-navigation-title {
         @extend .title, .is-4;
@@ -101,31 +109,9 @@
       .poly-taxonomy-term-link {
         color: $link;
       }
-      .poly-taxonomy-extra-wrapper {
-        @extend .is-parent;
-        @extend .dropdown, .is-hoverable;
-        @extend .p-0;
-        width: 100%;
-      }
-      .poly-taxonomy-extra-menu {
-        @extend .dropdown-menu;
-        min-width: 100%;
-        @include until($desktop) {
-          @include from($tablet) {
-            margin-top: -2rem !important;
-          }
-        }
-      }
-      .poly-taxonomy-extra {
-        @extend .dropdown-content;
-        .poly-link {
-          @extend .dropdown-item;
-          display: block;
-        }
-      }
+      
       .poly-taxonomy-title {
         display: contents;
-        .poly-link,
         .poly-content {
           @extend .dropdown-trigger, .tile, .is-child, .box;
           width: 100%;
@@ -154,7 +140,7 @@
     .poly-section-link,
     .poly-taxonomy-term-link,
     .poly-page-link,
-    .poly-link {
+    .poly-taxonomy-kind-link {
       @extend .poly-link-hover;
     }
   }

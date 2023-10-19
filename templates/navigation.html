@@ -1,17 +1,19 @@
 {% import "macros.html" as macros %}
 
 {% macro macro(id="navigation", menu) %}
+{% set nav_current_path = current_path | default(value="") %}
+
 <nav class="poly-nav">
   {% set_global rendered_terms = [] %}
   {% for nav in menu %}
     {% if nav is ending_with("_index.md")%}
       {% set section = get_section(path=nav) %}
-      {% set link_class = "is-arrowless" %}
+      {% set is_arrowless = "is-arrowless" %}
       {% if section.extra.poly.use_taxonomies %} 
-        {% set link_class = false %}
+        {% set is_arrowless = false %}
       {% endif %}
-      <div class="poly-section-nav-wrapper{% if link_class %} has-dropdown is-hoverable{% endif %}">
-        <a {{macros::link_attrs(type="section", href=section.path, title=section.title, current_url=current_path, class=link_class)}}>
+      <div class="poly-section-nav-wrapper{% if is_arrowless == false %} has-dropdown is-hoverable{% endif %}">
+        <a {{macros::link_attrs(type="section", href=section.path, title=section.title, current_url=nav_current_path, class=is_arrowless)}}>
           <div class="poly-content">
             <span class="poly-navigation-title">{{section.title}}</span>
             {% if section.description %}
@@ -34,38 +36,18 @@
                         {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx %}
                       {% endfor %}
                       {% if has_tx %}
-                        <a {{macros::link_attrs(type="taxonomy-term", href=term.path, title=term.name, current_url=current_path)}}>{{term.name}}</a>
+                        <a {{macros::link_attrs(type="taxonomy-term", href=term.path, title=term.name, current_url=nav_current_path)}}>{{term.name}}</a>
                         {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) %}
                       {% endif %}
                     {% else %}
                       {% set_global taxonomy_secondary_terms = taxonomy_secondary_terms | concat(with=[term]) %}
                     {% endif %}
                   {% endfor %}
-                  {% if taxonomy_secondary_terms | length > 0 %}
-                    <nav class="poly-taxonomy-extra-wrapper">
-                      <div class="poly-taxonomy-title">
-                        {% if taxonomy.kind.render %}
-                        {% set taxonomy_title = taxonomy.kind.name | split(pat="_") | join(sep=" ") | title %}
-                        <a {{macros::link_attrs(href="/"~taxonomy.kind.slug, title=taxonomy_title, current_url=current_path)}}
-                           aria-haspopup="true" aria-controls="{{taxonomy.kind.name}}-secondary-menu-{{id}}">
-                          {{ taxonomy_title }}
-                          <span class="button-arrow"></span>
-                        </a>
-                        {% else %}
-                        <div class="poly-content" aria-haspopup="true" aria-controls="{{taxonomy.kind.name}}-secondary-menu-{{id}}">
-                          {{ taxonomy_title }}
-                          <span class="button-arrow"></span>
-                        </div>
-                        {% endif %}
-                      </div>
-                      <div class="poly-taxonomy-extra-menu" id="{{taxonomy.kind.name}}-secondary-menu-{{id}}" role="menu">
-                        <nav class="poly-taxonomy-extra">
-                          {% for term in taxonomy_secondary_terms %}
-                            <a {{macros::link_attrs(href=term.path, title=term.name, current_url=current_path)}}>{{term.name}}</a>
-                          {% endfor %}
-                        </nav>
-                      </div>
-                    </nav>
+                  {% if taxonomy_secondary_terms | length > 0 and taxonomy.kind.render %}
+                    {% set taxonomy_title = taxonomy.kind.name | split(pat="_") | join(sep=" ") | title %}
+                    <a {{macros::link_attrs(type="taxonomy-kind", href="/"~taxonomy.kind.slug, title=taxonomy_title, current_url=nav_current_path)}}>
+                      {{ taxonomy_title }}
+                    </a>
                   {% endif %}
                 </nav>
               {% endif %}
@@ -75,7 +57,7 @@
       </div>
     {% else %}
       {% set page = get_page(path=nav) %}
-      <a {{macros::link_attrs(type="page", href=page.path, title=page.title, current_url=current_path)}} >
+      <a {{macros::link_attrs(type="page", href=page.path, title=page.title, current_url=nav_current_path)}} >
         <div class="poly-content">
           <span class="poly-navigation-title">{{page.title}}</span>
           {% if page.description %}

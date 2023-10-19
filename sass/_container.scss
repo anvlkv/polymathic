@@ -20,26 +20,29 @@
     > blockquote,
     > pre {
       @extend .box, .mx-auto;
-      @include from ($tablet) {
+      @include from($tablet) {
         &:has(+ .poly-container-block) {
-          width: calc(50% - .75rem);
+          width: calc(50% - 0.75rem);
           float: left;
           clear: left;
         }
       }
-      @include from ($desktop) {
-        &, &:has(+ .poly-container-block) {
-          width: calc(60% - .75rem);
+      @include from($desktop) {
+        &,
+        &:has(+ .poly-container-block) {
+          width: calc(60% - 0.75rem);
         }
       }
-      @include from ($widescreen) {
-        &, &:has(+ .poly-container-block) {
-          width: calc(65% - .75rem);
+      @include from($widescreen) {
+        &,
+        &:has(+ .poly-container-block) {
+          width: calc(65% - 0.75rem);
         }
       }
-      @include from ($fullhd) {
-        &, &:has(+ .poly-container-block) {
-          width: calc(70% - .75rem);
+      @include from($fullhd) {
+        &,
+        &:has(+ .poly-container-block) {
+          width: calc(70% - 0.75rem);
         }
       }
     }
@@ -51,23 +54,22 @@
   .poly-container-block {
     @extend .my-4;
     display: block;
-    @include clearfix();
     @include until($tablet) {
       width: 100%;
     }
-    @include from ($tablet) {
+    @include from($tablet) {
       float: right;
-      clear:right;
-      margin-left: .75rem !important;
-      width: 50%
+      clear: both;
+      margin-left: 0.75rem !important;
+      width: 50%;
     }
-    @include from ($desktop) {
-      width: 40%
+    @include from($desktop) {
+      width: 40%;
     }
-    @include from ($widescreen) {
+    @include from($widescreen) {
       width: 35%;
     }
-    @include from ($fullhd) {
+    @include from($fullhd) {
       width: 30%;
     }
     &.poly-link {
@@ -78,6 +80,11 @@
           color: $link;
         }
       }
+    }
+    &:last-child {
+      float: none;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
   }
 

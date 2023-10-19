@@ -11,7 +11,6 @@ demo = "https://main--polymathic-demo.netlify.app/"
 # You don't need to prefix variables by the theme name but as this will
 # be merged with user data, some kind of prefix or nesting is preferable
 # Use snake_casing to be consistent with the rest of Zola
-[extra]
 [extra.poly]
 font_url = "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap"
 favicon = false

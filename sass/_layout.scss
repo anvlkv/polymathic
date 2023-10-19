@@ -2,6 +2,16 @@
   @extend .navbar;
   > nav {
     @extend .container, .is-fluid;
+    @include until($tablet) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    @include from($tablet) {
+      @include until($desktop) {
+        padding-left: $gap/2;
+        padding-right: $gap/2;
+      }
+    }
     > nav {
       @extend .navbar-menu;
       .poly-nav {
@@ -21,27 +31,11 @@
         }
         .poly-taxonomy-nav-wrapper {
           @extend .navbar-dropdown;
-          .poly-taxonomy-term-link {
+          .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
             @extend .navbar-item;
           }
-        }
-        .poly-taxonomy-extra-wrapper {
-          @extend .navbar-item, .has-dropdown, .is-hoverable, .p-0;
-          .poly-taxonomy-title {
-            display: contents;
-          }
-          .poly-content,
-          .poly-link {
-            @extend .navbar-item;
-          }
-          .poly-taxonomy-extra-menu {
-            @extend .navbar-dropdown;
-          }
-          .poly-taxonomy-extra {
-            display: contents;
-            .poly-link {
-              @extend .navbar-item;
-            }
+          .poly-taxonomy-kind-link {
+            @extend .has-text-weight-bold;
           }
         }
       }
@@ -51,6 +45,7 @@
   .poly-section-link,
   .poly-taxonomy-term-link,
   .poly-page-link,
+  .poly-taxonomy-kind-link,
   .poly-link {
     @extend .poly-link-hover;
   }
