@@ -23,6 +23,8 @@ social_outlink = false
 animate_duration = "800ms"
 animate_delay = "950ms"
 animate_repeat = 1
+taxonomy_preview_count = 3
+taxonomy_config_path="taxonomies.yaml"
 
 # The theme author info: you!
 [author]

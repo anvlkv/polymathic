@@ -13,7 +13,9 @@
   <div class="poly-page-content">
     <section>
       <article class="poly-container">
-        {{page.content | safe}}
+        {% block page_content %}
+          {{page.content | safe}}
+        {% endblock %}
       </article>
       {% if page.extra.poly.aside %}
         <aside class="poly-page-aside">

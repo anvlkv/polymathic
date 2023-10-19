@@ -23,7 +23,7 @@
       }
       
       &.poly-pop {
-        @extend .is-full-mobile, .is-two-thirds-tablet, .is-four-fifths-desktop;
+        @extend .is-full-mobile, .is-two-thirds-tablet, .is-6-desktop;
       }
       &.poly-block-link {
         @extend .is-full, .mt-4;
@@ -88,7 +88,7 @@
     }
 
     .poly-section-link, .poly-page-link {
-      @extend .is-one-third-tablet, .is-full-mobile,.is-two-fifths-desktop;
+      @extend .is-one-third-tablet, .is-full-mobile, .is-3-desktop;
     }
 
     hr {

@@ -1,0 +1,34 @@
+.poly-taxonomy-content {
+  @extend .poly-sections-content, .is-container, .is-fullhd;
+  .poly-page-aside {
+    nav {
+      @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch;
+      .poly-taxonomy-term-link {
+        @extend .py-2, .px-1, .has-text-right-desktop, .has-text-weight-bold;
+        @extend .poly-link-hover;
+        border-bottom: 1px solid $link-light;
+      }
+    }
+  }
+
+  > section > .poly-container {
+    .poly-taxonomy-term-link,
+    .poly-section-link {
+      @extend .column;
+      flex-basis: 100%;
+      border-radius: .75rem;
+      @include hover() {
+        text-decoration: underline;
+        color: $link-dark;
+        background-color: rgba($link-light, .5);
+      }
+    }
+
+    .poly-taxonomy-term-link {
+      @extend .title, .is-size-4;
+    }
+    .poly-section-link {
+      @extend .is-size-6;
+    }
+  }
+}

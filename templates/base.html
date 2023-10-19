@@ -21,13 +21,8 @@
     {% endif %}
 
     <style>
-      .poly-load-style > * {
+      .poly-load-style {
         visibility: hidden;
-      }
-      .poly-load-style::before {
-        content: "LOADING...";
-        font-family: monospace;
-        visibility: visible;
       }
     </style>
 
@@ -45,6 +40,10 @@
       <link rel="manifest" href="{{config.extra.poly.manifest}}" />
     {% endif %}
     <meta name="application-name" content="{{config.extra.poly.app_name | default(value='polymathic')}}" />
+
+    {% block page_style %}
+      <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
+    {% endblock %}
   </head>
 
   <body class="poly-load-style" style="--animate-duration: {{config.extra.poly.animate_duration}};
@@ -56,8 +55,4 @@
       <script src="{{ get_url(path='polymathic.js') | safe }}"></script>
     {% endblock %}
   </body>
-
-  {% block page_style %}
-    <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
-  {% endblock %}
 </html>

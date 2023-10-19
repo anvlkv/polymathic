@@ -6,7 +6,8 @@
 @import "./link";
 @import "./navigation-blocks";
 @import "./page-content";
-@import "./section-content";
+@import "./sections-content";
+@import "./taxonomy-content";
 @import "./pager";
 
 @import "./container";
@@ -38,11 +39,5 @@ hr {
 }
 
 .poly-load-style {
-  > * {
-    visibility: visible !important;
-  }
-  &::before {
-    content: none;
-    visibility: hidden;
-  }
+  visibility: visible !important;
 }

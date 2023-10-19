@@ -37,12 +37,12 @@
       background-color: $link-light;
     }
   }
-  .poly-taxonomy-term-link {
+  .poly-taxonomy-term-link,
+  .poly-taxonomy-kind-link {
     @extend .p-3;
     width: auto;
   }
-  .poly-navigation-description,
-  .poly-taxonomy-extra-wrapper {
+  .poly-navigation-description {
     @extend .is-hidden;
   }
 
@@ -62,6 +62,7 @@
 
   .poly-section-link,
   .poly-taxonomy-term-link,
+  .poly-taxonomy-kind-link,
   .poly-page-link,
   .poly-out-link,
   .poly-link {

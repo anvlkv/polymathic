@@ -29,7 +29,9 @@
               {% if taxonomy.items | length > 0 %}
                 <nav class="poly-taxonomy-nav">
                   {% set_global taxonomy_secondary_terms = [] %}
-                  {% for term in taxonomy.items %}
+                  {% set order = macros::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=taxonomy.items | map(attribute="name")) | trim | split(pat=",") %}
+                  {% for i in order %}
+                    {% set term = taxonomy.items[i] %}
                     {% if rendered_terms is not containing(term.path)%}
                       {% set_global has_tx = false %}
                       {% for pg in term.pages %}
@@ -44,8 +46,9 @@
                     {% endif %}
                   {% endfor %}
                   {% if taxonomy_secondary_terms | length > 0 and taxonomy.kind.render %}
-                    {% set taxonomy_title = taxonomy.kind.name | split(pat="_") | join(sep=" ") | title %}
-                    <a {{macros::link_attrs(type="taxonomy-kind", href="/"~taxonomy.kind.slug, title=taxonomy_title, current_url=nav_current_path)}}>
+                    {% set taxonomy_title = macros::get_taxonomy_kind_title(kind=taxonomy.kind.name) | trim %}
+                    {% set taxonomy_description = macros::get_taxonomy_kind_description(kind=taxonomy.kind.name, default=taxonomy_title) | trim %}
+                    <a {{macros::link_attrs(type="taxonomy-kind", href="/"~taxonomy.kind.slug, title=taxonomy_description, current_url=nav_current_path)}}>
                       {{ taxonomy_title }}
                     </a>
                   {% endif %}
