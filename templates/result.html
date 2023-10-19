@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block layout_main %}
+  <div class="poly-page-content">
+    <section>
+      <article class="poly-container">
+        {% block result %}
+          {{page.content | safe}}
+        {% endblock %}
+      </article>
+    </section>
+  </div>
+{% endblock %}
