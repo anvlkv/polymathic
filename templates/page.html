@@ -3,27 +3,25 @@
 {% extends "layout.html" %} 
 
 {% block page_meta %}
-
   {{ macros::content_meta(content=page) }}
-
 {% endblock %}
 
 
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
-      <article class="poly-container">
-        {% block page_content %}
+      {% block page_content %}
+        <article class="poly-container">
           {{page.content | safe}}
-        {% endblock %}
-      </article>
-      {% if page.extra.poly.aside %}
-        <aside class="poly-page-aside">
-          {% block page_aside %}
+        </article>
+      {% endblock %}
+      {% block page_aside %}
+        {% if page.extra.poly.aside %}
+          <aside class="poly-page-aside">
             <p>{{ page.extra.poly.aside }}</p>
-          {% endblock %}
-        </aside>
-      {% endif %}
+          </aside>
+        {% endif %}
+      {% endblock %}
     </section>
   </div>
 {% endblock %}

@@ -1,0 +1,37 @@
+{% import "macros.html" as macros %}
+
+<div class="poly-hero">
+  <section>
+    {% if config.extra.poly.logo %}
+    <header class="animate__animated animate__slideInDown">
+      <nav>
+        <nav>
+          {{macros::brand_bar()}}
+        </nav>
+      </nav>
+    </header>
+    {% endif %}
+    <div
+      class="poly-hero-body {%if section.extra.poly.hero %} poly-with-image{%endif%}"
+      {%
+      if
+      section.extra.poly.hero
+      %}
+      style="{{macros::background_image_vars(path=macros::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim)}}"
+      {%
+      endif
+      %}
+    >
+    <div class="poly-content">
+      <div class="section">
+        <p class="title">{{section.title | default(value="polymathic")}}</h1>
+          {% if section.title %}
+            <p class="subtitle">{{section.description}}</p>
+          {% else %}
+            <p class="subtitle">{{section.description | default(value="Zola portfolio theme for those with many talents")}}</p>
+          {% endif %}
+      </div>
+    </div>
+    </div>
+  </section>
+</div>

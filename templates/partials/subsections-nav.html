@@ -1,0 +1,10 @@
+{% import "macros.html" as macros %}
+
+{% for sub in section.subsections %}
+  {% set section = get_section(path=sub) %}
+    {% set hero = false %}
+    {% if section.extra.poly.hero %}
+      {% set hero = macros::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim %}
+    {% endif %}
+    {{macros::link_hero_card(type="section", path=section.path, hero=hero, title=section.title, description = section.description, block = section.extra.poly.block | default(value=false), banner = section.extra.poly.banner | default(value=true), pop = section.extra.poly.pop | default(value=false))}}
+{% endfor %}

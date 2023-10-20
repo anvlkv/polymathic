@@ -1,0 +1,20 @@
+{% import "macros.html" as macros %}
+
+{% for page in section.pages %}
+    {% set hero = false %}
+    {% if page.extra.poly.hero %}
+      {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+    {% endif %}
+  {{macros::link_hero_card(type="page",path=page.path,  hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
+{% else %}
+  {% if paginator.pages is defined %}
+    {% for page in paginator.pages %}
+      {% set hero = false %}
+      {% if page.extra.poly.hero %}
+        {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+      {% endif %}
+      {{macros::link_hero_card(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
+    {% endfor %}
+    {{macros::pager(pagination=paginator)}}
+  {% endif %}
+{% endfor %}

@@ -5,14 +5,16 @@
 
 {% block content %}
   <header class="poly-header">
-    <nav>
-      {{macros::brand_bar(menu_id="poly-layout-header")}}
-      <nav id="poly-layout-header">
-        {% if config.extra.poly.menu_order %}
-          {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header")}}
-        {% endif %}
+    {% block layout_header %}
+      <nav>
+        {{macros::brand_bar(menu_id="poly-layout-header")}}
+        <nav id="poly-layout-header">
+          {% if config.extra.poly.menu_order %}
+            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header")}}
+          {% endif %}
+        </nav>
       </nav>
-    </nav>
+    {% endblock %}
   </header>
   <main class="poly-main">
     {% block layout_main %} {% endblock %}

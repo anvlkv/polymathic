@@ -3,11 +3,11 @@
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
-      <article class="poly-container">
-        {% block result %}
+      {% block result %}
+        <article class="poly-container">
           {{page.content | safe}}
-        {% endblock %}
-      </article>
+        </article>
+      {% endblock %}
     </section>
   </div>
 {% endblock %}

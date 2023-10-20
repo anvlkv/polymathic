@@ -14,33 +14,42 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
 
-    {% if config.extra.poly.font_url %}
+    
+    {% block poly_load_style %}
       <style>
-        @import url('{{config.extra.poly.font_url | safe}}');
+        .poly-load-style {
+          visibility: hidden;
+        }
       </style>
-    {% endif %}
+    {% endblock %}
 
-    <style>
-      .poly-load-style {
-        visibility: hidden;
-      }
-    </style>
+    {% block poly_app_config %}
+      {% if config.extra.poly.font_url %}
+        <style>
+          @import url('{{config.extra.poly.font_url | safe}}');
+        </style>
+      {% endif %}
 
-    {% if config.extra.poly.favicon %}
-      {% for f in config.extra.poly.favicon %}
-        <link
-          rel="{{f.rel}}"
-          type="{{f.type}}"
-          sizes="{{f.size}}"
-          href="{{f.path}}"
-        />
-      {% endfor %}
-    {% endif %}
-    {% if config.extra.poly.manifest %}
-      <link rel="manifest" href="{{config.extra.poly.manifest}}" />
-    {% endif %}
-    <meta name="application-name" content="{{config.extra.poly.app_name | default(value='polymathic')}}" />
+      {% if config.extra.poly.favicon %}
+        {% for f in config.extra.poly.favicon %}
+          <link
+            rel="{{f.rel}}"
+            type="{{f.type}}"
+            sizes="{{f.size}}"
+            href="{{f.path}}"
+          />
+        {% endfor %}
+      {% endif %}
 
+      {% if config.extra.poly.manifest %}
+        <link rel="manifest" href="{{config.extra.poly.manifest}}" />
+      {% endif %}
+
+      {% if config.extra.poly.app_name %}
+        <meta name="application-name" content="{{config.extra.poly.app_name}}" />
+      {% endif %}
+    {% endblock %}
+    
     {% block page_style %}
       <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
     {% endblock %}

@@ -1,0 +1,28 @@
+{% import "macros.html" as macros %}
+
+
+{% block aside_content %}
+  {% set taxonomy_title = macros::get_taxonomy_kind_title(kind=taxonomy.name) | trim %}
+  {% set taxonomy_description = macros::get_taxonomy_kind_description(kind=taxonomy.name) | trim %}
+  {% set taxonomy_content = macros::get_taxonomy_kind_content(kind=taxonomy.name) | trim %}
+  {% if taxonomy_content | length > 0 %}
+    {{taxonomy_content | safe}}
+  {% else %}
+    <h3>{{taxonomy_title}}</h3>
+    {% if taxonomy_description | length > 0 %}
+      <p>
+        {{taxonomy_description}}
+      </p>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block aside_nav %}
+  <nav>
+    {% set order = macros::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",") %}
+    {% for i in order %}
+      {% set term = terms[i] %}
+      <a {{macros::link_attrs(type="taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
+    {% endfor %}
+  </nav>
+{% endblock %}

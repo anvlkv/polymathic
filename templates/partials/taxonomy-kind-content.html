@@ -1,0 +1,47 @@
+{% import "macros.html" as macros %}
+
+{% set_global rendered_pages = [] %}
+{% set order = macros::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",") %}
+{% for i in order %}
+  {% set term = terms[i] %}
+  {% set sort_by = macros::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim %}
+  {% set pages = term.pages | sort(attribute=sort_by) %}
+  <a {{macros::link_attrs(type="taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
+  {% if config.extra.poly.menu_order %}
+    {% for nav in config.extra.poly.menu_order %}
+      {% if nav is ending_with("_index.md")%}
+        {% set section = get_section(path=nav, metadata_only=true) %}
+        {% if section.extra.poly.use_taxonomies and section.extra.poly.use_taxonomies is containing(taxonomy.name) %} 
+          {% set_global rendered_count = 0 %}
+          {% for page in pages %}
+            {% if rendered_count < config.extra.poly.taxonomy_preview_count and page.ancestors is containing(section.relative_path) and rendered_pages is not containing(page.path) %}
+              {% set hero = false %}
+              {% if page.extra.poly.hero %}
+                {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+              {% endif %}
+              {{macros::link_hero_card(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
+              {% set_global rendered_count = rendered_count + 1 %}
+              {% set_global rendered_pages = rendered_pages | concat(with=[page.path]) %}
+            {% endif %}
+          {% endfor %}
+          {% if rendered_count > 0 %}
+            <a {{macros::link_attrs(type="section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
+            <hr/>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% for page in term.pages %}
+      {% if rendered_count < config.extra.poly.taxonomy_preview_count and rendered_pages is not containing(page.path)%}
+        {% set hero = false %}
+        {% if page.extra.poly.hero %}
+          {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+        {% endif %}
+        {{macros::link_hero_card(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value=false), banner = page.extra.poly.banner | default(value=false), pop = page.extra.poly.pop | default(value=false))}}
+        {% set_global rendered_count = rendered_count + 1 %}
+        {% set_global rendered_pages = rendered_pages | concat(with=[page.path]) %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
