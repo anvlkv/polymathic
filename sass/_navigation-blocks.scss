@@ -61,7 +61,6 @@
           @include until($widescreen) {
             min-width: 20vw;
           }
-          // padding: 0.75rem;
         }
       }
 
@@ -82,7 +81,15 @@
       }
 
       .poly-taxonomy-nav-wrapper {
-        @extend .animate__animated, .animate__delay-3s, .animate__fadeInUp, .animate__faster;
+        @extend .animate__animated, .animate__delay-2s, .animate__fadeIn, .animate__faster;
+        .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
+          @extend .animate__animated, .animate__fadeInLeft, .animate__fast;
+          @for $i from 1 through 5 {
+            &:nth-child(#{$i+1}n) {
+              animation-delay: calc(var(--animate-delay) * 2 + #{$i} * var(--animate-duration) / 4);
+            }
+          }
+        }
       }
 
       

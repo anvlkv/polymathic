@@ -40,6 +40,18 @@
         }
       }
 
+      @include from($widescreen) {
+        max-width: $widescreen;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        &:not(.poly-with-image) {
+          &, .poly-content .section {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+      }
       .poly-content {
         overflow: hidden;
         > * {

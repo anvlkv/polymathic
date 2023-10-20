@@ -1,46 +1,155 @@
 @use "sass:map";
 @use "sass:color";
+@use "../node_modules/bulma/sass/utilities/functions.sass" as bulma;
+@import "./a11y-colors";
 
 $poly-config: () !default;
 
 // poly variables;
 $poly-primary: map.get($poly-config, "primary-color") or #7257bc !default;
+$poly-black: map.get($poly-config, "black") or #222 !default;
+$poly-white: map.get($poly-config, "white") or #fdfdfd !default;
 $poly-font-family: map.get($poly-config, "font-family") or "AR One Sans",
   sans-serif !default;
 $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !default;
 $poly-ui-transition-fn: map.get($poly-config, "ui-transition-fn") or ease-out !default;
+$poly-body-size: map.get($poly-config, "body-size") or 16px !default;
+$poly-darkness: map.get($poly-config, "text-darkness") or 90%;
+$poly-accent-saturation: map.get($poly-config, "accent-saturation") or 70%;
+$poly-lightness: map.get($poly-config, "background-lightness") or 99%;
+$poly-saturation: map.get($poly-config, "background-saturation") or 5%;
+$poly-text-saturation: map.get($poly-config, "text-saturation") or 10%;
+$poly-mono-range: map.get($poly-config, "mono-range") or 30;
+
+$black: $poly-black;
+$white: $poly-white;
 
 // poly derived variables
-$darkness: map.get($poly-config, "text-darkness") or 90%;
-$saturation: map.get($poly-config, "text-saturation") or 10%;
-$poly-text-color: map.get($poly-config, "text-color") or color.change(
+$poly-background: color.change(
   color.invert($poly-primary),
-  $saturation: $saturation,
-  $lightness: 100% - $darkness
+  $lightness: $poly-lightness,
+  $saturation: $poly-saturation
 );
 
-$poly-mono-range: map.get($poly-config, "mono-range") or 30;
-$poly-link: map.get($poly-config, "link-color") or color.adjust($poly-primary, $hue: -1 * $poly-mono-range, $blackness: 10%);
-$poly-info: map.get($poly-config, "info-color") or color.adjust($poly-primary, $hue: $poly-mono-range);
-
-$lightness: map.get($poly-config, "background-lightness") or 99%;
-$saturation: map.get($poly-config, "background-saturation") or 5%;
-$poly-background: map.get($poly-config, "background-color") or color.change(
+$poly-text: color.change(
   color.invert($poly-primary),
-  $lightness: $lightness,
-  $saturation: $saturation,
+  $saturation: $poly-text-saturation,
+  $lightness: 100% - $poly-darkness
 );
 
+$poly-link: color.adjust(
+  $poly-primary,
+  $hue: -1 * $poly-mono-range,
+  $blackness: 10%
+);
 
-// Update Bulma's global defaults to poly defaults;
+@if color.saturation($poly-link) < $poly-accent-saturation {
+  $poly-link: color.change($poly-link, $saturation: $poly-accent-saturation);
+}
+$poly-info: color.adjust($poly-primary, $hue: $poly-mono-range);
+@if color.saturation($poly-info) < $poly-accent-saturation {
+  $poly-info: color.change($poly-info, $saturation: $poly-accent-saturation);
+}
+
+$_size: strip-unit($poly-body-size);
+$_level: map.get($poly-config, "a11y-contrast") or "AA";
+
+@if map.get($poly-config, "background-color") {
+  $poly-background: map.get($poly-config, "background-color");
+} @else {
+  $poly-background: a11y-color(
+    $fg: $poly-background,
+    $bg: $poly-black,
+    $level: $_level,
+    $size: $_size,
+    $bold: true,
+  );
+}
+@if map.get($poly-config, "text-color") {
+  $poly-text: map.get($poly-config, "text-color");
+} @else {
+  $poly-text: a11y-color(
+    $fg: $poly-text,
+    $bg: $poly-background,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  );
+}
+@if map.get($poly-config, "link-color") {
+  $poly-link: map.get($poly-config, "link-color");
+} @else {
+  $poly-link: a11y-color(
+    $fg: $poly-link,
+    $bg: $poly-background,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  );
+}
+
+@if map.get($poly-config, "info-color") {
+  $poly-info: map.get($poly-config, "info-color");
+} @else {
+  $poly-info: a11y-color(
+    $fg: $poly-info,
+    $bg: $poly-background,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  );
+}
+
+$poly-info-dark: map.get($poly-config, "info-color-dark") or
+  a11y-color(
+    $fg: bulma.findDarkColor($poly-info),
+    $bg: $poly-info,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  ) !default;
+
+$poly-info-light: map.get($poly-config, "info-color-light") or
+  a11y-color(
+    $fg: bulma.findLightColor($poly-info),
+    $bg: $poly-info-dark,
+    $level: $_level,
+    $size: $_size,
+    $bold: true,
+  ) !default;
+
+$poly-link-dark: map.get($poly-config, "link-color-dark") or
+  a11y-color(
+    $fg: bulma.findDarkColor($poly-link),
+    $bg: $poly-link,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  ) !default;
+
+$poly-link-light: map.get($poly-config, "link-color-light") or
+  a11y-color(
+    $fg: bulma.findLightColor($poly-link),
+    $bg: $poly-link-dark,
+    $level: $_level,
+    $size: $_size,
+    $bold: true,
+  ) !default;
+
+// Update Bulma's variables to poly defaults;
 $family-primary: $poly-font-family;
-$text: $poly-text-color;
+$text: $poly-text;
 $primary: $poly-primary;
 $scheme-main: $poly-background;
 $scheme-main-bis: color.adjust($poly-background, $lightness: -2%);
 $scheme-main-ter: color.adjust($poly-background, $lightness: -4%);
 $info: $poly-info;
+$info-dark: $poly-info-dark;
+$info-light: $poly-info-light;
 $link: $poly-link;
-$box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text-color, 0.15),
+$link-dark: $poly-link-dark;
+$link-light: $poly-link-light;
+$body-size: $poly-body-size;
+$box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text, 0.15),
   0 0 0 1px $link;
 $modal-content-width: 80vw;

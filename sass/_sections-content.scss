@@ -63,11 +63,14 @@
           .poly-hero-block {
             .title {
               text-decoration: underline;
-              color: $link !important;
+              color: $link-dark !important;
+            }
+            p {
+              color: $link-dark !important;
             }
           }
           &::after {
-            border-bottom-color: $link !important;
+            border-bottom-color: $link-dark !important;
           }
         }
       }
@@ -76,7 +79,7 @@
           background-color: $link-light;
           background-image: none;
           &, * {
-            color: $link !important;
+            color: $link-dark !important;
           }
         }
       }

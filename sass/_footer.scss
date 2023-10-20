@@ -28,13 +28,16 @@
     display: contents;
   }
   .poly-navigation-title {
-    @extend .column, .is-flex-grow-0, .is-flex-shrink-0;
+    @extend .column, .is-flex-grow-0, .is-flex-shrink-0, .is-block;
     order: 0;
     height: fit-content;
     white-space: nowrap;
 
+    padding: $column-gap;
+
     @include hover() {
       background-color: $link-light;
+      color: $link-dark;
     }
   }
   .poly-taxonomy-term-link,

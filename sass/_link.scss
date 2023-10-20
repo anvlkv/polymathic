@@ -18,7 +18,7 @@
   @include hover() {
     background-color: $link-light !important;
     &, * {
-      color: $link;
+      color: $link-dark !important;
     }
   }
 }
