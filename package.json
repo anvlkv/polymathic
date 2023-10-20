@@ -19,6 +19,6 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "bulma": "^0.9.4",
-    "scss-reset": "^1.4.2"
+    "normalize-scss": "^7.0.1"
   }
 }

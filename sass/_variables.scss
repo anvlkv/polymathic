@@ -11,9 +11,11 @@ $poly-black: map.get($poly-config, "black") or #222 !default;
 $poly-white: map.get($poly-config, "white") or #fdfdfd !default;
 $poly-font-family: map.get($poly-config, "font-family") or "AR One Sans",
   sans-serif !default;
+$poly-font-family-print: map.get($poly-config, "font-family-print") or serif !default;
 $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !default;
 $poly-ui-transition-fn: map.get($poly-config, "ui-transition-fn") or ease-out !default;
 $poly-body-size: map.get($poly-config, "body-size") or 16px !default;
+$poly-body-size-print: map.get($poly-config, "body-size-print") or $poly-body-size * .82 !default;
 $poly-darkness: map.get($poly-config, "text-darkness") or 90%;
 $poly-accent-saturation: map.get($poly-config, "accent-saturation") or 70%;
 $poly-lightness: map.get($poly-config, "background-lightness") or 99%;
@@ -149,6 +151,7 @@ $info-light: $poly-info-light;
 $link: $poly-link;
 $link-dark: $poly-link-dark;
 $link-light: $poly-link-light;
+$code: $poly-info-dark;
 $body-size: $poly-body-size;
 $box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text, 0.15),
   0 0 0 1px $link;

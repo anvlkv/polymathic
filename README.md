@@ -8,7 +8,7 @@ I made it for my own portfolio. The theme is called `polymathic`, inspired by in
 
 Docs and theme demo are available here [main--polymathic-demo.netlify.app](https://main--polymathic-demo.netlify.app/) 
 
-This theme uses [Bulma](https://bulma.io/) scss framework, making the theme styles highly customizable.
+This theme uses [Bulma](https://bulma.io/) scss framework, making the theme styles highly customizable and enabling mobile first theme design.
 
 This theme uses [Animate.css](https://animate.style) for animations.
 
@@ -18,7 +18,11 @@ You can quickly deploy the theme to [netlify](https://docs.netlify.com/site-depl
 
 ## Features
 
-See all features [demonstrated in the docs](https://main--polymathic-demo.netlify.app/examples). 
+See all features [demonstrated in the docs](https://main--polymathic-demo.netlify.app/features). 
+
+### Media support
+
+The theme is friendly to wide range of screen sizes from `mobile` to `fullhd`. Theme comes with minimal styles for `print` media.
 
 ### Navigation
 
@@ -26,11 +30,12 @@ This theme builds navigation for your site. The outcome is highly customizable v
 
 ### Templates
 
-The theme comes with templates for `index.html`, `page.html`, `section.html`, `taxonomy_list.html`, `taxonomy_single.html`, `404.html`. You can use them in your Zola project as is or by extending them.
+The theme comes with templates for `index.html`, `page.html`, `section.html`, `taxonomy_list.html`, `taxonomy_single.html`, `404.html`. You can use them in your Zola project as is or by extending them, templates are divided in `block`s and `partials/*.html` for convenience of extending the theme.
 
 ### Brand and style
 
-The theme is highly customizable via `config.toml` and sass variables.
+The theme is highly customizable via `config.toml` and sass variables. Your customization can start from just the primary color or extend all the way to bulma variables.
+
 
 ### Shortcodes
 

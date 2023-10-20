@@ -55,6 +55,16 @@
     > p {
       @extend .content;
     }
+    > figure {
+      @extend .image, .box, .px-0, .pt-0;
+      overflow: hidden;
+      figcaption {
+        @extend .title, .is-subtitle, .is-5, .mt-2, .mx-4;
+      }
+    }
+    > img, > p > img {
+      @extend .box, .p-0;
+    }
   }
 
   .poly-container-block {

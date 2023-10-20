@@ -9,39 +9,5 @@
 @import "./sections-content";
 @import "./taxonomy-content";
 @import "./pager";
-
 @import "./container";
-
-hr {
-  background-color: transparent;
-  border-bottom: 0.5px solid $grey-light;
-}
-
-.is-container.is-fullhd {
-  @include until($fullhd) {
-    margin-left: $gap;
-    margin-right: $gap;
-  }
-  @include until($tablet) {
-    margin-left: $gap / 3;
-    margin-right: $gap / 3;
-  }
-}
-
-.control > .select {
-  &, > select {
-    width: 100%;
-  }
-}
-
-.field:not(.is-horizontal) .field-label .label {
-  text-align: left;
-}
-
-.poly-load-style {
-  visibility: visible !important;
-}
-
-code {
-  color: $info-dark;
-}
+@import "./globals";

@@ -1,0 +1,205 @@
+@import "./variables";
+$family-sans-serif: $poly-font-family-print;
+$body-size: $poly-body-size-print;
+
+@import "../node_modules/normalize-scss/sass/normalize";
+@import "../node_modules/bulma/sass/utilities/initial-variables.sass";
+@import "../node_modules/bulma/sass/utilities/derived-variables.sass";
+@import "../node_modules/bulma/sass/base/generic.sass";
+@import "../node_modules/bulma/sass/helpers/typography.sass";
+@import "../node_modules/bulma/sass/helpers/spacing.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+
+.poly-load-style {
+  visibility: visible !important;
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    @extend .title, .is-#{$i + 1};
+    @extend .mt-0, .mb-#{7-$i};
+    @if $i < 6 {
+      & ~ h#{$i + 1} {
+        @extend .subtitle;
+      }
+    }
+  }
+}
+
+p {
+  @extend .content;
+}
+
+blockquote {
+  @extend .p-2, .m-0, .mx-auto;
+  width: max-content;
+  background-color: $grey-lighter;
+  border-left: 1px solid $grey;
+}
+
+.poly-header,
+.poly-navigation-footer .poly-navigation-container,
+.poly-outlink-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  nav,
+  .poly-section-nav-wrapper {
+    display: contents;
+    .poly-navigation-description {
+      display: none;
+    }
+  }
+}
+
+.poly-header {
+  a:not(.poly-active-link, .poly-logo-link) {
+    display: none;
+  }
+  .poly-active-link {
+    @extend .title, .is-3, .subtitle, .has-text-primary;
+  }
+  border-bottom: 1px solid $primary-light;
+}
+
+.poly-navigation-footer{
+  border-top: 1px solid $primary-light;
+}
+
+.poly-navigation-footer .poly-navigation-container,
+.poly-outlink-footer {
+  margin-top: 0.75rem;
+  a {
+    flex-basis: 100%;
+    * {
+      display: inline;
+    }
+  }
+  a::after {
+    content: attr(href);
+    text-decoration: underline;
+    text-decoration-color: $grey-light;
+    display: inline;
+    margin-left: 0.25rem;
+  }
+}
+
+.poly-sections-content,
+.poly-page-content {
+  > section {
+    display: flex;
+    flex-direction: column;
+    .poly-page-aside {
+      order: -1;
+    }
+  }
+}
+
+.poly-sections-content {
+  > section {
+    > .poly-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: space-evenly;
+      gap: .75rem;
+
+      a {
+        display: block;
+        .title {
+          color: $link;
+          text-decoration: underline;
+          text-decoration-color: $grey-light;
+        }
+        &.poly-block-link {
+          flex-basis: 100%;
+          @extend .my-1;
+          .title {
+            @extend .mb-1;
+          }
+        }
+        &:not(.poly-block-link) {
+          flex-basis: 27%;
+          flex-grow: 0;
+          padding: 0.75rem;
+          border: 1px solid $grey;
+        }
+      }
+
+      hr {
+        flex-basis: 100%;
+        align-self: baseline;
+      }
+    }
+  }
+}
+
+.poly-navigation-blocks {
+  @extend .mt-3;
+  .poly-nav,
+  .poly-section-nav-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .poly-section-nav-wrapper,
+  .poly-content {
+    flex-basis: 45%;
+    flex-shrink: 1;
+  }
+  .poly-content,
+  .poly-taxonomy-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 100%;
+  }
+  .poly-section-link,
+  .poly-page-link {
+    display: contents;
+  }
+
+  .poly-navigation-title, .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
+    @extend .title, .is-5;
+    color: $link !important;
+    text-decoration: underline;
+    text-decoration-color: $grey-light !important;
+    flex-basis: 2.75em;
+    &.poly-taxonomy-term-link {
+      @extend .subtitle;
+    }
+  }
+  border-bottom: 1px solid $primary;
+}
+
+.poly-hero {
+  .title {
+    color: $primary-dark;
+  }
+  .subtitle {
+    color: $primary;
+  }
+  border-bottom: 2px solid $primary;
+}
+
+body {
+  font-family: $poly-font-family-print;
+  color: $black;
+  font-size: $body-size;
+  box-sizing: border-box;
+  a {
+    color: $black;
+    text-decoration: none;
+  }
+}
+
+code {
+  word-wrap: break-word;
+  white-space: break-spaces;
+}
+
+figure {
+  @extend .mx-1;
+}

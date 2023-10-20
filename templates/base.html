@@ -51,7 +51,10 @@
     {% endblock %}
     
     {% block page_style %}
-      <link rel="stylesheet" href="{{ get_url(path='polymathic.css') | safe }}" />
+      <link rel="stylesheet" media="screen" href="{{ get_url(path='polymathic.css') | safe }}" />
+    {% endblock %}
+    {% block print_style %}
+      <link rel="stylesheet" media="print" href="{{ get_url(path='print.css') | safe }}" />
     {% endblock %}
   </head>
 
