@@ -1,5 +1,5 @@
 .poly-navigation-footer {
-  @extend .footer;
+  @extend .footer, .mt-6;
 
   .poly-navigation-container {
     @extend .container, .is-container, .is-fullhd, .has-text-centered-mobile;
