@@ -279,7 +279,7 @@
 {% macro get_taxonomy_term_sort_by(kind, term) %}
     {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) %}
     {% set kind_config = tx_config[kind] | default(value=false) %}
-    {% set sort_by = "title" %}
+    {% set sort_by = "path" %}
     {% if kind_config and kind_config.terms is defined %}
       {% set_global override = kind_config.sort_by | default(value=sort_by) %}
       {% for t in kind_config.terms %}
