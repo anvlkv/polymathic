@@ -14,11 +14,19 @@
   }
 }
 
-.poly-link-hover {
+.poly-link-hover-block {
   @include hover() {
     background-color: $link-light !important;
     &, * {
       color: $link-dark !important;
     }
+  }
+}
+
+.poly-link-hover-text {
+  @include hover((color, text-decoration-color, text-decoration)) {
+    color: $link-dark !important;
+    text-decoration: underline;
+    text-decoration-color: $link-light !important;
   }
 }

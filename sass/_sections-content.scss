@@ -45,19 +45,6 @@
           }
         }
 
-        &:not(:has(+ .poly-block-link)) {
-          @extend .mb-4;
-          &::after{
-            @extend hr;
-            position: absolute;
-            bottom: -1.5rem;
-            left:0;
-            width: 100%;
-            display: block;
-            content: "";
-          }
-        }
-
         @include hover() {
           background-color: $link-light;
           .poly-hero-block {

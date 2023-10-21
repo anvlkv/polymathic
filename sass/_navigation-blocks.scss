@@ -148,7 +148,7 @@
     .poly-taxonomy-term-link,
     .poly-page-link,
     .poly-taxonomy-kind-link {
-      @extend .poly-link-hover;
+      @extend .poly-link-hover-block;
     }
   }
 }

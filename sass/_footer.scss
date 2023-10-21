@@ -29,16 +29,11 @@
   }
   .poly-navigation-title {
     @extend .column, .is-flex-grow-0, .is-flex-shrink-0, .is-block;
+    @extend .poly-link-hover-text;
     order: 0;
     height: fit-content;
     white-space: nowrap;
-
     padding: $column-gap;
-
-    @include hover() {
-      background-color: $link-light;
-      color: $link-dark;
-    }
   }
   .poly-taxonomy-term-link,
   .poly-taxonomy-kind-link {
@@ -69,6 +64,6 @@
   .poly-page-link,
   .poly-out-link,
   .poly-link {
-    @extend .poly-link-hover;
+    @extend .poly-link-hover-text;
   }
 }

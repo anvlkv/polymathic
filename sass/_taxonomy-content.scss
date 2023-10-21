@@ -5,9 +5,18 @@
       @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch;
       .poly-taxonomy-term-link {
         @extend .py-2, .px-1, .has-text-right-desktop, .has-text-weight-bold;
-        @extend .poly-link-hover;
+        @extend .poly-link-hover-block;
         border-bottom: 1px solid $link-light;
       }
+    }
+
+    .poly-section-link,
+    .poly-taxonomy-term-link,
+    .poly-taxonomy-kind-link,
+    .poly-page-link,
+    .poly-out-link,
+    .poly-link {
+      @extend .poly-link-hover-text;
     }
   }
 

@@ -26,44 +26,32 @@
     > blockquote,
     > pre {
       @extend .box, .mx-auto;
-      @include from($tablet) {
-        &:has(+ .poly-container-block) {
-          width: calc(50% - 0.75rem);
-          float: left;
-          clear: left;
-        }
-      }
       @include from($desktop) {
-        &,
-        &:has(+ .poly-container-block) {
-          width: calc(60% - 0.75rem);
-        }
+        width: calc(60% - 0.75rem);
       }
       @include from($widescreen) {
-        &,
-        &:has(+ .poly-container-block) {
-          width: calc(65% - 0.75rem);
-        }
+        width: calc(65% - 0.75rem);
       }
       @include from($fullhd) {
-        &,
-        &:has(+ .poly-container-block) {
-          width: calc(70% - 0.75rem);
-        }
+        width: calc(70% - 0.75rem);
       }
     }
     > p {
       @extend .content;
     }
     > figure {
-      @extend .image, .box, .px-0, .pt-0;
+      @extend .image, .box, .px-0, .pt-0, .mx-auto;
       overflow: hidden;
       figcaption {
         @extend .title, .is-subtitle, .is-5, .mt-2, .mx-4;
       }
     }
-    > img, > p > img {
+    > img,
+    > p > img {
       @extend .box, .p-0;
+    }
+    a:not([class]) {
+      @extend .poly-link, .poly-link-hover-text;
     }
   }
 
@@ -94,7 +82,8 @@
           background-color: $link-light;
           background-image: none;
           color: $link-dark;
-          &, * {
+          &,
+          * {
             text-shadow: none;
           }
         }

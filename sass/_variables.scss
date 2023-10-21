@@ -105,7 +105,7 @@ $_level: map.get($poly-config, "a11y-contrast") or "AA";
 $poly-info-dark: map.get($poly-config, "info-color-dark") or
   a11y-color(
     $fg: bulma.findDarkColor($poly-info),
-    $bg: $poly-info,
+    $bg: $poly-background,
     $level: $_level,
     $size: $_size,
     $bold: false,
@@ -123,7 +123,7 @@ $poly-info-light: map.get($poly-config, "info-color-light") or
 $poly-link-dark: map.get($poly-config, "link-color-dark") or
   a11y-color(
     $fg: bulma.findDarkColor($poly-link),
-    $bg: $poly-link,
+    $bg: $poly-background,
     $level: $_level,
     $size: $_size,
     $bold: false,
