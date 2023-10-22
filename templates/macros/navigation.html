@@ -1,4 +1,4 @@
-{% import "macros.html" as macros %}
+{% import "macros/util.html" as util %}
 
 {% macro macro(id="navigation", menu) %}
 {% set nav_current_path = current_path | default(value="") %}
@@ -13,7 +13,7 @@
         {% set is_arrowless = false %}
       {% endif %}
       <div class="poly-section-nav-wrapper{% if is_arrowless == false %} has-dropdown is-hoverable{% endif %}">
-        <a {{macros::link_attrs(type="section", href=section.path, title=section.title, current_url=nav_current_path, class=is_arrowless)}}>
+        <a {{util::link_attrs(type="section", href=section.path, title=section.title, current_url=nav_current_path, class=is_arrowless)}}>
           <div class="poly-content">
             <span class="poly-navigation-title">{{section.title}}</span>
             {% if section.description %}
@@ -29,7 +29,7 @@
               {% if taxonomy.items | length > 0 %}
                 <nav class="poly-taxonomy-nav">
                   {% set_global taxonomy_secondary_terms = [] %}
-                  {% set order = macros::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=taxonomy.items | map(attribute="name")) | trim | split(pat=",") %}
+                  {% set order = util::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=taxonomy.items | map(attribute="name")) | trim | split(pat=",") %}
                   {% for i in order %}
                     {% set term = taxonomy.items[i] %}
                     {% if rendered_terms is not containing(term.path)%}
@@ -38,7 +38,7 @@
                         {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx %}
                       {% endfor %}
                       {% if has_tx %}
-                        <a {{macros::link_attrs(type="taxonomy-term", href=term.path, title=term.name, current_url=nav_current_path)}}>{{term.name}}</a>
+                        <a {{util::link_attrs(type="taxonomy-term", href=term.path, title=term.name, current_url=nav_current_path)}}>{{term.name}}</a>
                         {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) %}
                       {% endif %}
                     {% else %}
@@ -46,9 +46,9 @@
                     {% endif %}
                   {% endfor %}
                   {% if taxonomy_secondary_terms | length > 0 and taxonomy.kind.render %}
-                    {% set taxonomy_title = macros::get_taxonomy_kind_title(kind=taxonomy.kind.name) | trim %}
-                    {% set taxonomy_description = macros::get_taxonomy_kind_description(kind=taxonomy.kind.name, default=taxonomy_title) | trim %}
-                    <a {{macros::link_attrs(type="taxonomy-kind", href="/"~taxonomy.kind.slug, title=taxonomy_description, current_url=nav_current_path)}}>
+                    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.kind.name) | trim %}
+                    {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.kind.name, default=taxonomy_title) | trim %}
+                    <a {{util::link_attrs(type="taxonomy-kind", href="/"~taxonomy.kind.slug, title=taxonomy_description, current_url=nav_current_path)}}>
                       {{ taxonomy_title }}
                     </a>
                   {% endif %}
@@ -60,7 +60,7 @@
       </div>
     {% else %}
       {% set page = get_page(path=nav) %}
-      <a {{macros::link_attrs(type="page", href=page.path, title=page.title, current_url=nav_current_path)}} >
+      <a {{util::link_attrs(type="page", href=page.path, title=page.title, current_url=nav_current_path)}} >
         <div class="poly-content">
           <span class="poly-navigation-title">{{page.title}}</span>
           {% if page.description %}

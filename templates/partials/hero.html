@@ -1,4 +1,7 @@
-{% import "macros.html" as macros %}
+{% import "macros/util.html" as util %}
+{% import "macros/navigation.html" as navigation %}
+{% import "macros/preview.html" as preview %}
+{% import "macros/footer.html" as footer %}
 
 <div class="poly-hero">
   <section>
@@ -6,7 +9,7 @@
     <header class="animate__animated animate__slideInDown">
       <nav>
         <nav>
-          {{macros::brand_bar()}}
+          {{util::brand_bar()}}
         </nav>
       </nav>
     </header>
@@ -17,7 +20,7 @@
       if
       section.extra.poly.hero
       %}
-      style="{{macros::background_image_vars(path=macros::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim)}}"
+      style="{{util::background_image_vars(path=util::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim)}}"
       {%
       endif
       %}

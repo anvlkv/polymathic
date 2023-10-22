@@ -1,17 +1,17 @@
-{% import "macros.html" as macros %}
+{% import "macros/util.html" as util %}
 
 
 {% set content = page | default(value=section) %}
 {% set id = "content-asset-modal-"~image | slugify %}
 
 <div class="poly-container-block">
-  <a class="poly-asset-card js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=macros::poly_path(value=image, assets=content.assets)) | safe}}" {% endif %}>
+  <a class="poly-asset-card js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=util::poly_path(value=image, assets=content.assets)) | safe}}" {% endif %}>
     {% if image %}
       {% set alt = alt | default(value= image | split(pat=".") | first | replace(from="_", to=" ") | title ) %}
       <div class="card-image">
         <figure class="image is-16by9">
-          <img {{macros::img_src(
-            src=macros::poly_path(value=image, assets=content.assets) | trim, 
+          <img {{util::img_src(
+            src=util::poly_path(value=image, assets=content.assets) | trim, 
             ratio=16.0/9.0,
             breakpoints=["min-width: 200px", "min-width: 400px", "min-width: 600px"],
             sizes=[200, 400, 600, 900],

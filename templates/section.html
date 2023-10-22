@@ -1,10 +1,8 @@
-{% import "navigation.html" as navigation %}
-{% import "macros.html" as macros %}
 {% extends "layout.html" %} 
 
 {% block page_meta %}
 
-  {{ macros::content_meta(content=section) }}
+  {{ util::content_meta(content=section) }}
 
 {% endblock %}
 
@@ -34,5 +32,5 @@
 {% endblock %}
 
 {% block modals %}
-  {{macros::content_modals(assets=section.assets)}}
+  {{util::content_modals(assets=section.assets)}}
 {% endblock %}

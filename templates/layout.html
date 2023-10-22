@@ -1,13 +1,10 @@
-{% import "navigation.html" as navigation %}
-{% import "footer.html" as footer %}
-{% import "macros.html" as macros %}
 {% extends "base.html" %} 
 
 {% block content %}
   <header class="poly-header">
     {% block layout_header %}
       <nav>
-        {{macros::brand_bar(menu_id="poly-layout-header")}}
+        {{util::brand_bar(menu_id="poly-layout-header")}}
         <nav id="poly-layout-header">
           {% if config.extra.poly.menu_order %}
             {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header")}}

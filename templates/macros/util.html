@@ -67,7 +67,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
   {% if content.extra.poly.hero %}
-    {% set path = macros::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim %}
+    {% set path = util::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim %}
     {% set image_meta = get_image_metadata(path=path) %}
     {% if image_meta.height > 630 or image_meta.width > 1200 %} 
       {% set image = resize_image(path=path, width=1200, height=630, op='fill', format='webp') %}
@@ -98,51 +98,7 @@
   {% endif %}
 {% endmacro %}
 
-{% macro link_hero_card(title, path, type, hero=false, description=false, block=false, banner=false, pop=false) %}
-  {% set link_class = "" %}
-  {% set class_name = "poly-hero-card" %}
-  {% if block == true %}
-    {% set class_name = "poly-hero-block" %}
-    {% set link_class = "poly-block-link" %}
-    {% if hero != false %}
-      {% set banner = true %}
-    {% endif %}
-  {% endif %}
-  {% if hero != false and banner == true %}
-    {% set class_name = class_name~" poly-with-image" %}
-  {% endif %}
-  {% if pop == true %}
-    {% set link_class = link_class~" poly-pop" %}
-  {% endif %}
-  <a {{macros::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path, class=link_class)}}
-    {% if hero != false and banner == true %}
-    style="{{macros::background_image_vars(path=hero)}}"
-    {% endif %}
-  >
-    <div class="{{class_name}}">
-      {% if banner == false and hero != false %} 
-        <div class="card-image">
-          <figure class="poly-image is-4by3">
-            <img {{macros::img_src(
-              src=hero, 
-              ratio=4.0/3.0,
-              breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-              sizes=[200, 400, 600, 900],
-            ) }} 
-            alt="{{title}}"
-            />
-          </figure>
-        </div>
-      {% endif %}
-      <div class="poly-content">
-        <p class="title is-4 is-subtitle">{{ title }}</p>
-        {% if description != false %}
-          <p>{{ description }}</p>
-        {% endif %}
-      </div>
-    </div>
-  </a>
-{% endmacro %}
+
 
 {% macro img_src(src, sizes, breakpoints, ratio) %}
   sizes="{% for size in sizes %}{% if breakpoints[loop.index0] %}({{breakpoints[loop.index0]}}) {{size}}px,{% else %}{{size}}px{% endif %}{% endfor %}"
@@ -180,7 +136,7 @@
       <div class="modal-content">
         <figure class="image">
           {% set image_meta = get_image_metadata(path=asset) %}
-          <img {{macros::img_src(
+          <img {{util::img_src(
             src=asset, 
             ratio=image_meta.width/image_meta.height,
             breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],

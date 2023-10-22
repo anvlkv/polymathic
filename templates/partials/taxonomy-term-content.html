@@ -1,5 +1,7 @@
-{% import "macros.html" as macros %}
-
+{% import "macros/util.html" as util %}
+{% import "macros/navigation.html" as navigation %}
+{% import "macros/preview.html" as preview %}
+{% import "macros/footer.html" as footer %}
 
 {% set_global rendered_pages = [] %}
 {% if config.extra.poly.menu_order %}
@@ -12,21 +14,21 @@
           {% if paginator %}
             {% set pages = paginator.pages %}
           {% endif %}
-          {% set sort_by = macros::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim %}
+          {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim %}
           {% set pages = pages | sort(attribute=sort_by) %}
           {% for page in pages %}
             {% if page.ancestors is containing(section.relative_path) and rendered_pages is not containing(page.path) %}
               {% set hero = false %}
               {% if page.extra.poly.hero %}
-                {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+                {% set hero = util::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
               {% endif %}
-              {{macros::link_hero_card(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
+              {{preview::macro(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value = section.extra.poly.page_block | default(value=false)), banner = page.extra.poly.banner | default(value=section.extra.poly.page_banner | default(value=false)), pop = page.extra.poly.pop | default(value=false))}}
               {% set_global rendered_count = rendered_count + 1 %}
               {% set_global rendered_pages = rendered_pages | concat(with=[page.path]) %}
             {% endif %}
           {% endfor %}
           {% if rendered_count > 0 %}
-            <a {{macros::link_attrs(type="section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
+            <a {{util::link_attrs(type="section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
             <hr/>
           {% endif %}
         {% endif %}
@@ -37,18 +39,18 @@
   {% if paginator %}
     {% set pages = paginator.pages %}
   {% endif %}
-  {% set sort_by = macros::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim %}
+  {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim %}
   {% set pages = pages | sort(attribute=sort_by) %}
   {% for page in pages %}
     {% if rendered_pages is not containing(page.path)%}
       {% set hero = false %}
       {% if page.extra.poly.hero %}
-        {% set hero = macros::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
+        {% set hero = util::poly_path(value=page.extra.poly.hero, assets=page.assets) | trim %}
       {% endif %}
-      {{macros::link_hero_card(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value=false), banner = page.extra.poly.banner | default(value=false), pop = page.extra.poly.pop | default(value=false))}}
+      {{preview::macro(type="page", path=page.path, hero=hero, title=page.title, description=page.description, block=page.extra.poly.block | default(value=false), banner = page.extra.poly.banner | default(value=false), pop = page.extra.poly.pop | default(value=false))}}
       {% set_global rendered_pages = rendered_pages | concat(with=[page.path]) %}
     {% endif %}
   {% endfor %}
   {% if paginator and paginator.number_pagers > 1 %}
-    {{macros::pager(pagination=paginator)}}
+    {{util::pager(pagination=paginator)}}
   {% endif %}

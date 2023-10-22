@@ -1,4 +1,3 @@
-{% import "macros.html" as macros %}
 {% extends "layout.html" %}
 
 {% block layout_main %}
@@ -12,20 +11,20 @@
       <aside class="poly-page-aside">
         {% block taxonomy_aside %}
         <article class="poly-container">
-          {% set term_content = macros::get_taxonomy_term_content(kind=taxonomy.name, term=term.name) | trim %}
+          {% set term_content = util::get_taxonomy_term_content(kind=taxonomy.name, term=term.name) | trim %}
           {% if term_content | length > 0 %} 
             {{term_content | safe}}
           {% else %}
-            {% set term_description = macros::get_taxonomy_term_description(kind=taxonomy.name, term=term.name) | trim %}
+            {% set term_description = util::get_taxonomy_term_description(kind=taxonomy.name, term=term.name) | trim %}
             <h3>{{term.name}}</h3>
             {% if term_description | length > 0 %} 
               <p>{{term_description}}</p>
             {% endif %}
           {% endif %}
           <nav>
-            {% set taxonomy_title = macros::get_taxonomy_kind_title(kind=taxonomy.name) | trim %}
-            {% set taxonomy_description = macros::get_taxonomy_kind_description(kind=taxonomy.name, default=taxonomy_title) | trim %}
-            <a {{macros::link_attrs(type="taxonomy-kind", href="/"~taxonomy.slug, title=taxonomy_description)}}>
+            {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim %}
+            {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.name, default=taxonomy_title) | trim %}
+            <a {{util::link_attrs(type="taxonomy-kind", href="/"~taxonomy.slug, title=taxonomy_description)}}>
               <span class="has-text-grey-light">More: </span>{{taxonomy_title}}
             </a>
           </nav>

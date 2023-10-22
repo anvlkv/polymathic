@@ -1,4 +1,4 @@
-{% import "macros.html" as macros %}
+{% import "macros/util.html" as util %}
 
 {% set banner = banner | default(value=true) %}
 {% set color = color | default(value=false) %}
@@ -14,15 +14,15 @@
 >
   <div class="{{class_name}}"
     {% if hero and banner == true %}
-    style="{{macros::background_image_vars(path=macros::poly_path(value=hero, assets=content.assets) | trim)}}"
+    style="{{util::background_image_vars(path=util::poly_path(value=hero, assets=content.assets) | trim)}}"
     {% endif %}
   >
     {% if banner == false and hero is defined %} 
       {% set alt = alt | default(value= hero | split(pat=".") | first | replace(from="_", to=" ") | title ) %}
       <div class="card-image">
         <figure class="poly-image is-4by3">
-          <img {{macros::img_src(
-            src=macros::poly_path(value=hero, assets=content.assets) | trim, 
+          <img {{util::img_src(
+            src=util::poly_path(value=hero, assets=content.assets) | trim, 
             ratio=4.0/3.0,
             breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
             sizes=[200, 400, 600, 900],
