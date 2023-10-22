@@ -36,11 +36,11 @@
 
 {% macro brand_bar(menu_id=false) %}
 <div class="poly-brand">
-  <a class="poly-logo-link" href="{{config.base_url}}" {% if config.extra.poly.app_name %} title="{{config.extra.poly.app_name}}" {% endif %}>
+  <a class="poly-logo-link" href="{{config.base_url}}" {% if config.title %} title="{{config.title}}" {% endif %}>
     {% if config.extra.poly.logo %}
     <img src="{{get_url(path=config.extra.poly.logo)}}" alt="Logo">
-    {% elif config.extra.poly.app_name %}
-    <h2>{{config.extra.poly.app_name}}</h2>
+    {% elif config.title %}
+    <h2>{{config.title}}</h2>
     {% else %}
     <h2>Polymathic</h2>
     {% endif %}
@@ -56,11 +56,14 @@
 {% endmacro %}
 
 
-{% macro content_meta(content) %}
-<title>{{ content.title }}{% if config.extra.poly.app_name %} | {{config.extra.poly.app_name}}{% endif %}</title>
-<meta name="description" content="{{ content.description }}" />
-<meta property="og:title" content="{{ content.title }}" />
-<meta property="og:description" content="{{ content.description }}" />
+{% macro content_meta(content, root_title=true) %}
+<title>{{ content.title }}{% if config.title  and root_title == true %} | {{config.title}}{% endif %}</title>
+{% if content.description or config.description %}
+  {% set description = content.description | default(value=config.description) %}
+  <meta name="description" content="{{ description  }}" />
+  <meta property="og:description" content="{{ description }}" />
+{% endif %}
+<meta property="og:title" content="{{ content.title | default(value=config.title) }}" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
   {% if content.extra.poly.hero %}

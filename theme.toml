@@ -15,7 +15,6 @@ demo = "https://main--polymathic-demo.netlify.app/"
 font_url = "https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400;700&display=swap"
 favicon = false
 manifest = false
-app_name = false
 logo = false
 og_image= false
 menu_order = false
