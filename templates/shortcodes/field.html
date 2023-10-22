@@ -23,9 +23,7 @@
             </select>
           </div>
         {% elif type == "textarea" %}
-          <textarea name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" class="textarea" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >
-            {{ body | markdown(inline=true) | safe }}
-          </textarea>
+          <textarea name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" class="textarea" {% if placeholder %} placeholder="{{placeholder}}" {% endif %} >{{ body | markdown(inline=true) | safe }}</textarea>
         {% elif type == "checkbox" %}
           <label class="checkbox">
             <input name="{{name}}" {% if required %} required="required" {% endif %} id="{{id}}" type="checkbox">
