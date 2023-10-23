@@ -1,30 +1,31 @@
 {% import "macros/util.html" as util %}
-{% import "macros/navigation.html" as navigation %}
 {% import "macros/preview.html" as preview %}
+{% import "macros/brand.html" as brand %}
+{% import "macros/navigation.html" as navigation %}
 {% import "macros/footer.html" as footer %}
 
 {% block aside_content %}
-  {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim %}
-  {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.name) | trim %}
-  {% set taxonomy_content = util::get_taxonomy_kind_content(kind=taxonomy.name) | trim %}
-  {% if taxonomy_content | length > 0 %}
+  {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim -%}
+  {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.name) | trim -%}
+  {% set taxonomy_content = util::get_taxonomy_kind_content(kind=taxonomy.name) | trim -%}
+  {% if taxonomy_content | length > 0 -%}
     {{taxonomy_content | safe}}
-  {% else %}
+  {% else -%}
     <h3>{{taxonomy_title}}</h3>
-    {% if taxonomy_description | length > 0 %}
+    {% if taxonomy_description | length > 0 -%}
       <p>
         {{taxonomy_description}}
       </p>
-    {% endif %}
-  {% endif %}
+    {% endif -%}
+  {% endif -%}
 {% endblock %}
 
 {% block aside_nav %}
   <nav>
-    {% set order = util::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",") %}
-    {% for i in order %}
-      {% set term = terms[i] %}
+    {% set order = util::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",") -%}
+    {% for i in order -%}
+      {% set term = terms[i] -%}
       <a {{util::link_attrs(type="taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
-    {% endfor %}
+    {% endfor -%}
   </nav>
 {% endblock %}

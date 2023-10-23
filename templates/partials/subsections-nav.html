@@ -1,13 +1,10 @@
 {% import "macros/util.html" as util %}
-{% import "macros/navigation.html" as navigation %}
 {% import "macros/preview.html" as preview %}
+{% import "macros/brand.html" as brand %}
+{% import "macros/navigation.html" as navigation %}
 {% import "macros/footer.html" as footer %}
 
-{% for sub in section.subsections %}
-  {% set section = get_section(path=sub) %}
-    {% set hero = false %}
-    {% if section.extra.poly.hero %}
-      {% set hero = util::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim %}
-    {% endif %}
-    {{preview::macro(type="section", path=section.path, hero=hero, title=section.title, description = section.description, block = section.extra.poly.block | default(value=false), banner = section.extra.poly.banner | default(value=true), pop = section.extra.poly.pop | default(value=false))}}
-{% endfor %}
+{% for sub in section.subsections -%}
+  {% set sub_section = get_section(path=sub) -%}
+  {{preview::macro(type="section", entry=sub_section, parent_section=section)}}
+{% endfor -%}

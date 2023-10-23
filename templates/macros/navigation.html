@@ -1,74 +1,73 @@
 {% import "macros/util.html" as util %}
 
 {% macro macro(id="navigation", menu) %}
-{% set nav_current_path = current_path | default(value="") %}
-
+{% set nav_current_path = current_path | default(value="") -%}
 <nav class="poly-nav">
-  {% set_global rendered_terms = [] %}
-  {% for nav in menu %}
-    {% if nav is ending_with("_index.md")%}
-      {% set section = get_section(path=nav) %}
-      {% set is_arrowless = "is-arrowless" %}
-      {% if section.extra.poly.use_taxonomies %} 
-        {% set is_arrowless = false %}
+  {% set_global rendered_terms = [] -%}
+  {% for nav in menu -%}
+    {% if nav is ending_with("_index.md") %}
+      {% set section = get_section(path=nav) -%}
+      {% set is_arrowless = "is-arrowless" -%}
+      {% if section.extra.poly.use_taxonomies -%} 
+        {% set is_arrowless = false -%}
       {% endif %}
       <div class="poly-section-nav-wrapper{% if is_arrowless == false %} has-dropdown is-hoverable{% endif %}">
         <a {{util::link_attrs(type="section", href=section.path, title=section.title, current_url=nav_current_path, class=is_arrowless)}}>
           <div class="poly-content">
             <span class="poly-navigation-title">{{section.title}}</span>
-            {% if section.description %}
+            {% if section.description -%}
             <span class="poly-navigation-description">{{section.description}}</span>
             {% endif %}
           </div>
         </a>
   
-        {% if section.extra.poly.use_taxonomies %}
+        {% if section.extra.poly.use_taxonomies -%}
           <nav class="poly-taxonomy-nav-wrapper">
-            {% for tx in section.extra.poly.use_taxonomies %} 
-              {% set taxonomy = get_taxonomy(kind=tx) %}
-              {% if taxonomy.items | length > 0 %}
+            {% for tx in section.extra.poly.use_taxonomies -%} 
+              {% set taxonomy = get_taxonomy(kind=tx) -%}
+              {% if taxonomy.items | length > 0 -%}
                 <nav class="poly-taxonomy-nav">
-                  {% set_global taxonomy_secondary_terms = [] %}
-                  {% set order = util::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=taxonomy.items | map(attribute="name")) | trim | split(pat=",") %}
-                  {% for i in order %}
-                    {% set term = taxonomy.items[i] %}
-                    {% if rendered_terms is not containing(term.path)%}
-                      {% set_global has_tx = false %}
-                      {% for pg in term.pages %}
-                        {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx %}
+                  {% set_global taxonomy_secondary_terms = [] -%}
+                  {% set order = util::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=taxonomy.items | map(attribute="name")) | trim | split(pat=",") -%}
+                  {% for i in order -%}
+                    {% set term = taxonomy.items[i] -%}
+                    {% if rendered_terms is not containing(term.path) -%}
+                      {% set_global has_tx = false -%}
+                      {% for pg in term.pages -%}
+                        {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx -%}
                       {% endfor %}
-                      {% if has_tx %}
+                      {% if has_tx -%}
                         <a {{util::link_attrs(type="taxonomy-term", href=term.path, title=term.name, current_url=nav_current_path)}}>{{term.name}}</a>
-                        {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) %}
-                      {% endif %}
-                    {% else %}
-                      {% set_global taxonomy_secondary_terms = taxonomy_secondary_terms | concat(with=[term]) %}
-                    {% endif %}
-                  {% endfor %}
-                  {% if taxonomy_secondary_terms | length > 0 and taxonomy.kind.render %}
-                    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.kind.name) | trim %}
-                    {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.kind.name, default=taxonomy_title) | trim %}
+                        {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) -%}
+                      {% endif -%}
+                    {% else -%}
+                      {% set_global taxonomy_secondary_terms = taxonomy_secondary_terms | concat(with=[term]) -%}
+                    {% endif -%}
+                  {% endfor -%}
+                  {% if taxonomy_secondary_terms | length > 0 and taxonomy.kind.render -%}
+                    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.kind.name) | trim -%}
+                    {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.kind.name, default=taxonomy_title) | trim -%}
                     <a {{util::link_attrs(type="taxonomy-kind", href="/"~taxonomy.kind.slug, title=taxonomy_description, current_url=nav_current_path)}}>
                       {{ taxonomy_title }}
                     </a>
-                  {% endif %}
+                  {% endif -%}
                 </nav>
-              {% endif %}
-            {% endfor %}
+              {% endif -%}
+            {% endfor -%}
           </nav>
-        {% endif %}
+        {% endif -%}
       </div>
     {% else %}
-      {% set page = get_page(path=nav) %}
+      {% set page = get_page(path=nav) -%}
       <a {{util::link_attrs(type="page", href=page.path, title=page.title, current_url=nav_current_path)}} >
         <div class="poly-content">
           <span class="poly-navigation-title">{{page.title}}</span>
-          {% if page.description %}
+          {% if page.description -%}
           <span class="poly-navigation-description">{{page.description}}</span>
           {% endif %}
         </div>
       </a>
-    {% endif %}
-  {% endfor %}
+    {% endif -%}
+  {% endfor -%}
 </nav>
 {% endmacro %}
