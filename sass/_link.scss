@@ -1,32 +1,91 @@
+.poly-link-text {
+  color: $link;
+  position: relative;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+}
+
+
+.poly-link-hover-text {
+  text-decoration-thickness: .1rem;
+  @include hover((color, text-decoration-color)) {
+    color: $link-dark !important;
+    text-decoration: underline;
+    text-decoration-skip-ink: all; 
+    text-decoration-thickness: .1rem;
+    text-decoration-color: $link-dark;
+  }
+}
+
 .poly-section-link,
 .poly-taxonomy-term-link,
 .poly-page-link,
 .poly-out-link,
+.poly-logo-link,
 .poly-taxonomy-kind-link,
-.poly-link {
-  color: $link !important;
-  position: relative;
-
-  &.poly-active-link {
-    pointer-events: none;
-    color: $grey-dark !important;
-    text-decoration: underline;
-  }
+.poly-link  {
+  @extend .poly-link-text, .poly-link-hover-text;
 }
 
-.poly-link-hover-block {
-  @include hover() {
-    background-color: $link-light !important;
-    &, * {
-      color: $link-dark !important;
+.poly-logo-link {
+  @extend .has-text-primary;
+}
+
+.poly-card-section-link,
+.poly-card-page-link {
+  .title {
+    text-decoration: overline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: .5px;
+  }
+  @include hover((color, background-color, box-shadow, text-decoration-color)) {
+  .poly-hero-card {
+      background-color: $link-light !important;
+      box-shadow: $box-link-hover-shadow;
+      &, * {
+        color: $link-dark !important;
+      }
+      .title {
+        text-decoration: overline;
+        text-decoration-skip-ink: all;
+        text-decoration-thickness: .5px;
+        text-decoration-color: $link-dark;
+      }
     }
   }
 }
 
-.poly-link-hover-text {
-  @include hover((color, text-decoration-color, text-decoration)) {
-    color: $link-dark !important;
+.poly-block-section-link,
+.poly-block-page-link {
+  .title {
     text-decoration: underline;
-    text-decoration-color: $link-light !important;
+    text-decoration-color: transparent;
+    text-decoration-thickness: .5px;
   }
+  @include hover((color, text-decoration-color)) {
+    .poly-hero-block {
+      background-color: $link-light !important;
+      .title {
+        text-decoration-thickness: .5px;
+        color: $link-dark !important;
+        text-decoration: underline;
+        text-decoration-skip-ink: all;
+        text-decoration-color: $link-dark;
+      }
+    }
+  }
+}
+
+.poly-group-taxonomy-term-link,
+.poly-group-section-link {
+  @extend .poly-link-text, .poly-link-hover-text;
+  @include hover((color, background-color, text-decoration-color)) {
+    background-color: $link-light !important;
+  }
+}
+
+.poly-active-link {
+  pointer-events: none;
+  color: $grey-dark;
+  text-decoration: underline;
 }

@@ -11,7 +11,9 @@
   {% set term = terms[i]  -%}
   {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
   {% set pages = term.pages | sort(attribute=sort_by)  -%}
-  <a {{util::link_attrs(type="taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
+  <div class="poly-group-title">
+    <a {{util::link_attrs(type="group-taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
+  </div>
   {% if config.extra.poly.menu_order  -%}
     {% for nav in config.extra.poly.menu_order  -%}
       {% if nav is ending_with("_index.md") -%}
@@ -26,8 +28,10 @@
             {% endif  -%}
           {% endfor  -%}
           {% if rendered_count > 0  -%}
-            <a {{util::link_attrs(type="section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
+          <div class="poly-group-footer">
+            <a {{util::link_attrs(type="group-section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
             <hr/>
+          </div>
           {% endif  -%}
         {% endif  -%}
       {% endif  -%}

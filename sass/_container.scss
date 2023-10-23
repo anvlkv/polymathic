@@ -9,9 +9,13 @@
         @extend .title, .is-size-#{$i}-desktop;
         @if $i < 6 {
           @extend .is-size-#{$i + 1}-tablet;
+        } @else {
+          @extend .is-size-#{$i}-tablet;
         }
         @if $i < 5 {
           @extend .is-size-#{$i + 2}-mobile;
+        } @else {
+          @extend .is-size-#{$i}-mobile;
         }
         width: 100%;
         color: inherit;

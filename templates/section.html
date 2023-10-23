@@ -7,13 +7,15 @@
 {% endblock %}
 
 {% block layout_main %}
-  <div class="poly-sections-content">
+  <div class="poly-page-content">
     <section>
       {% block section_pages %}
-        <article class="poly-container">
+        <article class="poly-page-main poly-grid">
           {% include "partials/subsections-nav.html" %}
           {% if section.subsections | length > 0 %}
-            <hr/>
+            <div class="poly-group-footer">
+              <hr/>
+            </div>
           {% endif %}
           {% include "partials/pages-nav.html" %}
         </article>

@@ -1,6 +1,7 @@
 {% set title = title | default(value=false) %}
+{% set type = type | default(value="info") %}
 <div class="poly-container-block">
-  <article class="poly-message">
+  <article class="poly-message is-{{type}}">
     {% if title %}
     <div class="message-header">
       {%if title %}

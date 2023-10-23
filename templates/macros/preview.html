@@ -1,11 +1,16 @@
 {% import "macros/util.html" as util %}
 
 {% macro default(title, path, type, description=false, pop=false, hero=false) %}
-  {% set class_name = "poly-tile poly-tile-layout-default" -%}
+  {% set class_name = "poly-tile" -%}
+  {% if hero != false -%}
+      {% set class_name = class_name~" poly-tile-layout-hero" -%}
+    {% else -%}
+      {% set class_name = class_name~" poly-tile-layout-default" -%}
+  {% endif -%}
   {% if pop == true -%}
     {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
-  <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}>
+  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}>
     <div class="poly-hero-card">
       {% if hero != false -%}
         <div class="card-image">
@@ -37,7 +42,7 @@
     {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
   
-  <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
+  <a {{util::link_attrs(type="block-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
     {% if hero != false -%}
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
@@ -59,7 +64,7 @@
     {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
   
-  <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
+  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
     {% if hero != false -%}
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
@@ -87,7 +92,7 @@
     {% endif -%}
   >
     <div class="poly-hero-block">
-      <div class="poly-content">
+      <div class="title is-6">
         <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path)}}>
           {{title}}
         </a>
@@ -96,7 +101,7 @@
         {{content | safe}}
       </div>
     </div>
-  </a>
+  </div>
 {% endmacro %}
 
 {% macro macro(entry, parent_section, type) %}

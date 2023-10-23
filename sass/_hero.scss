@@ -82,15 +82,14 @@
 }
 
 .poly-hero-block {
-  @extend .section;
-
   &.poly-with-image {
     @include backgrounds();
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     .poly-content {
-      text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white, 1px 1px 0 $white;
+      color: $white;
+      text-shadow: 0px 1px 5px rgba($black, .75);
     }
   }
 }
