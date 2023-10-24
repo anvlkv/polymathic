@@ -1,7 +1,6 @@
 .poly-grid {
   @extend .columns, .is-multiline, .is-mobile, .mx-0;
 
-
   .poly-group-title,
   .poly-group-footer {
     @extend .column, .is-full, .p-0;
@@ -26,15 +25,20 @@
 
   .poly-tile {
     @extend .column;
-    @extend .animate__animated;
+
     --animate-delay: calc(var(--animate-duration) / 4);
 
-    &:nth-child(n+2) {
+    &:nth-child(n + 2) {
       @extend .animate__delay-1s;
+      &.poly-tile-layout-contents {
+        .title {
+          @extend .animate__delay-1s;
+        }
+      }
     }
 
     @for $i from 1 through 12 {
-      &:nth-child(#{$i+1}n) {
+      &:nth-child(#{$i + 1}n) {
         --animate-delay: calc(var(--animate-duration) / 4 * #{$i});
       }
     }
@@ -52,18 +56,24 @@
     &.poly-tile-layout-hero,
     &.poly-tile-layout-banner {
       padding: calc($column-gap + $poly-grid-pop);
-      @extend .animate__bounceIn;
+      @extend .animate__animated, .animate__bounceIn;
     }
 
     &.poly-tile-layout-block,
     &.poly-tile-layout-contents {
       @extend .is-full, .p-0;
-      @extend .animate__fadeInRight;
 
       .poly-hero-block {
         padding: calc($column-gap + $poly-grid-pop);
       }
 
+      &:first-child {
+        margin-top: $column-gap;
+      }
+    }
+
+    &.poly-tile-layout-block {
+      @extend .animate__animated, .animate__fadeInRight;
       & + .poly-tile-layout-block,
       & + .poly-tile-layout-contents {
         &::before {
@@ -72,9 +82,18 @@
           margin: 0 $poly-grid-pop;
         }
       }
+    }
 
-      &:first-child {
-        margin-top: $column-gap;
+    &.poly-tile-layout-contents {
+      .title {
+        @extend .animate__animated, .animate__fadeInRight;
+      }
+      & + .poly-tile-layout-block {
+        &::before {
+          @extend hr;
+          content: "";
+          margin: 0 $poly-grid-pop;
+        }
       }
     }
 
