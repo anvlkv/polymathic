@@ -79,6 +79,7 @@
     }
 
     &.poly-pop {
+      @extend .animate__slow;
       &.poly-tile-layout-block,
       &.poly-tile-layout-contents {
         .poly-hero-block {
