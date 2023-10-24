@@ -1,30 +1,38 @@
 {% import "macros/util.html" as util %}
+{% import "macros/preview.html" as preview %}
 {% import "macros/navigation.html" as navigation %}
 
 
 {% macro macro(class="") %}
-{%- set nav_current_path = current_path | default(value="") %}
-{%- if config.extra.poly.menu_order or config.extra.poly.social_outlink %}
-<footer class="poly-navigation-footer {{class}}">
-  <div class="poly-navigation-container">
-    {% if config.extra.poly.menu_order -%}
-      {{navigation::macro(menu=config.extra.poly.menu_order, id="footer")}}
-    {% endif %}
-    {%- if config.extra.poly.social_outlink %}
-    <section class="poly-outlink-footer">
-      {% for link in config.extra.poly.social_outlink %}
-      <a {{util::link_attrs(type="out", href=link.href, title=link.title, current_url=nav_current_path)}} >
-        {{link.title}}
-        {% if link.icon -%}
-        <span class="icon">
-          <i class="{{link.icon}}"></i>
-        </span>
+  {%- set nav_current_path = current_path | default(value="") %}
+  {%- if config.extra.poly.menu_order or config.extra.poly.social_outlink or config.extra.poly.license %}
+    <footer class="poly-navigation-footer {{class}}">
+      <div class="poly-navigation-container">
+        {% if config.extra.poly.menu_order -%}
+          {{navigation::macro(menu=config.extra.poly.menu_order, id="footer", recursively=true, plain=true)}}
         {% endif %}
-      </a>
-      {% endfor %}
-    </section>
-    {% endif %}
-  </div>
-</footer>
-{% endif -%}
+        {%- if config.extra.poly.social_outlink %}
+          <section class="poly-outlink-footer">
+            {% for link in config.extra.poly.social_outlink %}
+            <a {{util::link_attrs(type="out", href=link.href, title=link.description | default(value=link.title), current_url=nav_current_path)}} >
+              {{link.title}}
+              {% if link.icon -%}
+                <span class="icon">
+                  <i class="{{link.icon}}"></i>
+                </span>
+              {% endif %}
+            </a>
+            {% endfor %}
+          </section>
+        {% endif %}
+        {% if config.extra.poly.license -%}
+          <section class="poly-license-footer">
+            {% set nav_current_path = current_path | default(value="") -%}
+            {% set license = get_page(path=config.extra.poly.license) -%}
+            {{preview::plain(type="page", href=license.path, title=license.title, description=license.description, nav_current_path=nav_current_path) }}
+          </section>
+        {% endif -%}
+      </div>
+    </footer>
+  {% endif -%}
 {% endmacro %}

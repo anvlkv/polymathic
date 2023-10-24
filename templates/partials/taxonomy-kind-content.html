@@ -12,7 +12,7 @@
   {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
   {% set pages = term.pages | sort(attribute=sort_by)  -%}
   <div class="poly-group-title">
-    <a {{util::link_attrs(type="group-taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
+    {{preview::macro_tx(entry=term, type="term", parent=taxonomy)}}
   </div>
   {% if config.extra.poly.menu_order  -%}
     {% for nav in config.extra.poly.menu_order  -%}
@@ -29,7 +29,11 @@
           {% endfor  -%}
           {% if rendered_count > 0  -%}
           <div class="poly-group-footer">
-            <a {{util::link_attrs(type="group-section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
+            {% set parent = section.ancestors | last -%}
+            {% if parent -%}
+              {% set parent = get_section(path=parent, metadata_only=true) -%}
+            {% endif -%}
+            {{preview::macro(entry=section, type="section", plain=true, parent_section=parent)}}
             <hr/>
           </div>
           {% endif  -%}

@@ -26,7 +26,11 @@
           {% endfor  -%}
           {% if rendered_count > 0  -%}
           <div class="poly-group-footer">
-            <a {{util::link_attrs(type="section", href=section.path, title=section.description|default(value=section.title))}}><span class="has-text-grey-light">See all: </span>{{section.title}}</a>
+            {% set parent = section.ancestors | last -%}
+            {% if parent -%}
+              {% set parent = get_section(path=parent, metadata_only=true) -%}
+            {% endif -%}
+            {{preview::macro(entry=section, type="section", plain=true, parent_section=parent)}}
             <hr/>
           </div>
           {% endif  -%}

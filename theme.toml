@@ -19,6 +19,7 @@ logo = false
 og_image= false
 menu_order = false
 social_outlink = false
+license=false
 animate_duration = "800ms"
 animate_delay = "950ms"
 animate_repeat = 1

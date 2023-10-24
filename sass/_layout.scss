@@ -3,43 +3,6 @@
   > nav {
     @extend .navbar;
 
-    > nav {
-      @extend .navbar-menu;
-      .poly-nav {
-        @extend .navbar-start;
-        .poly-navigation-description {
-          @extend .is-hidden;
-        }
-        .poly-section-nav-wrapper,
-        .poly-page-link {
-          @extend .navbar-item;
-        }
-        .poly-section-link {
-          @extend .navbar-link;
-          .poly-content {
-            display: contents;
-          }
-        }
-        .poly-taxonomy-nav-wrapper {
-          @extend .navbar-dropdown;
-          .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
-            @extend .navbar-item;
-          }
-          .poly-taxonomy-kind-link {
-            @extend .has-text-weight-bold;
-          }
-        }
-      }
-    }
-  }
-
-  .poly-section-link,
-  .poly-taxonomy-term-link,
-  .poly-page-link,
-  .poly-taxonomy-kind-link,
-  .poly-logo-link,
-  .poly-link {
-    @extend .poly-link-hover-block;
   }
 }
 

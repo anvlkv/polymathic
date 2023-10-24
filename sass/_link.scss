@@ -55,6 +55,10 @@ $poly-block-hover-background: linear-gradient(
 
 .poly-logo-link {
   @extend .has-text-primary;
+  @include hover((color, text-decoration-color)) {
+    color: $primary-dark !important;
+    text-decoration-color: $primary-dark !important;
+  }
 }
 
 .poly-card-section-link,

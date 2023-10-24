@@ -25,7 +25,7 @@
     {% set order = util::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",") -%}
     {% for i in order -%}
       {% set term = terms[i] -%}
-      <a {{util::link_attrs(type="taxonomy-term", href=term.path, title=term.name)}}>{{term.name}}</a>
+      {{preview::macro_tx(entry=term, type="term", parent=taxonomy)}}
     {% endfor -%}
   </nav>
 {% endblock %}

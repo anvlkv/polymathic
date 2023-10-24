@@ -5,47 +5,10 @@
     @extend .container, .is-container, .is-fullhd, .has-text-centered-mobile;
   }
 
-  .poly-nav {
-    @extend .columns, .is-tablet;
-  }
-  .poly-section-nav-wrapper {
-    display: contents;
-  }
-  .poly-taxonomy-nav-wrapper {
-    @extend .column, .p-0, .is-flex, .is-flex-direction-column;
-  }
-  .poly-section-link,
-  .poly-page-link {
-    display: contents;
-    .content {
-      display: contents;
-      @include from($tablet) {
-        text-align: right;
-      }
-    }
-  }
-  .poly-taxonomy-nav {
-    display: contents;
-  }
-  .poly-navigation-title {
-    @extend .column, .is-flex-grow-0, .is-flex-shrink-0, .is-block;
-    @extend .poly-link-hover-text;
-    order: 0;
-    height: fit-content;
-    white-space: nowrap;
-    padding: $column-gap;
-  }
-  .poly-taxonomy-term-link,
-  .poly-taxonomy-kind-link {
-    @extend .p-3;
-    width: auto;
-  }
-  .poly-navigation-description {
-    @extend .is-hidden;
-  }
+  
 
-  .poly-outlink-footer {
-    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap;
+  .poly-outlink-footer, .poly-license-footer {
+    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap, .mt-4;
   }
 
   .poly-out-link {
@@ -56,14 +19,5 @@
   }
   .poly-content {
     display: contents;
-  }
-
-  .poly-section-link,
-  .poly-taxonomy-term-link,
-  .poly-taxonomy-kind-link,
-  .poly-page-link,
-  .poly-out-link,
-  .poly-link {
-    @extend .poly-link-hover-text;
   }
 }

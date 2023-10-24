@@ -7,7 +7,7 @@
         {{brand::macro(menu_id="poly-layout-header")}}
         <nav id="poly-layout-header">
           {% if config.extra.poly.menu_order %}
-            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header")}}
+            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header", plain=true)}}
           {% endif %}
         </nav>
       </nav>
