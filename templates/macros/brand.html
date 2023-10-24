@@ -1,0 +1,21 @@
+{% macro macro(menu_id=false, app_title=true) %}
+  <div class="poly-brand{% if config.extra.poly.logo %} poly-with-image{% endif %}">
+    <a class="poly-logo-link" href="{{config.base_url}}" {% if config.title %} title="{{config.title}}" {% endif %}>
+      {% if config.extra.poly.logo -%}
+        <img src="{{get_url(path=config.extra.poly.logo)}}" alt="{{config.title | default(value='polymathic app')}} logo">
+      {% endif -%}
+      {% if config.title and app_title == true -%}
+        <h2>{{config.title}}</h2>
+      {% elif app_title == true -%}
+        <h2>polymathic</h2>
+      {% endif -%}
+    </a>
+    {% if menu_id %} 
+      <a id="menu-trigger-{{menu_id}}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="{{menu_id}}">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    {% endif %}
+  </div>
+{% endmacro %}

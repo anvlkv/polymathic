@@ -1,26 +1,25 @@
 .poly-page-content {
   @extend .container, .is-container, .is-fullhd;
-  min-height: calc(100vh - 13rem);
-  overflow: hidden;
+  min-height: calc(100vh - 15rem);
   
   > section {
     @extend .columns, .is-flex, .mb-4, .mt-6;
     @include until($desktop) {
       flex-direction: column;
     }
-    > .poly-container {
+    .poly-page-content {
       @extend .column;
-      @include from($widescreen) {
-        max-width: $widescreen;
-        margin-left: auto;
-        margin-right: 0;
-        &:only-child {
-          margin-right: auto;
-        }
-      }
+      // @include from($widescreen) {
+      //   max-width: $widescreen;
+      //   margin-left: auto;
+      //   margin-right: 0;
+      //   &:only-child {
+      //     margin-right: auto;
+      //   }
+      // }
     }
     .poly-page-aside {
-      @extend .column, .is-full-tablet, .is-one-third-desktop, .is-one-fifth-fullhd;
+      @extend .column, .is-full-tablet, .is-one-third-desktop;
       order: -1;
       @include until($desktop) {
         border-bottom: .1px solid $grey-light;

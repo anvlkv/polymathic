@@ -1,35 +1,34 @@
-{% import "macros.html" as macros %}
+{% import "macros/util.html" as util %}
+{% import "macros/navigation.html" as navigation %}
+{% import "macros/preview.html" as preview %}
+{% import "macros/footer.html" as footer %}
+{% import "macros/brand.html" as brand %}
 
 <div class="poly-hero">
   <section>
-    {% if config.extra.poly.logo %}
+    {% if config.extra.poly.logo -%}
     <header class="animate__animated animate__slideInDown">
       <nav>
         <nav>
-          {{macros::brand_bar()}}
+          {{brand::macro()}}
         </nav>
       </nav>
     </header>
-    {% endif %}
+    {% endif -%}
     <div
-      class="poly-hero-body {%if section.extra.poly.hero %} poly-with-image{%endif%}"
-      {%
-      if
-      section.extra.poly.hero
-      %}
-      style="{{macros::background_image_vars(path=macros::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim)}}"
-      {%
-      endif
-      %}
+      class="poly-hero-body{% if section.extra.poly.hero %} poly-with-image{% endif %}"
+      {% if section.extra.poly.hero -%}
+      style="{{util::background_image_vars(path=util::poly_path(value=section.extra.poly.hero, assets=section.assets) | trim)}}"
+      {% endif -%}
     >
     <div class="poly-content">
       <div class="section">
         <p class="title">{{section.title | default(value="polymathic")}}</h1>
-          {% if section.title %}
+          {% if section.title -%}
             <p class="subtitle">{{section.description}}</p>
-          {% else %}
+          {% else -%}
             <p class="subtitle">{{section.description | default(value="Zola portfolio theme for those with many talents")}}</p>
-          {% endif %}
+          {% endif -%}
       </div>
     </div>
     </div>

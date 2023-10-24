@@ -44,10 +44,10 @@ $poly-link: color.adjust(
   $hue: -1 * $poly-mono-range,
   $blackness: 10%
 );
-
 @if color.saturation($poly-link) < $poly-accent-saturation {
   $poly-link: color.change($poly-link, $saturation: $poly-accent-saturation);
 }
+
 $poly-info: color.adjust($poly-primary, $hue: $poly-mono-range);
 @if color.saturation($poly-info) < $poly-accent-saturation {
   $poly-info: color.change($poly-info, $saturation: $poly-accent-saturation);
@@ -67,6 +67,7 @@ $_level: map.get($poly-config, "a11y-contrast") or "AA";
     $bold: true,
   );
 }
+
 @if map.get($poly-config, "text-color") {
   $poly-text: map.get($poly-config, "text-color");
 } @else {
@@ -78,6 +79,7 @@ $_level: map.get($poly-config, "a11y-contrast") or "AA";
     $bold: false,
   );
 }
+
 @if map.get($poly-config, "link-color") {
   $poly-link: map.get($poly-config, "link-color");
 } @else {
@@ -137,6 +139,8 @@ $poly-link-light: map.get($poly-config, "link-color-light") or
     $size: $_size,
     $bold: true,
   ) !default;
+
+$poly-grid-pop: map.get($poly-config, "grid-pop-size") or .75rem !default;
 
 // Update Bulma's variables to poly defaults;
 $family-primary: $poly-font-family;

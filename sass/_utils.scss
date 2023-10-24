@@ -1,17 +1,19 @@
-@mixin backgrounds() {
-  background-image: var(--background-sm);
+@use "sass:list";
+
+@mixin backgrounds($layers: ()) {
+  background-image: list.append($layers, var(--background-sm), $separator: comma);
       
   @include from($tablet) {
-    background-image: var(--background-tablet);
+    background-image: list.append($layers, var(--background-tablet), $separator: comma);
   }
   @include from($desktop) {
-    background-image: var(--background-desktop);
+    background-image: list.append($layers, var(--background-desktop), $separator: comma);
   }
   @include from($widescreen) {
-    background-image: var(--background-widescreen);
+    background-image: list.append($layers, var(--background-widescreen), $separator: comma);
   }
   @include from($fullhd) {
-    background-image: var(--background-fullhd);
+    background-image: list.append($layers, var(--background-fullhd), $separator: comma);
   }
 }
 
@@ -23,9 +25,9 @@
   }
 }
 
-@mixin hover($transition-props: (box-shadow, color, background-color)) {
+@mixin hover($transition-props: (box-shadow, color, background-color), $multiplier: 1) {
   &, * {
-    @include transition($props: $transition-props)
+    @include transition($props: $transition-props, $multiplier: $multiplier)
   }
   &:hover {
     @content;

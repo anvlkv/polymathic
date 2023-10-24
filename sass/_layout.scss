@@ -1,17 +1,8 @@
 .poly-header {
-  @extend .navbar;
+  @extend .container, .is-fullhd;
   > nav {
-    @extend .container, .is-fluid;
-    @include until($tablet) {
-      padding-left: 0;
-      padding-right: 0;
-    }
-    @include from($tablet) {
-      @include until($desktop) {
-        padding-left: $gap/2;
-        padding-right: $gap/2;
-      }
-    }
+    @extend .navbar;
+
     > nav {
       @extend .navbar-menu;
       .poly-nav {

@@ -1,0 +1,126 @@
+{% import "macros/util.html" as util %}
+
+{% macro default(title, path, type, description=false, pop=false, hero=false) %}
+  {% set class_name = "poly-tile" -%}
+  {% if hero != false -%}
+      {% set class_name = class_name~" poly-tile-layout-hero" -%}
+    {% else -%}
+      {% set class_name = class_name~" poly-tile-layout-default" -%}
+  {% endif -%}
+  {% if pop == true -%}
+    {% set class_name = class_name~" poly-pop" -%}
+  {% endif -%}
+  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}>
+    <div class="poly-hero-card">
+      {% if hero != false -%}
+        <div class="poly-card-image">
+          <figure class="poly-image is-1by1">
+            <img {{util::img_src(
+              src=hero, 
+              ratio=1.0/1.0,
+              breakpoints=["min-width: 300px", "min-width: 200px"],
+              sizes=[400, 300, 216],
+            ) }} 
+            alt="{{title}}"
+            />
+          </figure>
+        </div>
+      {% endif -%}
+      <div class="poly-content">
+        <p class="title is-4 is-subtitle">{{ title }}</p>
+        {% if description != false -%}
+          <p>{{ description }}</p>
+        {% endif -%}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+{% macro block(title, path, type, description=false, pop=false, hero=false) %}
+  {% set class_name = "poly-tile poly-tile-layout-block" -%}
+  {% if pop == true -%}
+    {% set class_name = class_name~" poly-pop" -%}
+  {% endif -%}
+  
+  <a {{util::link_attrs(type="block-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
+    {% if hero != false -%}
+      style="{{util::background_image_vars(path=hero)}}"
+    {% endif -%}
+  >
+    <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
+      <div class="poly-content">
+        <p class="title is-4 is-subtitle">{{ title }}</p>
+        {% if description != false -%}
+          <p class="content">{{ description }}</p>
+        {% endif -%}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+{% macro banner(title, path, type, description=false, pop=false, hero=false) %}
+  {% set class_name = "poly-tile poly-tile-layout-banner" -%}
+  {% if pop == true -%}
+    {% set class_name = class_name~" poly-pop" -%}
+  {% endif -%}
+  
+  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
+    {% if hero != false -%}
+      style="{{util::background_image_vars(path=hero)}}"
+    {% endif -%}
+  >
+    <div class="poly-hero-card{% if hero != false %} poly-with-image{% endif %}">
+      <div class="poly-content">
+        <p class="title is-4 is-subtitle">{{ title }}</p>
+        {% if description != false -%}
+          <p class="content">{{ description }}</p>
+        {% endif -%}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+{% macro contents(content, title, path, type, description=false, pop=false, hero=false) %}
+  {% set class_name = "poly-tile poly-tile-layout-contents" -%}
+  {% if pop == true -%}
+    {% set class_name = class_name~" poly-pop" -%}
+  {% endif -%}
+  
+  <div class="{{class_name}}"
+    {% if hero != false -%}
+      style="{{util::background_image_vars(path=hero)}}"
+    {% endif -%}
+  >
+    <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
+      <div class="title is-6">
+        <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path)}}>
+          {{title}}
+        </a>
+      </div>
+      <div class="poly-content">
+        {{content | safe}}
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro macro(entry, parent_section, type) %}
+  {% set hero = false -%}
+  {% if entry.extra.poly.hero -%}
+    {% set hero = util::poly_path(value=entry.extra.poly.hero, assets=entry.assets) | trim -%}
+  {% endif -%}
+  {% set fallback = parent_section.extra.poly.page_thumbnails | default(value="default") -%}
+  {% if type == "section" -%} 
+    {% set fallback = parent_section.extra.poly.section_thumbnails | default(value="default") -%}
+  {% endif -%}
+  {% set layout = entry.extra.poly.thumbnail | default(value = fallback) -%}
+  {% if layout == "contents" -%}
+    {{preview::contents(content=entry.content, type=type, path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
+  {% elif layout == "banner" -%}
+    {{preview::banner(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
+  {% elif layout == "block" -%}
+    {{preview::block(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
+  {% else -%}
+    {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
+  {% endif -%}
+{% endmacro %}
