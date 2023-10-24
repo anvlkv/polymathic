@@ -1,3 +1,10 @@
+$poly-block-hover-background: linear-gradient(
+  to bottom,
+  rgba($poly-link-light, 0),
+  rgba($poly-link-light, 0.25) 7%,
+  rgba($poly-link-light, 0.95)
+);
+
 .poly-link-text {
   color: $link;
   position: relative;
@@ -5,15 +12,34 @@
   text-decoration-color: transparent;
 }
 
-
 .poly-link-hover-text {
-  text-decoration-thickness: .1rem;
+  text-decoration-thickness: 0.1rem;
   @include hover((color, text-decoration-color)) {
     color: $link-dark !important;
     text-decoration: underline;
-    text-decoration-skip-ink: all; 
-    text-decoration-thickness: .1rem;
+    text-decoration-skip-ink: all;
+    text-decoration-thickness: 0.1rem;
     text-decoration-color: $link-dark;
+  }
+}
+
+.poly-hero-hover {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    display: inline-block;
+    animation-play-state: paused;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    left: 0;
+    top:0;
+    background-image: $poly-block-hover-background;
+  }
+  .poly-content{
+    position: relative;
   }
 }
 
@@ -23,7 +49,7 @@
 .poly-out-link,
 .poly-logo-link,
 .poly-taxonomy-kind-link,
-.poly-link  {
+.poly-link {
   @extend .poly-link-text, .poly-link-hover-text;
 }
 
@@ -33,23 +59,44 @@
 
 .poly-card-section-link,
 .poly-card-page-link {
-  .title {
+  .title::first-line {
     text-decoration: overline;
     text-decoration-color: transparent;
-    text-decoration-thickness: .5px;
+    text-decoration-thickness: 0.5px;
   }
-  @include hover((color, background-color, box-shadow, text-decoration-color)) {
-  .poly-hero-card {
+
+  .poly-hero-card.poly-with-image {
+    --animate-duration: #{$poly-ui-transition-time * 1.5};
+    @extend .poly-hero-hover;
+  }
+
+  @include hover(
+    (color, background-color, box-shadow, text-decoration-color),
+    1.5
+  ) {
+    .poly-hero-card {
       background-color: $link-light !important;
       box-shadow: $box-link-hover-shadow;
-      &, * {
+      &,
+      .content,
+      .title {
         color: $link-dark !important;
       }
-      .title {
+      .title::first-line {
         text-decoration: overline;
         text-decoration-skip-ink: all;
-        text-decoration-thickness: .5px;
+        text-decoration-thickness: 0.5px;
         text-decoration-color: $link-dark;
+      }
+      &.poly-with-image {
+        .poly-content {
+          text-shadow: 0 0 0 transparent;
+        }
+
+        &::before {
+          @extend .animate__animated, .animate__fadeInUp;
+          animation-play-state: running;
+        }
       }
     }
   }
@@ -60,17 +107,34 @@
   .title {
     text-decoration: underline;
     text-decoration-color: transparent;
-    text-decoration-thickness: .5px;
+    text-decoration-thickness: 0.5px;
   }
-  @include hover((color, text-decoration-color)) {
+  .poly-hero-block.poly-with-image {
+    --animate-duration: #{$poly-ui-transition-time * 2};
+    @extend .poly-hero-hover;
+  }
+  @include hover((color, text-decoration-color, text-shadow), 2) {
     .poly-hero-block {
       background-color: $link-light !important;
       .title {
-        text-decoration-thickness: .5px;
         color: $link-dark !important;
+        text-decoration-thickness: 0.5px;
         text-decoration: underline;
         text-decoration-skip-ink: all;
         text-decoration-color: $link-dark;
+      }
+      &.poly-with-image {
+        .poly-content {
+          text-shadow: 0 0 0 transparent;
+          .title,
+          .content {
+            @extend .has-text-link-dark;
+          }
+        }
+        &::before {
+          @extend .animate__animated, .animate__fadeInUp;
+          animation-play-state: running;
+        }
       }
     }
   }

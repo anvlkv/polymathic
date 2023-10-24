@@ -13,13 +13,13 @@
   <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}>
     <div class="poly-hero-card">
       {% if hero != false -%}
-        <div class="card-image">
-          <figure class="poly-image is-4by3">
+        <div class="poly-card-image">
+          <figure class="poly-image is-1by1">
             <img {{util::img_src(
               src=hero, 
-              ratio=4.0/3.0,
-              breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-              sizes=[200, 400, 600, 900],
+              ratio=1.0/1.0,
+              breakpoints=["min-width: 300px", "min-width: 200px"],
+              sizes=[400, 300, 216],
             ) }} 
             alt="{{title}}"
             />
@@ -47,11 +47,11 @@
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
   >
-    <div class="poly-hero-block">
+    <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
       <div class="poly-content">
         <p class="title is-4 is-subtitle">{{ title }}</p>
         {% if description != false -%}
-          <p>{{ description }}</p>
+          <p class="content">{{ description }}</p>
         {% endif -%}
       </div>
     </div>
@@ -69,11 +69,11 @@
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
   >
-    <div class="poly-hero-card">
+    <div class="poly-hero-card{% if hero != false %} poly-with-image{% endif %}">
       <div class="poly-content">
         <p class="title is-4 is-subtitle">{{ title }}</p>
         {% if description != false -%}
-          <p>{{ description }}</p>
+          <p class="content">{{ description }}</p>
         {% endif -%}
       </div>
     </div>
@@ -91,7 +91,7 @@
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
   >
-    <div class="poly-hero-block">
+    <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
       <div class="title is-6">
         <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path)}}>
           {{title}}

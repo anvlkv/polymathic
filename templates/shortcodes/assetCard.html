@@ -8,7 +8,7 @@
   <a class="poly-asset-card js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=util::poly_path(value=image, assets=content.assets)) | safe}}" {% endif %}>
     {% if image %}
       {% set alt = alt | default(value= image | split(pat=".") | first | replace(from="_", to=" ") | title ) %}
-      <div class="card-image">
+      <div class="poly-card-image">
         <figure class="image is-16by9">
           <img {{util::img_src(
             src=util::poly_path(value=image, assets=content.assets) | trim, 

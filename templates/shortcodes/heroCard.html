@@ -19,7 +19,7 @@
   >
     {% if banner == false and hero is defined %} 
       {% set alt = alt | default(value= hero | split(pat=".") | first | replace(from="_", to=" ") | title ) %}
-      <div class="card-image">
+      <div class="poly-card-image">
         <figure class="poly-image is-4by3">
           <img {{util::img_src(
             src=util::poly_path(value=hero, assets=content.assets) | trim, 

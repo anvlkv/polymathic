@@ -1,3 +1,5 @@
+$poly-hero-text-shadow: 0 .1em .15em rgba($black, .75) !default;
+
 .poly-hero {
   @extend .container, .is-fluid, .px-0;
   > section {
@@ -63,14 +65,18 @@
 }
 
 .poly-hero-card {
-  @extend .card;
+  @extend .card, .is-flex;
+  overflow: hidden;
   &.poly-with-image {
     @include backgrounds();
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     .poly-content {
-      text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white, 1px 1px 0 $white;
+      .title, .content {
+        @extend .has-text-white;
+      }
+      text-shadow: $poly-hero-text-shadow;
     }
   }
   .poly-content {
@@ -78,6 +84,16 @@
   }
   .poly-image {
     @extend .image;
+  }
+  .poly-card-image {
+    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+  .poly-content {
+    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: .5;
   }
 }
 
@@ -88,8 +104,13 @@
     background-repeat: no-repeat;
     background-position: center center;
     .poly-content {
-      color: $white;
-      text-shadow: 0px 1px 5px rgba($black, .75);
+      .title, .content {
+        @extend .has-text-white;
+      }
+      text-shadow: $poly-hero-text-shadow;
     }
+  }
+  .content {
+    color: $text !important;
   }
 }
