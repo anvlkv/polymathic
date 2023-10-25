@@ -1,6 +1,6 @@
 name = "polymathic"
 description = "A portfolio theme for person of many talents"
-license = "Attribution-ShareAlike 4.0 International"
+license = "MIT"
 homepage = "https://github.com/anvlkv/polymathic"
 # The minimum version of Zola required
 min_version = "0.17.2"
