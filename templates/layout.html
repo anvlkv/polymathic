@@ -3,11 +3,11 @@
 {% block content %}
   <header class="poly-header">
     {% block layout_header %}
-      <nav>
-        {{brand::macro(menu_id="poly-layout-header")}}
-        <nav id="poly-layout-header">
+      <nav class="navbar">
+        {{brand::macro(menu_id="poly-layout-header", fallback="poly-layout-footer")}}
+        <nav class="poly-navigation-container poly-hold-expand" id="poly-layout-header">
           {% if config.extra.poly.menu_order %}
-            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header", plain=true)}}
+            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header", plain=true, recursively=true)}}
           {% endif %}
         </nav>
       </nav>
@@ -17,6 +17,6 @@
     {% block layout_main %} {% endblock %}
   </main>
   {% block footer %}
-    {{ footer::macro() }}
+    {{ footer::macro(id="poly-layout-footer") }}
   {% endblock %}
 {% endblock %}

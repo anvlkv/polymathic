@@ -1,7 +1,7 @@
 {% import "macros/util.html" as util %}
 {% import "macros/preview.html" as preview %}
 
-{% macro navigation_links(rendered_terms_input, menu, recursively, nav_current_path, plain, id=false) %}
+{% macro navigation_links(rendered_terms_input, menu, recursively, nav_current_path, plain, depth=0) %}
   {% set_global rendered_terms = rendered_terms_input -%}
   {% set_global shared_taxonomies = [] -%}
   {% for nav in menu -%}
@@ -14,7 +14,7 @@
       {% set_global contents = preview::macro(plain=plain, type="section", entry=section, parent_section=parent) -%}
       {% set_global entries_count = 1 %}
       {% if recursively == true %}
-        {% set subs = navigation::navigation_links(rendered_terms_input=rendered_terms, menu=section.subsections, recursively=recursively, nav_current_path=nav_current_path, plain=plain) -%}
+        {% set subs = navigation::navigation_links(rendered_terms_input=rendered_terms, menu=section.subsections, recursively=recursively, nav_current_path=nav_current_path, plain=plain, depth=depth + 1) -%}
         {% set_global contents = contents~subs -%}
         {% set_global entries_count = section.subsections | length + entries_count %}
       {% endif %}
@@ -55,7 +55,7 @@
     {% endif -%}
   {% endfor -%}
   {% set txs = shared_taxonomies | unique(attribute="name") %}
-  {% if txs | length > 0 %}
+  {% if txs | length > 0 and depth == 0 %}
     <nav class="poly-nav-section{% if txs | length == 1 %} poly-is-one{% endif %}">
       {% for tx in txs -%}
         {{preview::macro_tx(type="kind", entry=tx, plain=plain)}}
@@ -67,6 +67,6 @@
 {% macro macro(menu, recursively=false, id="navigation", plain=false) %}
   <nav class="poly-nav" id="{{id}}">
     {% set nav_current_path = current_path | default(value="") -%}
-    {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain, id=id)}}
+    {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain)}}
   </nav>
 {% endmacro %}

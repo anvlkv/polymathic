@@ -155,7 +155,7 @@ $poly-block-hover-background: linear-gradient(
 }
 
 .poly-active-link {
-  pointer-events: none;
+  cursor: default;
   color: $grey-dark;
   text-decoration: underline;
 }

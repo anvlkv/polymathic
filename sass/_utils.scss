@@ -29,7 +29,7 @@
   &, * {
     @include transition($props: $transition-props, $multiplier: $multiplier)
   }
-  &:hover {
+  &:not(.poly-active-link):hover {
     @content;
   }
 }
