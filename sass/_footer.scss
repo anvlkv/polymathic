@@ -3,16 +3,48 @@
 
   .poly-navigation-container {
     @extend .container, .is-container, .is-fullhd, .has-text-centered-mobile;
+
+    .poly-nav {
+      @extend .is-flex, .is-flex-wrap-wrap, .is-justify-content-space-between;
+      @include until($tablet) {
+        flex-direction: column;
+      }
+      .poly-nav-section {
+        @extend .is-flex, .is-flex-direction-column;
+        .poly-nav-section {
+          font-size: smaller;
+        }
+        a {
+          font-size: inherit;
+          &:not(:first-child) {
+            font-size: smaller;
+          }
+        }
+      }
+    }
   }
 
   
 
   .poly-outlink-footer, .poly-license-footer {
-    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap, .mt-4;
+    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap;
+  }
+  .poly-outlink-footer {
+    @extend .mt-4, .mb-4;
+  }
+  .poly-license-footer {
+    @extend .mt-6;
+    .poly-page-link {
+      @extend .is-size-7;
+    }
+  }
+
+  a {
+    @extend .py-2, .px-4, .is-block;
   }
 
   .poly-out-link {
-    @extend .py-2, .px-4;
+    @extend .is-size-6;
     @include until($tablet) {
       width: 100%;
     }
