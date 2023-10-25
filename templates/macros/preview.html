@@ -104,6 +104,28 @@
   </div>
 {% endmacro %}
 
+{% macro tx_card(pop=false, type, href, description, title, nav_current_path) %}
+  {% set class_name = "poly-tile poly-tile-layout-default" -%}
+  {% if pop == true -%}
+    {% set class_name = class_name~" poly-pop" -%}
+  {% endif -%}
+  {% set size="is-6"%}
+  {% if type == "taxonomy-kind" %}
+    {% set size="is-5"%}
+  {% endif %}
+
+  <a {{util::link_attrs(type="card-"~type, href=href, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}>
+    <div class="poly-hero-card">
+      <div class="poly-content">
+        <p class="title {{size}} is-subtitle">{{ title }}</p>
+        {% if description != false -%}
+          <p class="content">{{ description }}</p>
+        {% endif -%}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
 {% macro plain(type, href, description, nav_current_path, title) %}
   <a {{util::link_attrs(type=type, href=href, title=description, current_url=nav_current_path)}}>{{ title }}</a>
 {% endmacro %}
@@ -134,14 +156,25 @@
   {% endif -%}
 {% endmacro %}
 
-{% macro macro_tx(entry, type, parent=false) %} 
+{% macro macro_tx(entry, type, parent=false, plain=true) %} 
   {% set nav_current_path = current_path | default(value="") -%}
+  {% set title = "" %}
+  {% set description = "" %}
+  {% set path = "" %}
   {% if type == "kind" and entry.render == true -%}
-    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=entry.name) | trim -%}
-    {% set taxonomy_description = util::get_taxonomy_kind_description(kind=entry.name, default=taxonomy_title) | trim -%}
-    {{preview::plain(type="taxonomy-kind", href="/"~entry.slug, title=taxonomy_title, description=taxonomy_description, nav_current_path=nav_current_path)}}
+    {% set title = util::get_taxonomy_kind_title(kind=entry.name) | trim -%}
+    {% set description = util::get_taxonomy_kind_description(kind=entry.name, default=title) | trim -%}
+    {% set path = "/"~entry.slug %}
   {% elif type == "term" and parent != false -%}
-    {% set term_description = util::get_taxonomy_term_description(kind=parent.name, term=entry.name) | trim %}
-    {{preview::plain(type="taxonomy-term", href=entry.path, title=entry.name, description=term_description, nav_current_path=nav_current_path)}}
+    {% set title = entry.name %}
+    {% set description = util::get_taxonomy_term_description(kind=parent.name, term=entry.name) | trim %}
+    {% set path = entry.path %}
+  {% else %}
+    {{throw(message="unknown type: "~type)}}
   {% endif -%}
+  {% if plain %}
+    {{preview::plain(type="taxonomy-"~type, href=path, title=title, description=description, nav_current_path=nav_current_path)}}
+  {% else %}
+    {{preview::tx_card(type="taxonomy-"~type, href=path, title=title, description=description, nav_current_path=nav_current_path)}}
+  {% endif %}
 {% endmacro %}
