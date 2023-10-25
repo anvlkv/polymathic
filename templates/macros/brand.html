@@ -1,4 +1,4 @@
-{% macro macro(menu_id=false, app_title=true) %}
+{% macro macro(menu_id=false, app_title=true, fallback=false) %}
   <div class="poly-brand{% if config.extra.poly.logo %} poly-with-image{% endif %}">
     <a class="poly-logo-link" href="{{config.base_url}}" {% if config.title %} title="{{config.title}}" {% endif %}>
       {% if config.extra.poly.logo -%}
@@ -11,7 +11,7 @@
       {% endif -%}
     </a>
     {% if menu_id %} 
-      <a id="menu-trigger-{{menu_id}}" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="{{menu_id}}">
+      <a id="menu-trigger-{{menu_id}}" {%- if fallback %} href="#{{fallback}}"{% endif %} role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="{{menu_id}}">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
