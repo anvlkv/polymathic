@@ -1,154 +1,61 @@
-.poly-navigation-blocks {
-  @extend .container, .is-fluid;
-  > section {
-    .poly-nav {
-      @extend .is-flex;
+@use "sass:map";
 
+$poly-navigation-blocks-grid: (
+  mobile: 1,
+  tablet: 2,
+  desktop: 3,
+  widescreen: 4,
+  fullhd: 4 
+) !default;
+
+.poly-navigation-blocks {
+  @extend .container, .is-fluid, .px-0;
+  > section {
+    display: contents;
+    .poly-nav {
+      display: grid;
       @include until($tablet) {
-        flex-direction: column;
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'mobile'), 1fr);
       }
-      &,
-      .poly-taxonomy-nav-wrapper,
-      .poly-taxonomy-nav,
-      .poly-section-link,
-      .poly-taxonomy-term-link,
-      .poly-page-link,
-      .poly-taxonomy-kind-link {
-        @extend .tile;
+      @include from($tablet) {
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'tablet'), 1fr);
       }
-      @extend .is-ancestor;
-      flex-wrap: wrap;
-      .poly-section-nav-wrapper {
-        @extend .tile, .p-0;
-        @include until($tablet) {
-          display: flex;
-          flex-direction: column;
-          &:not(:hover):not(:focus) {
-            .poly-taxonomy-nav {
-              margin-top: -100vh;
-              display: none;
-            }
-          }
-          .poly-taxonomy-nav {
-            @include transition(
-              $props: (
-                margin,
-              ),
-              $multiplier: 2.5
-            );
-            &:hover,
-            &:focus {
-              margin-top: 0;
-              transition-delay: 0;
-            }
-          }
-          .poly-taxonomy-nav-wrapper {
-            padding: 0;
-          }
-        }
+      @include from($desktop) {
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'desktop'), 1fr);
       }
-      .poly-section-link,
-      .poly-taxonomy-term-link,
-      .poly-page-link,
-      .poly-taxonomy-kind-link {
-        @extend .is-child, .box;
-        @include until($desktop) {
-          @include from($tablet) {
-            min-width: 25vw;
-          }
+      @include from($widescreen) {
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'widescreen'), 1fr);
+      }
+      @include from($fullhd) {
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'fullhd'), 1fr);
+      }
+
+      .poly-nav-section:not(.poly-is-one) {
+        display: grid;
+        grid-row: span var(--poly-rows);
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: subgrid;
+        justify-items: stretch;
+        @include from($tablet) {
+          grid-column: span 2;
         }
         @include from($desktop) {
-          @include until($widescreen) {
-            min-width: 20vw;
+          grid-template-columns: repeat(4, 1fr);
+          .poly-tile:first-child {
+            grid-column: span 2;
+            grid-row: span calc(var(--poly-rows) / 2 + 1);
+          }
+        }
+        .poly-tile:not(:first-child) {
+          .poly-hero-card .poly-content {
+            padding: $poly-grid-pop;
           }
         }
       }
 
-      .poly-taxonomy-kind-link {
-        font-size: larger;
-        font-weight: $title-weight;
-        color: $link;
-      }
-
-      .poly-section-nav-wrapper, .poly-page-link {
-        @extend .animate__animated, .animate__delay-2s, .animate__fast;
-        &:nth-child(odd) {
-          @extend .animate__fadeInLeft;
-        }
-        &:nth-child(even) {
-          @extend .animate__fadeInRight;
-        }
-      }
-
-      .poly-taxonomy-nav-wrapper {
-        @extend .animate__animated, .animate__delay-2s, .animate__fadeIn, .animate__faster;
-        .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
-          @extend .animate__animated, .animate__fadeInLeft, .animate__fast;
-          @for $i from 1 through 5 {
-            &:nth-child(#{$i+1}n) {
-              animation-delay: calc(var(--animate-delay) * 2 + #{$i} * var(--animate-duration) / 4);
-            }
-          }
-        }
-      }
-
-      
-
-      gap: 0.75rem;
-
-      .poly-taxonomy-nav-wrapper {
-        @extend .is-parent;
-      }
-      .poly-taxonomy-nav {
-        @extend .is-parent, .is-vertical;
-        gap: 0.75rem;
-      }
-      .poly-navigation-title {
-        @extend .title, .is-4;
-        width: 100%;
-        display: block;
-      }
-      .poly-navigation-description {
-        @extend .subtitle, .is-5;
-        width: 100%;
-        display: block;
-      }
-      .poly-taxonomy-term-link {
-        color: $link;
-      }
-      
-      .poly-taxonomy-title {
+      .poly-is-one {
         display: contents;
-        .poly-content {
-          @extend .dropdown-trigger, .tile, .is-child, .box;
-          width: 100%;
-          @include until($desktop) {
-            @include from($tablet) {
-              min-width: 25vw;
-            }
-          }
-          @include from($desktop) {
-            @include until($widescreen) {
-              min-width: 20vw;
-            }
-          }
-          .button-arrow {
-            @include arrow($link);
-            right: 1rem;
-          }
-        }
       }
-    }
-
-    .poly-content {
-      @extend .content;
-    }
-
-    .poly-section-link,
-    .poly-taxonomy-term-link,
-    .poly-page-link,
-    .poly-taxonomy-kind-link {
-      @extend .poly-link-hover-block;
     }
   }
 }

@@ -1,6 +1,6 @@
 {% import "macros/util.html" as util %}
 
-{% macro default(title, path, type, description=false, pop=false, hero=false) %}
+{% macro default(title, path, type, description=false, pop=false, hero=false, nav_current_path) %}
   {% set class_name = "poly-tile" -%}
   {% if hero != false -%}
       {% set class_name = class_name~" poly-tile-layout-hero" -%}
@@ -10,7 +10,7 @@
   {% if pop == true -%}
     {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
-  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}>
+  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}>
     <div class="poly-hero-card">
       {% if hero != false -%}
         <div class="poly-card-image">
@@ -36,13 +36,13 @@
   </a>
 {% endmacro %}
 
-{% macro block(title, path, type, description=false, pop=false, hero=false) %}
+{% macro block(title, path, type, description=false, pop=false, hero=false, nav_current_path) %}
   {% set class_name = "poly-tile poly-tile-layout-block" -%}
   {% if pop == true -%}
     {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
   
-  <a {{util::link_attrs(type="block-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
+  <a {{util::link_attrs(type="block-"~type, href=path, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}
     {% if hero != false -%}
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
@@ -58,13 +58,13 @@
   </a>
 {% endmacro %}
 
-{% macro banner(title, path, type, description=false, pop=false, hero=false) %}
+{% macro banner(title, path, type, description=false, pop=false, hero=false, nav_current_path) %}
   {% set class_name = "poly-tile poly-tile-layout-banner" -%}
   {% if pop == true -%}
     {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
   
-  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=current_path, class=class_name)}}
+  <a {{util::link_attrs(type="card-"~type, href=path, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}
     {% if hero != false -%}
       style="{{util::background_image_vars(path=hero)}}"
     {% endif -%}
@@ -80,7 +80,7 @@
   </a>
 {% endmacro %}
 
-{% macro contents(content, title, path, type, description=false, pop=false, hero=false) %}
+{% macro contents(content, title, path, type, description=false, pop=false, hero=false, nav_current_path) %}
   {% set class_name = "poly-tile poly-tile-layout-contents" -%}
   {% if pop == true -%}
     {% set class_name = class_name~" poly-pop" -%}
@@ -93,7 +93,7 @@
   >
     <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
       <div class="title is-6">
-        <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=current_path)}}>
+        <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=nav_current_path)}}>
           {{title}}
         </a>
       </div>
@@ -104,23 +104,77 @@
   </div>
 {% endmacro %}
 
-{% macro macro(entry, parent_section, type) %}
-  {% set hero = false -%}
-  {% if entry.extra.poly.hero -%}
-    {% set hero = util::poly_path(value=entry.extra.poly.hero, assets=entry.assets) | trim -%}
+{% macro tx_card(pop=false, type, href, description, title, nav_current_path) %}
+  {% set class_name = "poly-tile poly-tile-layout-default" -%}
+  {% if pop == true -%}
+    {% set class_name = class_name~" poly-pop" -%}
   {% endif -%}
-  {% set fallback = parent_section.extra.poly.page_thumbnails | default(value="default") -%}
-  {% if type == "section" -%} 
-    {% set fallback = parent_section.extra.poly.section_thumbnails | default(value="default") -%}
+  {% set size="is-6"%}
+  {% if type == "taxonomy-kind" %}
+    {% set size="is-5"%}
+  {% endif %}
+
+  <a {{util::link_attrs(type="card-"~type, href=href, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}>
+    <div class="poly-hero-card">
+      <div class="poly-content">
+        <p class="title {{size}} is-subtitle">{{ title }}</p>
+        {% if description != false -%}
+          <p class="content">{{ description }}</p>
+        {% endif -%}
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+{% macro plain(type, href, description, nav_current_path, title) %}
+  <a {{util::link_attrs(type=type, href=href, title=description, current_url=nav_current_path)}}>{{ title }}</a>
+{% endmacro %}
+
+{% macro macro(entry, parent_section, type, plain=false) %}
+  {% set nav_current_path = current_path | default(value="") -%}
+  {% if plain == true %}
+    {{preview::plain(type=type, href=entry.path, title=entry.title, description=entry.description, nav_current_path=nav_current_path) }}
+  {% else %}
+    {% set hero = false -%}
+    {% if entry.extra.poly.hero -%}
+      {% set hero = util::poly_path(value=entry.extra.poly.hero, assets=entry.assets) | trim -%}
+    {% endif -%}
+    {% set fallback = parent_section.extra.poly.page_thumbnails | default(value="default") -%}
+    {% if type == "section" -%} 
+      {% set fallback = parent_section.extra.poly.section_thumbnails | default(value="default") -%}
+    {% endif -%}
+    {% set layout = entry.extra.poly.thumbnail | default(value = fallback) -%}
+    {% if layout == "contents" -%}
+      {{preview::contents(content=entry.content, type=type, path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+    {% elif layout == "banner" -%}
+      {{preview::banner(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+    {% elif layout == "block" -%}
+      {{preview::block(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+    {% else -%}
+      {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+    {% endif -%}
   {% endif -%}
-  {% set layout = entry.extra.poly.thumbnail | default(value = fallback) -%}
-  {% if layout == "contents" -%}
-    {{preview::contents(content=entry.content, type=type, path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
-  {% elif layout == "banner" -%}
-    {{preview::banner(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
-  {% elif layout == "block" -%}
-    {{preview::block(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
-  {% else -%}
-    {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false))}}
+{% endmacro %}
+
+{% macro macro_tx(entry, type, parent=false, plain=true) %} 
+  {% set nav_current_path = current_path | default(value="") -%}
+  {% set title = "" %}
+  {% set description = "" %}
+  {% set path = "" %}
+  {% if type == "kind" and entry.render == true -%}
+    {% set title = util::get_taxonomy_kind_title(kind=entry.name) | trim -%}
+    {% set description = util::get_taxonomy_kind_description(kind=entry.name, default=title) | trim -%}
+    {% set path = "/"~entry.slug %}
+  {% elif type == "term" and parent != false -%}
+    {% set title = entry.name %}
+    {% set description = util::get_taxonomy_term_description(kind=parent.name, term=entry.name) | trim %}
+    {% set path = entry.path %}
+  {% else %}
+    {{throw(message="unknown type: "~type)}}
   {% endif -%}
+  {% if plain %}
+    {{preview::plain(type="taxonomy-"~type, href=path, title=title, description=description, nav_current_path=nav_current_path)}}
+  {% else %}
+    {{preview::tx_card(type="taxonomy-"~type, href=path, title=title, description=description, nav_current_path=nav_current_path)}}
+  {% endif %}
 {% endmacro %}

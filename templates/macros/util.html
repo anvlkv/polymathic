@@ -18,11 +18,11 @@
 {% set image_ds = resize_image(path=path, width=960, op='fit_width', format='webp') -%}
 {% set image_wd = resize_image(path=path, width=1152, op='fit_width', format='webp') -%}
 {% set image_fd = resize_image(path=path, width=1344, op='fit_width', format='webp') -%}
---background-widescreen: url({{image_wd.url}});
---background-fullhd: url({{image_fd.url}});
---background-desktop: url({{image_ds.url}});
---background-tablet: url({{image_tb.url}});
---background-sm: url({{image_sm.url}});
+--poly-background-widescreen: url({{image_wd.url}});
+--poly-background-fullhd: url({{image_fd.url}});
+--poly-background-desktop: url({{image_ds.url}});
+--poly-background-tablet: url({{image_tb.url}});
+--poly-background-sm: url({{image_sm.url}});
 {% endmacro  %}
 
 {% macro debug(value) %} 

@@ -1,5 +1,6 @@
 .poly-grid {
   @extend .columns, .is-multiline, .is-mobile, .mx-0;
+  flex-grow: 1;
 
   .poly-group-title,
   .poly-group-footer {
@@ -26,21 +27,13 @@
   .poly-tile {
     @extend .column;
 
-    --animate-delay: calc(var(--animate-duration) / 4);
-
-    &:nth-child(n + 2) {
-      @extend .animate__delay-1s;
-      &.poly-tile-layout-contents {
-        .title {
-          @extend .animate__delay-1s;
-        }
-      }
+    &.poly-tile-layout-default {
+      @extend .is-4-desktop, .is-6-tablet, .is-full-mobile;
     }
-
-    @for $i from 1 through 12 {
-      &:nth-child(#{$i + 1}n) {
-        --animate-delay: calc(var(--animate-duration) / 4 * #{$i});
-      }
+  
+    &.poly-tile-layout-hero,
+    &.poly-tile-layout-banner {
+      @extend .is-6-desktop, .is-full-tablet, .is-full-mobile;
     }
 
     &.poly-tile-layout-default {
@@ -52,79 +45,9 @@
       @extend .is-6-desktop, .is-full-tablet, .is-full-mobile;
     }
 
-    &.poly-tile-layout-default,
-    &.poly-tile-layout-hero,
-    &.poly-tile-layout-banner {
-      padding: calc($column-gap + $poly-grid-pop);
-      @extend .animate__animated, .animate__bounceIn;
-    }
-
     &.poly-tile-layout-block,
     &.poly-tile-layout-contents {
       @extend .is-full, .p-0;
-
-      .poly-hero-block {
-        padding: calc($column-gap + $poly-grid-pop);
-      }
-
-      &:first-child {
-        margin-top: $column-gap;
-      }
-    }
-
-    &.poly-tile-layout-block {
-      @extend .animate__animated, .animate__fadeInRight;
-      & + .poly-tile-layout-block,
-      & + .poly-tile-layout-contents {
-        &::before {
-          @extend hr;
-          content: "";
-          margin: 0 $poly-grid-pop;
-        }
-      }
-    }
-
-    &.poly-tile-layout-contents {
-      .title {
-        @extend .animate__animated, .animate__fadeInRight;
-      }
-      & + .poly-tile-layout-block {
-        &::before {
-          @extend hr;
-          content: "";
-          margin: 0 $poly-grid-pop;
-        }
-      }
-    }
-
-    &.poly-pop {
-      @extend .animate__slow;
-      &.poly-tile-layout-block,
-      &.poly-tile-layout-contents {
-        .poly-hero-block {
-          padding-top: calc($column-gap + $poly-grid-pop * 4);
-          padding-bottom: calc($column-gap + $poly-grid-pop * 4);
-        }
-      }
-
-      &.poly-tile-layout-default,
-      &.poly-tile-layout-hero,
-      &.poly-tile-layout-banner {
-        padding: $column-gap;
-        .poly-hero-card .poly-content {
-          padding: calc($card-content-padding + $poly-grid-pop);
-        }
-        .poly-hero-card .poly-card-image {
-          flex-basis: calc(50% + $poly-grid-pop);
-          & + .poly-content {
-            padding-left: $column-gap;
-          }
-        }
-      }
-    }
-
-    > * {
-      min-height: 100%;
     }
   }
 }

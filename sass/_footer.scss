@@ -3,67 +3,53 @@
 
   .poly-navigation-container {
     @extend .container, .is-container, .is-fullhd, .has-text-centered-mobile;
-  }
 
-  .poly-nav {
-    @extend .columns, .is-tablet;
-  }
-  .poly-section-nav-wrapper {
-    display: contents;
-  }
-  .poly-taxonomy-nav-wrapper {
-    @extend .column, .p-0, .is-flex, .is-flex-direction-column;
-  }
-  .poly-section-link,
-  .poly-page-link {
-    display: contents;
-    .content {
-      display: contents;
-      @include from($tablet) {
-        text-align: right;
+    .poly-nav {
+      @extend .is-flex, .is-flex-wrap-wrap, .is-justify-content-space-between;
+      @include until($tablet) {
+        flex-direction: column;
+      }
+      .poly-nav-section {
+        @extend .is-flex, .is-flex-direction-column;
+        .poly-nav-section {
+          font-size: smaller;
+        }
+        a {
+          font-size: inherit;
+          &:not(:first-child) {
+            font-size: smaller;
+          }
+        }
       }
     }
   }
-  .poly-taxonomy-nav {
-    display: contents;
+
+  
+
+  .poly-outlink-footer, .poly-license-footer {
+    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap;
   }
-  .poly-navigation-title {
-    @extend .column, .is-flex-grow-0, .is-flex-shrink-0, .is-block;
-    @extend .poly-link-hover-text;
-    order: 0;
-    height: fit-content;
-    white-space: nowrap;
-    padding: $column-gap;
+  .poly-outlink-footer {
+    @extend .mt-4, .mb-4;
   }
-  .poly-taxonomy-term-link,
-  .poly-taxonomy-kind-link {
-    @extend .p-3;
-    width: auto;
-  }
-  .poly-navigation-description {
-    @extend .is-hidden;
+  .poly-license-footer {
+    @extend .mt-6;
+    .poly-page-link {
+      @extend .is-size-7;
+    }
   }
 
-  .poly-outlink-footer {
-    @extend .is-flex, .is-justify-content-space-evenly, .is-flex-wrap-wrap;
+  a {
+    @extend .py-2, .px-4, .is-block;
   }
 
   .poly-out-link {
-    @extend .py-2, .px-4;
+    @extend .is-size-6;
     @include until($tablet) {
       width: 100%;
     }
   }
   .poly-content {
     display: contents;
-  }
-
-  .poly-section-link,
-  .poly-taxonomy-term-link,
-  .poly-taxonomy-kind-link,
-  .poly-page-link,
-  .poly-out-link,
-  .poly-link {
-    @extend .poly-link-hover-text;
   }
 }

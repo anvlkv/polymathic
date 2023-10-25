@@ -55,8 +55,14 @@ $poly-block-hover-background: linear-gradient(
 
 .poly-logo-link {
   @extend .has-text-primary;
+  @include hover((color, text-decoration-color)) {
+    color: $primary-dark !important;
+    text-decoration-color: $primary-dark !important;
+  }
 }
 
+.poly-card-taxonomy-kind-link,
+.poly-card-taxonomy-term-link,
 .poly-card-section-link,
 .poly-card-page-link {
   .title::first-line {
@@ -149,7 +155,8 @@ $poly-block-hover-background: linear-gradient(
 }
 
 .poly-active-link {
-  pointer-events: none;
+  cursor: default;
   color: $grey-dark;
   text-decoration: underline;
+  text-decoration-thickness: .5px;
 }
