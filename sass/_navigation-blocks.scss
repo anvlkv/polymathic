@@ -1,154 +1,38 @@
 .poly-navigation-blocks {
-  @extend .container, .is-fluid;
+  @extend .container, .is-fluid, .px-0;
   > section {
+    display: contents;
     .poly-nav {
-      @extend .is-flex;
+      display: grid;
+      @include from($tablet) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @include from($desktop) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      @include from($fullhd) {
+        grid-template-columns: repeat(4, 1fr);
+      }
 
-      @include until($tablet) {
-        flex-direction: column;
-      }
-      &,
-      .poly-taxonomy-nav-wrapper,
-      .poly-taxonomy-nav,
-      .poly-section-link,
-      .poly-taxonomy-term-link,
-      .poly-page-link,
-      .poly-taxonomy-kind-link {
-        @extend .tile;
-      }
-      @extend .is-ancestor;
-      flex-wrap: wrap;
-      .poly-section-nav-wrapper {
-        @extend .tile, .p-0;
-        @include until($tablet) {
-          display: flex;
-          flex-direction: column;
-          &:not(:hover):not(:focus) {
-            .poly-taxonomy-nav {
-              margin-top: -100vh;
-              display: none;
-            }
-          }
-          .poly-taxonomy-nav {
-            @include transition(
-              $props: (
-                margin,
-              ),
-              $multiplier: 2.5
-            );
-            &:hover,
-            &:focus {
-              margin-top: 0;
-              transition-delay: 0;
-            }
-          }
-          .poly-taxonomy-nav-wrapper {
-            padding: 0;
-          }
-        }
-      }
-      .poly-section-link,
-      .poly-taxonomy-term-link,
-      .poly-page-link,
-      .poly-taxonomy-kind-link {
-        @extend .is-child, .box;
-        @include until($desktop) {
-          @include from($tablet) {
-            min-width: 25vw;
-          }
+      .poly-nav-section:not(.poly-is-one) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-row: span 2;
+        @include from($tablet) {
+          grid-column: span 2;
         }
         @include from($desktop) {
-          @include until($widescreen) {
-            min-width: 20vw;
+          grid-template-columns: repeat(4, 1fr);
+          .poly-tile:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
           }
         }
       }
 
-      .poly-taxonomy-kind-link {
-        font-size: larger;
-        font-weight: $title-weight;
-        color: $link;
-      }
-
-      .poly-section-nav-wrapper, .poly-page-link {
-        @extend .animate__animated, .animate__delay-2s, .animate__fast;
-        &:nth-child(odd) {
-          @extend .animate__fadeInLeft;
-        }
-        &:nth-child(even) {
-          @extend .animate__fadeInRight;
-        }
-      }
-
-      .poly-taxonomy-nav-wrapper {
-        @extend .animate__animated, .animate__delay-2s, .animate__fadeIn, .animate__faster;
-        .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
-          @extend .animate__animated, .animate__fadeInLeft, .animate__fast;
-          @for $i from 1 through 5 {
-            &:nth-child(#{$i+1}n) {
-              animation-delay: calc(var(--animate-delay) * 2 + #{$i} * var(--animate-duration) / 4);
-            }
-          }
-        }
-      }
-
-      
-
-      gap: 0.75rem;
-
-      .poly-taxonomy-nav-wrapper {
-        @extend .is-parent;
-      }
-      .poly-taxonomy-nav {
-        @extend .is-parent, .is-vertical;
-        gap: 0.75rem;
-      }
-      .poly-navigation-title {
-        @extend .title, .is-4;
-        width: 100%;
-        display: block;
-      }
-      .poly-navigation-description {
-        @extend .subtitle, .is-5;
-        width: 100%;
-        display: block;
-      }
-      .poly-taxonomy-term-link {
-        color: $link;
-      }
-      
-      .poly-taxonomy-title {
+      .poly-is-one {
         display: contents;
-        .poly-content {
-          @extend .dropdown-trigger, .tile, .is-child, .box;
-          width: 100%;
-          @include until($desktop) {
-            @include from($tablet) {
-              min-width: 25vw;
-            }
-          }
-          @include from($desktop) {
-            @include until($widescreen) {
-              min-width: 20vw;
-            }
-          }
-          .button-arrow {
-            @include arrow($link);
-            right: 1rem;
-          }
-        }
       }
-    }
-
-    .poly-content {
-      @extend .content;
-    }
-
-    .poly-section-link,
-    .poly-taxonomy-term-link,
-    .poly-page-link,
-    .poly-taxonomy-kind-link {
-      @extend .poly-link-hover-block;
     }
   }
 }

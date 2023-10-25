@@ -1,8 +1,9 @@
 {% import "macros/util.html" as util %}
 {% import "macros/preview.html" as preview %}
 
-{% macro navigation_links(rendered_terms_input, menu, recursively, nav_current_path, plain) %}
+{% macro navigation_links(rendered_terms_input, menu, recursively, nav_current_path, plain, id=false) %}
   {% set_global rendered_terms = rendered_terms_input -%}
+  {% set_global shared_taxonomies = [] -%}
   {% for nav in menu -%}
     {% if nav is ending_with("_index.md") -%}
       {% set section = get_section(path=nav) -%}
@@ -10,15 +11,17 @@
       {% if parent -%}
         {% set parent = get_section(path=parent, metadata_only=true) -%}
       {% endif -%}
-      {{preview::macro(plain=plain, type="section", entry=section, parent_section=parent)}}
+      {% set_global contents = preview::macro(plain=plain, type="section", entry=section, parent_section=parent) -%}
+      {% set_global entries_count = 1 %}
       {% if recursively == true %}
-        {{navigation::navigation_links(rendered_terms_input=rendered_terms, menu=section.subsections, recursively=recursively, nav_current_path=nav_current_path, plain=plain) }}
+        {% set subs = navigation::navigation_links(rendered_terms_input=rendered_terms, menu=section.subsections, recursively=recursively, nav_current_path=nav_current_path, plain=plain) -%}
+        {% set_global contents = contents~subs -%}
+        {% set_global entries_count = section.subsections | length + entries_count %}
       {% endif %}
       {% if section.extra.poly.use_taxonomies -%}
           {% for tx in section.extra.poly.use_taxonomies -%} 
             {% set taxonomy = get_taxonomy(kind=tx) -%}
             {% if taxonomy.items | length > 0 -%}
-                {% set_global taxonomy_secondary_terms = [] -%}
                 {% set order = util::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=taxonomy.items | map(attribute="name")) | trim | split(pat=",") -%}
                 {% for i in order -%}
                   {% set term = taxonomy.items[i] -%}
@@ -28,30 +31,42 @@
                       {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx -%}
                     {% endfor %}
                     {% if has_tx -%}
-                      {{preview::macro_tx(type="term", entry=term, parent=taxonomy.kind)}}
+                      {% set entry = preview::macro_tx(type="term", entry=term, parent=taxonomy.kind, plain=plain) -%}
+                      {% set_global contents = contents~entry -%}
                       {% set_global rendered_terms = rendered_terms | concat(with=[term.path]) -%}
+                      {% set_global entries_count = entries_count + 1 %}
                     {% endif -%}
-                  {% else -%}
-                    {% set_global taxonomy_secondary_terms = taxonomy_secondary_terms | concat(with=[term]) -%}
+                  {% elif taxonomy.kind.render -%}
+                    {% set_global shared_taxonomies = shared_taxonomies | concat(with=[taxonomy.kind]) -%}
                   {% endif -%}
                 {% endfor -%}
-                {% if taxonomy_secondary_terms | length > 0 and taxonomy.kind.render -%}
-                  {{preview::macro_tx(type="kind", entry=taxonomy.kind)}}
-                {% endif -%}
             {% endif -%}
           {% endfor -%}
       {% endif -%}
+      <nav class="poly-nav-section{% if entries_count == 1 %} poly-is-one{% endif %}">
+        {{contents | safe}}
+      </nav>
     {% else %}
       {% set page = get_page(path=nav) -%}
       {% set page_section = get_section(path=page.ancestors | last, metadata_only=true)  -%}
-      {{preview::macro(plain=plain, entry=page, parent_section=page_section, type="page")}}
+      <nav class="poly-nav-section poly-is-one">
+        {{preview::macro(plain=plain, entry=page, parent_section=page_section, type="page")}}
+      </nav>
     {% endif -%}
   {% endfor -%}
+  {% set txs = shared_taxonomies | unique(attribute="name") %}
+  {% if txs | length > 0 %}
+    <nav class="poly-nav-section{% if txs | length == 1 %} poly-is-one{% endif %}">
+      {% for tx in txs -%}
+        {{preview::macro_tx(type="kind", entry=tx, plain=plain)}}
+      {% endfor -%}
+    </nav>
+  {% endif %}
 {% endmacro %}
 
 {% macro macro(menu, recursively=false, id="navigation", plain=false) %}
-  <nav class="poly-nav">
+  <nav class="poly-nav" id="{{id}}">
     {% set nav_current_path = current_path | default(value="") -%}
-    {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain)}}
+    {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain, id=id)}}
   </nav>
 {% endmacro %}
