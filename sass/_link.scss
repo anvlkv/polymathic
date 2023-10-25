@@ -92,7 +92,7 @@ $poly-block-hover-background: linear-gradient(
         text-decoration: overline;
         text-decoration-skip-ink: all;
         text-decoration-thickness: 0.5px;
-        text-decoration-color: $link-dark;
+        text-decoration-color: $link-dark !important;
       }
       &.poly-with-image {
         .poly-content {
