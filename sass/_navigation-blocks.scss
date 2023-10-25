@@ -1,23 +1,41 @@
+@use "sass:map";
+
+$poly-navigation-blocks-grid: (
+  mobile: 1,
+  tablet: 2,
+  desktop: 3,
+  widescreen: 4,
+  fullhd: 4 
+) !default;
+
 .poly-navigation-blocks {
   @extend .container, .is-fluid, .px-0;
   > section {
     display: contents;
     .poly-nav {
       display: grid;
+      @include until($tablet) {
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'mobile'), 1fr);
+      }
       @include from($tablet) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'tablet'), 1fr);
       }
       @include from($desktop) {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'desktop'), 1fr);
+      }
+      @include from($widescreen) {
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'widescreen'), 1fr);
       }
       @include from($fullhd) {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'fullhd'), 1fr);
       }
 
       .poly-nav-section:not(.poly-is-one) {
         display: grid;
+        grid-row: span var(--poly-rows);
         grid-template-columns: 1fr 1fr;
-        grid-row: span 2;
+        grid-template-rows: subgrid;
+        justify-items: stretch;
         @include from($tablet) {
           grid-column: span 2;
         }
@@ -25,7 +43,11 @@
           grid-template-columns: repeat(4, 1fr);
           .poly-tile:first-child {
             grid-column: span 2;
-            grid-row: span 2;
+          }
+        }
+        .poly-tile:not(:first-child) {
+          .poly-hero-card .poly-content {
+            padding: $poly-grid-pop;
           }
         }
       }

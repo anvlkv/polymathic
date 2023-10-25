@@ -1,7 +1,7 @@
 {% import "macros/util.html" as util %}
 {% import "macros/preview.html" as preview %}
 
-{% macro navigation_links(rendered_terms_input, menu, recursively, nav_current_path, plain, depth=0) %}
+{% macro navigation_links(rendered_terms_input, menu, recursively, nav_current_path, plain, depth=0, bulma_dropdown=false) %}
   {% set_global rendered_terms = rendered_terms_input -%}
   {% set_global shared_taxonomies = [] -%}
   {% for nav in menu -%}
@@ -12,6 +12,9 @@
         {% set parent = get_section(path=parent, metadata_only=true) -%}
       {% endif -%}
       {% set_global contents = preview::macro(plain=plain, type="section", entry=section, parent_section=parent) -%}
+      {% if bulma_dropdown %}
+        {% set_global contents = contents~'<nav class="navbar-dropdown">' -%}
+      {% endif %}
       {% set_global entries_count = 1 %}
       {% if recursively == true %}
         {% set subs = navigation::navigation_links(rendered_terms_input=rendered_terms, menu=section.subsections, recursively=recursively, nav_current_path=nav_current_path, plain=plain, depth=depth + 1) -%}
@@ -43,7 +46,10 @@
             {% endif -%}
           {% endfor -%}
       {% endif -%}
-      <nav class="poly-nav-section{% if entries_count == 1 %} poly-is-one{% endif %}">
+      <nav class="poly-nav-section{% if entries_count == 1 %} poly-is-one{% endif %}" style="--poly-rows: {{(entries_count / 2) | int}};">
+        {% if bulma_dropdown %}
+          {% set_global contents = contents~'</nav>' -%}
+        {% endif %}
         {{contents | safe}}
       </nav>
     {% else %}
@@ -56,7 +62,7 @@
   {% endfor -%}
   {% set txs = shared_taxonomies | unique(attribute="name") %}
   {% if txs | length > 0 and depth == 0 %}
-    <nav class="poly-nav-section{% if txs | length == 1 %} poly-is-one{% endif %}">
+    <nav class="poly-nav-section{% if txs | length == 1 %} poly-is-one{% endif %}" style="--poly-rows: {{(entries_count / 2) | int}};">
       {% for tx in txs -%}
         {{preview::macro_tx(type="kind", entry=tx, plain=plain)}}
       {% endfor -%}
@@ -64,9 +70,9 @@
   {% endif %}
 {% endmacro %}
 
-{% macro macro(menu, recursively=false, id="navigation", plain=false) %}
+{% macro macro(menu, recursively=false, id="navigation", plain=false, bulma_dropdown=false) %}
   <nav class="poly-nav" id="{{id}}">
     {% set nav_current_path = current_path | default(value="") -%}
-    {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain)}}
+    {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain, bulma_dropdown=bulma_dropdown)}}
   </nav>
 {% endmacro %}

@@ -60,16 +60,4 @@ document.addEventListener("DOMContentLoaded", () => {
       $target.classList.toggle("is-active");
     });
   });
-
-  const $holdExpands = Array.from(
-    document.querySelectorAll(".poly-hold-expand")
-  );
-
-  $holdExpands.forEach((el) => {
-    el.querySelectorAll(".poly-nav-section").forEach((s) => {
-      s.addEventListener("mouseenter", () => {
-        s.classList.toggle("poly-expand");
-      });
-    });
-  });
 });

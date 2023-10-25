@@ -91,5 +91,8 @@
 
   > * {
     min-height: 100%;
+    .poly-content{
+      @extend .is-flex, .is-flex-direction-column, .is-justify-content-space-between;
+    }
   }
 }

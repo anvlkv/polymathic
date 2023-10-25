@@ -5,9 +5,9 @@
     {% block layout_header %}
       <nav class="navbar">
         {{brand::macro(menu_id="poly-layout-header", fallback="poly-layout-footer")}}
-        <nav class="poly-navigation-container poly-hold-expand" id="poly-layout-header">
+        <nav class="poly-navigation-container" id="poly-layout-header">
           {% if config.extra.poly.menu_order %}
-            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header", plain=true, recursively=true)}}
+            {{navigation::macro(menu=config.extra.poly.menu_order, id="poly-layout-header", plain=true, recursively=true, bulma_dropdown=true)}}
           {% endif %}
         </nav>
       </nav>

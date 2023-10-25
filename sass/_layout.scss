@@ -2,49 +2,17 @@
   @extend .container, .is-fullhd;
   .poly-navigation-container {
     @extend .navbar-menu;
-    &:not(.is-active) {
-      .poly-nav {
-        > .poly-nav-section {
-          &:not(.poly-is-one) {
-            @include transition((transform, border-color, background-color), 2);
-
-            &:not(:hover):not(:focus):not(:focus-within):not(.poly-expand) {
-              a:not(:first-child) {
-                @extend .is-hidden;
-              }
-              .poly-nav-section {
-                @extend .is-hidden;
-              }
-              &::after {
-                @include arrow($grey-light);
-                transform: rotate(45deg);
-              }
-            }
-
-            &:hover,
-            &:focus,
-            &:focus-within,
-            &.poly-expand {
-              &::after {
-                @include arrow($link-light);
-                border-bottom: 0;
-                transform: rotate(0);
-              }
-            }
-          }
-        }
-      }
-    }
+    
 
     .poly-nav {
       @extend .navbar-start;
-      .poly-nav-section {
+      .poly-nav-section.poly-is-one {
         display: contents;
-        &::after {
-          position: unset !important;
-          align-self: baseline;
-          margin-bottom: auto;
-          margin-top: auto !important;
+      }
+      > .poly-nav-section:not(.poly-is-one) {
+        @extend .navbar-item, .has-dropdown, .is-hoverable;
+        > a {
+          @extend .navbar-link;
         }
       }
       a {
