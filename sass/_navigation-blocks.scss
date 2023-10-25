@@ -43,6 +43,7 @@ $poly-navigation-blocks-grid: (
           grid-template-columns: repeat(4, 1fr);
           .poly-tile:first-child {
             grid-column: span 2;
+            grid-row: span calc(var(--poly-rows) / 2 + 1);
           }
         }
         .poly-tile:not(:first-child) {
