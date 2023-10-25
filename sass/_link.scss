@@ -1,10 +1,3 @@
-$poly-block-hover-background: linear-gradient(
-  to bottom,
-  rgba($poly-link-light, 0),
-  rgba($poly-link-light, 0.25) 7%,
-  rgba($poly-link-light, 0.95)
-);
-
 .poly-link-text {
   color: $link;
   position: relative;
@@ -36,7 +29,7 @@ $poly-block-hover-background: linear-gradient(
     opacity: 0;
     left: 0;
     top:0;
-    background-image: $poly-block-hover-background;
+    background-image: $poly-hero-hover-background;
   }
   .poly-content{
     position: relative;

@@ -1,13 +1,5 @@
 @use "sass:map";
 
-$poly-navigation-blocks-grid: (
-  mobile: 2,
-  tablet: 2,
-  desktop: 3,
-  widescreen: 4,
-  fullhd: 4 
-) !default;
-
 .poly-navigation-blocks {
   @extend .container, .is-fluid, .px-0;
   > section {

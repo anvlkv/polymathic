@@ -23,6 +23,7 @@ $poly-saturation: map.get($poly-config, "background-saturation") or 5%;
 $poly-text-saturation: map.get($poly-config, "text-saturation") or 10%;
 $poly-mono-range: map.get($poly-config, "mono-range") or 30;
 
+// bulma b/w
 $black: $poly-black;
 $white: $poly-white;
 
@@ -141,6 +142,20 @@ $poly-link-light: map.get($poly-config, "link-color-light") or
   ) !default;
 
 $poly-grid-pop: map.get($poly-config, "grid-pop-size") or .75rem !default;
+$poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 0 .1em .15em rgba($poly-black, .75) !default;
+$poly-hero-hover-background: map.get($poly-config, "hero-hover-background") or linear-gradient(
+  to bottom,
+  rgba($poly-link-light, 0),
+  rgba($poly-link-light, 0.25) 7%,
+  rgba($poly-link-light, 0.95)
+) !default;
+$poly-navigation-blocks-grid: map.get($poly-config, "navigation-blocks-grid") or (
+  mobile: 2,
+  tablet: 2,
+  desktop: 3,
+  widescreen: 4,
+  fullhd: 4 
+) !default;
 
 // Update Bulma's variables to poly defaults;
 $family-primary: $poly-font-family;
