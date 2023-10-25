@@ -1,5 +1,5 @@
 .poly-header {
-  @extend .container, .is-fullhd;
+  @extend .container;
   .poly-navigation-container {
     @extend .navbar-menu;
     
@@ -22,6 +22,16 @@
   }
 }
 
-.poly-main {
+.poly-layout-main {
   display: contents;
+  &.is-fluid {
+    .poly-page-content {
+      @extend .container, .is-fluid;
+    }
+  }
+  &.is-fullhd {
+    .poly-page-content {
+      @extend .container, .is-fullhd;
+    }
+  }
 }

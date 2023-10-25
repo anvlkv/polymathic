@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 
 {% block content %}
-  <header class="poly-header">
+  <header class="poly-header {% if config.extra.poly.fluid_page %}is-fluid{% else %}is-fullhd{% endif %}">
     {% block layout_header %}
       <nav class="navbar">
         {{brand::macro(menu_id="poly-layout-header", fallback="poly-layout-footer")}}
@@ -13,10 +13,14 @@
       </nav>
     {% endblock %}
   </header>
-  <main class="poly-main">
+  <main class="poly-layout-main {% if config.extra.poly.fluid_page %}is-fluid{% else %}is-fullhd{% endif %}">
     {% block layout_main %} {% endblock %}
   </main>
   {% block footer %}
-    {{ footer::macro(id="poly-layout-footer") }}
+    {% set class = "is-fullhd" %}
+    {% if config.extra.poly.fluid_page %}
+      {% set class = "is-fluid" %}
+    {% endif %}
+    {{ footer::macro(id="poly-layout-footer", class=class) }}
   {% endblock %}
 {% endblock %}

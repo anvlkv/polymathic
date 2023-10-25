@@ -2,7 +2,7 @@
   @extend .footer, .mt-6;
 
   .poly-navigation-container {
-    @extend .container, .is-container, .is-fullhd, .has-text-centered-mobile;
+    @extend .container, .is-container, .has-text-centered-mobile;
 
     .poly-nav {
       @extend .is-flex, .is-flex-wrap-wrap, .is-justify-content-space-between;

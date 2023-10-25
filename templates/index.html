@@ -21,7 +21,7 @@
   {% block index_content %}
     <main class="poly-page-content">
       <section class="animate__animated animate__fadeIn animate__delay-1s animate__faster">
-        <article class="poly-container">
+        <article class="poly-page-main poly-container">
           {% if section.title %}
             {{section.content | safe}}
           {% else %}
@@ -33,7 +33,7 @@
   {% endblock %}
 
   {% block footer %}
-    {{ footer::macro(class="animate__animated animate__slideInUp") }}
+    {{ footer::macro(class="animate__animated animate__fadeInUp") }}
   {% endblock %}
 
 {% endblock content %}
