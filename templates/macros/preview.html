@@ -151,7 +151,7 @@
     {% elif layout == "block" -%}
       {{preview::block(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
     {% else -%}
-      {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+      {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title | default(value=""), description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
     {% endif -%}
   {% endif -%}
 {% endmacro %}

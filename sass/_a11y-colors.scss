@@ -265,7 +265,7 @@
         )
       {
         $step: -$step;
-        @warn "sign flipped while finding contrast to: "+$bg;
+        @debug "sign flipped while seeking contrast to: "+$bg;
       }
     }
     @return $fg;

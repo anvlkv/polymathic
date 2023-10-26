@@ -54,9 +54,7 @@
       }
       .poly-content {
         overflow: hidden;
-        > * {
-          @extend .animate__animated, .animate__slideInUp;
-        }
+        backface-visibility: hidden; 
       }
     }
   }

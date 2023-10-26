@@ -27,6 +27,9 @@ hr {
 
 .poly-load-style {
   visibility: visible !important;
+  > * {
+    overflow: hidden;
+  }
 }
 
 body {
