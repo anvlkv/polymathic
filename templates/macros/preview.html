@@ -18,10 +18,10 @@
             <img {{util::img_src(
               src=hero, 
               ratio=1.0/1.0,
-              breakpoints=["min-width: 300px", "min-width: 200px"],
-              sizes=[400, 300, 216],
+              breakpoints=["min-width: 200px", "min-width: 300px", "min-width: 400px"],
+              sizes=[200, 400, 600, 900],
             ) }} 
-            alt="{{title}}"
+            alt="{{description|default(value=title ~ " preview image")}}"
             />
           </figure>
         </div>

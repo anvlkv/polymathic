@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 
+{% block page_meta %}
+
+  {{ util::taxonomy_meta(tx=taxonomy) }}
+
+{% endblock %}
+
 {% block layout_main %}
   <div class="poly-page-content">
     <section>

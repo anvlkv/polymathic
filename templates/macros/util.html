@@ -65,6 +65,32 @@
   {% endif -%} 
 {% endmacro %}
 
+{% macro taxonomy_meta(tx, term=false, root_title=true) %}
+  {% set title = util::get_taxonomy_kind_title(kind=tx.name) | trim -%}
+  {% set description = util::get_taxonomy_kind_description(kind=tx.name, default=config.description | default(value="")) | trim -%}
+  {% if term -%}
+    {% set t_description = util::get_taxonomy_term_description(kind=tx.name, term=term.name) | trim %}
+    {% if t_description | length > 0 %}
+      {% set description = t_description %}
+    {% endif %}
+    {% set title = term.name %}
+  {% endif %}
+  <title>{{ title }}{% if config.title  and root_title == true %} | {{config.title}}{% endif %}</title>
+  {% if description or config.description -%}
+    <meta name="description" content="{{ description  }}" />
+    <meta property="og:description" content="{{ description }}" />
+  {% endif -%}
+  <meta property="og:title" content="{{ title | default(value=config.title) }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
+  {% if config.extra.poly.og_image -%}
+    <meta
+      property="og:image"
+      content="{{ get_url(path=config.extra.poly.og_image) | safe }}"
+    />
+  {% endif -%} 
+{% endmacro %}
+
 {% macro link_attrs(type=false, href, title=false, current_url=false, class=false) %}
   class="poly-{% if type %}{{type}}-{% endif %}link{% if current_url and current_url == href %} poly-active-link{% endif %}{% if class %} {{class}}{% endif %}"
   {% if current_url != href -%}
