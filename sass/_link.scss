@@ -122,6 +122,9 @@
         text-decoration-skip-ink: all;
         text-decoration-color: $link-dark;
       }
+      .content {
+        color: a11y-color($text, $link-light, $_level, $_size) !important;
+      }
       &.poly-with-image {
         .poly-content {
           text-shadow: 0 0 0 transparent;

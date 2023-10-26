@@ -24,6 +24,18 @@ See all features [demonstrated in the docs](https://main--polymathic-demo.netlif
 
 The theme is friendly to wide range of screen sizes from `mobile` to `fullhd`. Theme comes with minimal styles for `print` media.
 
+#### Dark mode
+
+Theme includes preference based dark mode as separate stylesheet. No switch.
+
+#### Accessibility
+
+This theme automatically finds accessible colors when using customizations, with minimal config.
+
+This theme supports no script environments.
+
+This theme respects user preference for reduced motion.
+
 ### Navigation
 
 This theme builds navigation for your site. The outcome is highly customizable via your `config.toml` and front-matter of your sections.
@@ -35,7 +47,6 @@ The theme comes with templates for `index.html`, `page.html`, `section.html`, `t
 ### Brand and style
 
 The theme is highly customizable via `config.toml` and sass variables. Your customization can start from just the primary color or extend all the way to bulma variables.
-
 
 ### Shortcodes
 

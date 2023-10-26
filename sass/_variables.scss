@@ -16,14 +16,14 @@ $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !
 $poly-ui-transition-fn: map.get($poly-config, "ui-transition-fn") or ease-out !default;
 $poly-body-size: map.get($poly-config, "body-size") or 16px !default;
 $poly-body-size-print: map.get($poly-config, "body-size-print") or $poly-body-size * .82 !default;
-$poly-darkness: map.get($poly-config, "text-darkness") or 90%;
-$poly-accent-saturation: map.get($poly-config, "accent-saturation") or 70%;
-$poly-lightness: map.get($poly-config, "background-lightness") or 99%;
-$poly-saturation: map.get($poly-config, "background-saturation") or 5%;
-$poly-text-saturation: map.get($poly-config, "text-saturation") or 10%;
-$poly-mono-range: map.get($poly-config, "mono-range") or 30;
+$poly-darkness: map.get($poly-config, "text-darkness") or 90% !default;
+$poly-accent-saturation: map.get($poly-config, "accent-saturation") or 70% !default;
+$poly-lightness: map.get($poly-config, "background-lightness") or 99% !default;
+$poly-saturation: map.get($poly-config, "background-saturation") or 5% !default;
+$poly-text-saturation: map.get($poly-config, "text-saturation") or 10% !default;
+$poly-mono-range: map.get($poly-config, "mono-range") or 30 !default;
 
-// bulma b/w
+// a11y b/w
 $black: $poly-black;
 $white: $poly-white;
 
@@ -43,8 +43,8 @@ $poly-text: color.change(
 $poly-link: color.adjust(
   $poly-primary,
   $hue: -1 * $poly-mono-range,
-  $blackness: 10%
 );
+
 @if color.saturation($poly-link) < $poly-accent-saturation {
   $poly-link: color.change($poly-link, $saturation: $poly-accent-saturation);
 }
@@ -55,7 +55,7 @@ $poly-info: color.adjust($poly-primary, $hue: $poly-mono-range);
 }
 
 $_size: strip-unit($poly-body-size);
-$_level: map.get($poly-config, "a11y-contrast") or "AA";
+$_level: map.get($poly-config, "a11y-contrast") or "AA" !default;
 
 @if map.get($poly-config, "background-color") {
   $poly-background: map.get($poly-config, "background-color");
