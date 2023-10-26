@@ -58,6 +58,7 @@
 .poly-card-taxonomy-term-link,
 .poly-card-section-link,
 .poly-card-page-link,
+.poly-asset-card-link,
 .poly-card-link {
   .title::first-line {
     text-decoration: overline;
@@ -74,7 +75,7 @@
     (color, background-color, box-shadow, text-decoration-color),
     1.5
   ) {
-    .poly-hero-card {
+    .poly-hero-card, .poly-asset-card {
       background-color: $link-light !important;
       box-shadow: $box-link-hover-shadow;
       &,

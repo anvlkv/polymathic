@@ -1,4 +1,8 @@
-@use "sass:color";
+
+@use 'sass:color';
+@use 'sass:math';
+@use 'sass:map';
+
 
 // with adjustments
 // from https://github.com/jhogue/automated-a11y-sass/blob/master/a11y-color.scss
@@ -7,20 +11,6 @@
 // @param {number with unit} $value
 @function strip-unit($value) {
   @return ($value / ($value * 0 + 1));
-}
-
-// @function pow($base, $exponents)
-// Helper: Raise a number the power of another number
-// Adapted from: https://gist.github.com/hail2u/1964056
-//
-// @param {number} $base — The base number
-// @param {number} $exponents — The exponent to which to raise $base
-@function pow($base, $exponents) {
-  $raised: 1;
-  @for $i from 1 through $exponents {
-    $raised: $raised * $base;
-  }
-  @return $raised;
 }
 
 // @function luminance($color)
@@ -33,21 +23,33 @@
 // Output:
 // .sample { luminance: 0.1283736922; }
 //
+
+// fix from https://stackoverflow.com/questions/30352063/sass-function-for-determining-the-luminance-of-a-color
 @function luminance($color) {
-  // Thanks voxpelli for a very concise implementation of luminance measure in sass
-  // Adapted from: https://gist.github.com/voxpelli/6304812
-  $rgba: red($color), green($color), blue($color);
-  $rgba2: ();
-  @for $i from 1 through 3 {
-    $rgb: nth($rgba, $i);
-    $rgb: $rgb / 255;
-    $rgb: if($rgb < 0.03928, $rgb / 12.92, pow(($rgb + 0.055) / 1.055, 2));
-    $rgba2: append($rgba2, $rgb);
+  $rgb: (
+    'r': color.red($color),
+    'g': color.green($color),
+    'b': color.blue($color)
+  );
+
+  @each $channel, $value in $rgb {
+    $value: math.div($value, 255);
+
+    @if $value < 0.03928 {
+      $value: math.div($value, 12.92);
+    } @else {
+      $value: math.div($value + .055, 1.055);
+      $value: math.pow($value, 2);
+    }
+
+    $rgb: map.merge($rgb, ($channel: $value));
   }
-  @return (
-      0.2126 * nth($rgba2, 1) + 0.7152 * nth($rgba2, 2) + 0.0722 *
-        nth($rgba2, 3)
-    ) * 100;
+
+  @return 
+    (map.get($rgb, 'r') * .2126) + 
+    (map.get($rgb, 'g') * .7152) + 
+    (map.get($rgb, 'b') * .0722)
+  ;
 }
 
 // @function contrast-ratio($fg, $bg)
@@ -63,12 +65,12 @@
 @function contrast-ratio($fg, $bg) {
   $luminance1: luminance($fg) + 0.05;
   $luminance2: luminance($bg) + 0.05;
-  $ratio: $luminance1 / $luminance2;
+  $ratio: math.div($luminance1, $luminance2);
   @if $luminance2 > $luminance1 {
-    $ratio: 1 / $ratio;
+    $ratio: math.div(1, $ratio);
   }
   // Round to a hundreth because 6.96 should not pass a ratio of 7.0
-  $ratio: round($ratio * 100) / 100;
+  $ratio: math.div(math.round($ratio * 100), 100);
   @return $ratio;
 }
 
@@ -265,7 +267,6 @@
         )
       {
         $step: -$step;
-        @debug "sign flipped while seeking contrast to: "+$bg;
       }
     }
     @return $fg;

@@ -2,10 +2,12 @@
 
 .poly-navigation-blocks {
   @extend .container, .is-fluid, .px-0;
+  background: $poly-navigation-blocks-background;
   > section {
     display: contents;
     .poly-nav {
       display: grid;
+      grid-auto-flow: dense;
       @include until($tablet) {
         grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'mobile'), 1fr);
       }

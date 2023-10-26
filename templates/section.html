@@ -10,16 +10,18 @@
   <div class="poly-page-content">
     <section>
       {% block section_pages %}
-        <article class="poly-grid">
-          {% include "partials/subsections-nav.html" %}
-          {% if section.subsections | length > 0 %}
-            <div class="poly-group-footer">
-              <hr/>
-            </div>
+        {% if section.pages | length > 0 or section.subsections | length > 0 or paginator is defined and paginator.pages | length > 0 %}
+          <article class="poly-grid">
+            {% include "partials/subsections-nav.html" %}
+            {% if section.subsections | length > 0 %}
+              <div class="poly-group-footer">
+                <hr/>
+              </div>
+            {% endif %}
+            {% include "partials/pages-nav.html" %}
+          </article>
           {% endif %}
-          {% include "partials/pages-nav.html" %}
-        </article>
-      {% endblock %}
+        {% endblock %}
       {% if section.content | length > 0 %}
         <aside class="poly-page-aside">
           {% block section_aside %}

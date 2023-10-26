@@ -32,6 +32,10 @@
       @include from($desktop){
         border-right: .1px solid $grey-light;
       }
+      &:only-child {
+        @extend .is-full, .is-flex-grow-1;
+        border: none !important;
+      }
     }
   }
 }

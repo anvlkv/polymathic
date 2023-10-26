@@ -52,7 +52,7 @@
       @extend .image, .box, .px-0, .pt-0, .mx-auto;
       overflow: hidden;
       figcaption {
-        @extend .title, .is-subtitle, .is-5, .mt-2, .mx-4;
+        @extend .title, .subtitle, .is-5, .mt-2, .mx-4;
       }
     }
     > img,

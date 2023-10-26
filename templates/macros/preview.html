@@ -18,7 +18,6 @@
             <img {{util::img_src(
               src=hero, 
               ratio=1.0/1.0,
-              breakpoints=["min-width: 200px", "min-width: 300px", "min-width: 400px"],
               sizes=[200, 400, 600, 900],
             ) }} 
             alt="{{description|default(value=title ~ " preview image")}}"
@@ -27,7 +26,7 @@
         </div>
       {% endif -%}
       <div class="poly-content">
-        <p class="title is-4 is-subtitle">{{ title }}</p>
+        <p class="title is-4 subtitle">{{ title }}</p>
         {% if description != false -%}
           <p>{{ description }}</p>
         {% endif -%}
@@ -49,7 +48,7 @@
   >
     <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
       <div class="poly-content">
-        <p class="title is-4 is-subtitle">{{ title }}</p>
+        <p class="title is-4 subtitle">{{ title }}</p>
         {% if description != false -%}
           <p class="content">{{ description }}</p>
         {% endif -%}
@@ -71,7 +70,7 @@
   >
     <div class="poly-hero-card{% if hero != false %} poly-with-image{% endif %}">
       <div class="poly-content">
-        <p class="title is-4 is-subtitle">{{ title }}</p>
+        <p class="title is-4 subtitle">{{ title }}</p>
         {% if description != false -%}
           <p class="content">{{ description }}</p>
         {% endif -%}
@@ -117,7 +116,7 @@
   <a {{util::link_attrs(type="card-"~type, href=href, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}>
     <div class="poly-hero-card">
       <div class="poly-content">
-        <p class="title {{size}} is-subtitle">{{ title }}</p>
+        <p class="title {{size}} subtitle">{{ title }}</p>
         {% if description != false -%}
           <p class="content">{{ description }}</p>
         {% endif -%}

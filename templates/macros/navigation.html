@@ -31,7 +31,7 @@
                   {% if rendered_terms is not containing(term.path) -%}
                     {% set_global has_tx = false -%}
                     {% for pg in term.pages -%}
-                      {% set_global has_tx = pg.ancestors is containing(section.relative_path) or has_tx -%}
+                      {% set_global has_tx = has_tx or pg.ancestors is containing(section.relative_path) and pg.taxonomies[taxonomy.kind.name][0] == term.name -%}
                     {% endfor %}
                     {% if has_tx -%}
                       {% set entry = preview::macro_tx(type="term", entry=term, parent=taxonomy.kind, plain=plain) -%}
