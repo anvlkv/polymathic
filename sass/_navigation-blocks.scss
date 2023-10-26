@@ -7,6 +7,7 @@
     display: contents;
     .poly-nav {
       display: grid;
+      grid-auto-flow: dense;
       @include until($tablet) {
         grid-template-columns: repeat(map.get($poly-navigation-blocks-grid, 'mobile'), 1fr);
       }
