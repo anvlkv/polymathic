@@ -13,7 +13,6 @@
           <img {{util::img_src(
             src=util::poly_path(value=image, assets=content.assets) | trim, 
             ratio=16.0/9.0,
-            breakpoints=["min-width: 200px", "min-width: 400px", "min-width: 600px"],
             sizes=[200, 400, 600, 900],
           ) }} 
            alt="{{alt}}">

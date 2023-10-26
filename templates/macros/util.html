@@ -101,10 +101,9 @@
   {% endif -%}
 {% endmacro %}
 
-
-
-{% macro img_src(src, sizes, breakpoints, ratio) %}
-  sizes="{% for size in sizes %}{% if breakpoints[loop.index0] %}({{breakpoints[loop.index0]}}) {{size}}px,{% else %}{{size}}px{% endif %}{% endfor %}"
+{% macro img_src(src, sizes, breakpoints='max-width: 769px, max-width: 960px, max-width: 1152px, max-width: 1344px', ratio) %}
+  {% set breakpoints = breakpoints | split(pat=",")%}
+  sizes="{% for size in sizes %}{% if breakpoints[loop.index0] and loop.last == false %}({{breakpoints[loop.index0]}}) {{size}}w,{% else %}{{size}}w{% endif %}{% endfor %}"
   srcset="{% for size in sizes %}{% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill')%}{{image.url}} {{size}}w{% if loop.last == false%},{% endif %}{% endfor %}"
   src="{{src}}"  
 {% endmacro %}
@@ -143,7 +142,6 @@
             <img {{util::img_src(
               src=asset, 
               ratio=image_meta.width/image_meta.height,
-              breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
               sizes=[769, 960, 1152, 1344],
             ) }} 
               alt="{{alt}}"

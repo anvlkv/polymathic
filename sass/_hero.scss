@@ -62,6 +62,9 @@
 
 .poly-hero-card {
   @extend .card, .is-flex;
+  @include until($tablet) {
+    flex-direction: column;
+  }
   overflow: hidden;
   &.poly-with-image {
     @include backgrounds();
