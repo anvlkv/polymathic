@@ -14,6 +14,15 @@
         @extend .container, .is-container, .is-fullhd;
       }
     }
+    .poly-page-main, .poly-grid {
+      &:not(:only-child) {
+        @include from($fullhd) {
+          max-width: $fullhd;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+      }
+    }
     .poly-page-aside {
       @extend .column, .is-full-tablet, .is-one-third-desktop, .is-one-third-widescreen, .is-3-fullhd;
       order: -1;
