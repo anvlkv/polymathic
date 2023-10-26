@@ -36,6 +36,8 @@ $white: map.get($poly-config-dark, "white") or $poly-black !default;
 
 
 
-$card-background-color: $scheme-main-bis;
-$box-background-color: $card-background-color;
-$input-background-color: $card-background-color;
+$card-background-color: map.get($poly-config-dark, "card-background-color") or $scheme-main-ter !default;
+$box-background-color: map.get($poly-config-dark, "box-background-color") or $scheme-main-ter !default;
+$input-background-color: map.get($poly-config-dark, "input-background-color") or $scheme-main-ter !default;
+
+$shadow: map.get($poly-config-dark, "shadow") or 0 0.5em 1em -0.125em rgba($poly-white, 0.1), 0 0px 0 1px rgba($poly-white, 0.025) !default;
