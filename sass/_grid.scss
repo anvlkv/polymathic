@@ -33,7 +33,7 @@
   
     &.poly-tile-layout-hero,
     &.poly-tile-layout-banner {
-      @extend .is-6-desktop, .is-full-tablet, .is-full-mobile;
+      @extend .is-4-fullhd, .is-6-desktop, .is-full-tablet, .is-full-mobile;
     }
 
     &.poly-tile-layout-block,
