@@ -1,13 +1,5 @@
 @use "sass:map";
 
-$poly-navigation-blocks-grid: (
-  mobile: 1,
-  tablet: 2,
-  desktop: 3,
-  widescreen: 4,
-  fullhd: 4 
-) !default;
-
 .poly-navigation-blocks {
   @extend .container, .is-fluid, .px-0;
   > section {
@@ -32,20 +24,32 @@ $poly-navigation-blocks-grid: (
 
       .poly-nav-section:not(.poly-is-one) {
         display: grid;
-        grid-row: span var(--poly-rows);
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: subgrid;
         justify-items: stretch;
-        @include from($tablet) {
-          grid-column: span 2;
+        
+        
+        grid-template-columns: 1fr 1fr;
+        @include until($tablet) {
+          grid-template-columns: subgrid;
+          grid-row: span calc(var(--poly-rows) + 1);
         }
+        @include from($tablet) {
+          grid-row: span var(--poly-rows);
+        }
+
+        grid-template-rows: subgrid;
+        grid-column: span 2;
+
         @include from($desktop) {
           grid-template-columns: repeat(4, 1fr);
           .poly-tile:first-child {
-            grid-column: span 2;
             grid-row: span calc(var(--poly-rows) / 2 + 1);
           }
         }
+
+        .poly-tile:first-child {
+          grid-column: span 2;
+        }
+
         .poly-tile:not(:first-child) {
           .poly-hero-card .poly-content {
             padding: $poly-grid-pop;
@@ -55,6 +59,11 @@ $poly-navigation-blocks-grid: (
 
       .poly-is-one {
         display: contents;
+        @include until($tablet) {
+          a {
+            grid-column: span 2;
+          }
+        }
       }
     }
   }

@@ -6,8 +6,8 @@
 {% macro macro(class="", id="footer") %}
   {%- set nav_current_path = current_path | default(value="") %}
   {%- if config.extra.poly.menu_order or config.extra.poly.social_outlink or config.extra.poly.license %}
-    <footer class="poly-navigation-footer {{class}}" id="{{id}}">
-      <div class="poly-navigation-container">
+    <footer class="poly-navigation-footer" id="{{id}}">
+      <div class="poly-navigation-container {{class}}">
         {% if config.extra.poly.menu_order -%}
           {{navigation::macro(menu=config.extra.poly.menu_order, id="footer", recursively=true, plain=true)}}
         {% endif %}

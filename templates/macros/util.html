@@ -10,19 +10,17 @@
   {{ path }}
 {% endmacro %}
 
-
-
 {% macro background_image_vars(path) %}
-{% set image_sm = resize_image(path=path, width=769, height=769, op='fill', format='webp') -%}
-{% set image_tb = resize_image(path=path, width=769, op='fit_width', format='webp') -%}
-{% set image_ds = resize_image(path=path, width=960, op='fit_width', format='webp') -%}
-{% set image_wd = resize_image(path=path, width=1152, op='fit_width', format='webp') -%}
-{% set image_fd = resize_image(path=path, width=1344, op='fit_width', format='webp') -%}
---poly-background-widescreen: url({{image_wd.url}});
---poly-background-fullhd: url({{image_fd.url}});
---poly-background-desktop: url({{image_ds.url}});
---poly-background-tablet: url({{image_tb.url}});
---poly-background-sm: url({{image_sm.url}});
+  {% set image_sm = resize_image(path=path, width=769, height=769, op='fill', format='webp') -%}
+  {% set image_tb = resize_image(path=path, width=769, op='fit_width', format='webp') -%}
+  {% set image_ds = resize_image(path=path, width=960, op='fit_width', format='webp') -%}
+  {% set image_wd = resize_image(path=path, width=1152, op='fit_width', format='webp') -%}
+  {% set image_fd = resize_image(path=path, width=1344, op='fit_width', format='webp') -%}
+  --poly-background-widescreen: url({{image_wd.url}});
+  --poly-background-fullhd: url({{image_fd.url}});
+  --poly-background-desktop: url({{image_ds.url}});
+  --poly-background-tablet: url({{image_tb.url}});
+  --poly-background-sm: url({{image_sm.url}});
 {% endmacro  %}
 
 {% macro debug(value) %} 
@@ -34,15 +32,15 @@
 {% endmacro %}
 
 {% macro content_meta(content, root_title=true) %}
-<title>{{ content.title }}{% if config.title  and root_title == true %} | {{config.title}}{% endif %}</title>
-{% if content.description or config.description -%}
-  {% set description = content.description | default(value=config.description) -%}
-  <meta name="description" content="{{ description  }}" />
-  <meta property="og:description" content="{{ description }}" />
-{% endif -%}
-<meta property="og:title" content="{{ content.title | default(value=config.title) }}" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
+  <title>{{ content.title }}{% if config.title  and root_title == true %} | {{config.title}}{% endif %}</title>
+  {% if content.description or config.description -%}
+    {% set description = content.description | default(value=config.description) -%}
+    <meta name="description" content="{{ description  }}" />
+    <meta property="og:description" content="{{ description }}" />
+  {% endif -%}
+  <meta property="og:title" content="{{ content.title | default(value=config.title) }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
   {% if content.extra.poly.hero -%}
     {% set path = util::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim -%}
     {% set image_meta = get_image_metadata(path=path) -%}
@@ -67,9 +65,37 @@
   {% endif -%} 
 {% endmacro %}
 
+{% macro taxonomy_meta(tx, term=false, root_title=true) %}
+  {% set title = util::get_taxonomy_kind_title(kind=tx.name) | trim -%}
+  {% set description = util::get_taxonomy_kind_description(kind=tx.name, default=config.description | default(value="")) | trim -%}
+  {% if term -%}
+    {% set t_description = util::get_taxonomy_term_description(kind=tx.name, term=term.name) | trim %}
+    {% if t_description | length > 0 %}
+      {% set description = t_description %}
+    {% endif %}
+    {% set title = term.name %}
+  {% endif %}
+  <title>{{ title }}{% if config.title  and root_title == true %} | {{config.title}}{% endif %}</title>
+  {% if description or config.description -%}
+    <meta name="description" content="{{ description  }}" />
+    <meta property="og:description" content="{{ description }}" />
+  {% endif -%}
+  <meta property="og:title" content="{{ title | default(value=config.title) }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
+  {% if config.extra.poly.og_image -%}
+    <meta
+      property="og:image"
+      content="{{ get_url(path=config.extra.poly.og_image) | safe }}"
+    />
+  {% endif -%} 
+{% endmacro %}
+
 {% macro link_attrs(type=false, href, title=false, current_url=false, class=false) %}
   class="poly-{% if type %}{{type}}-{% endif %}link{% if current_url and current_url == href %} poly-active-link{% endif %}{% if class %} {{class}}{% endif %}"
+  {% if current_url != href -%}
   href="{{href | safe}}"
+  {% endif -%}
   {% if title -%}
   title="{{title}}"
   {% endif -%}
@@ -104,55 +130,55 @@
 {% endmacro %}
 
 {% macro content_modals(assets) %}
-{% for asset in assets  -%}
-  {% if asset is matching(".(png|jpeg|jpg|gif|webp)$") -%}
-    {% set name = asset | split(pat="/") | last  -%}
-    {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title -%}
-    <div class="modal" id="content-asset-modal-{{name | slugify}}">
-      <div class="modal-background"></div>
-      <div class="modal-content">
-        <figure class="image">
-          {% set image_meta = get_image_metadata(path=asset)  -%}
-          <img {{util::img_src(
-            src=asset, 
-            ratio=image_meta.width/image_meta.height,
-            breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
-            sizes=[769, 960, 1152, 1344],
-          ) }} 
-            alt="{{alt}}"
-          />
-        </figure>
+  {% for asset in assets  -%}
+    {% if asset is matching(".(png|jpeg|jpg|gif|webp)$") -%}
+      {% set name = asset | split(pat="/") | last  -%}
+      {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title -%}
+      <div class="modal" id="content-asset-modal-{{name | slugify}}">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <figure class="image">
+            {% set image_meta = get_image_metadata(path=asset)  -%}
+            <img {{util::img_src(
+              src=asset, 
+              ratio=image_meta.width/image_meta.height,
+              breakpoints=["min-width: 769px", "min-width: 960px", "min-width: 1152px"],
+              sizes=[769, 960, 1152, 1344],
+            ) }} 
+              alt="{{alt}}"
+            />
+          </figure>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
       </div>
-      <button class="modal-close is-large" aria-label="close"></button>
-    </div>
-  {% endif  -%}
-{% endfor  -%}
+    {% endif  -%}
+  {% endfor  -%}
 {% endmacro %}
 
 {% macro get_taxonomy_kind_title(kind) %}
-    {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
-    {% set kind_config = tx_config[kind] | default(value=false) -%}
-    {% if kind_config == false -%}
-      {{ kind | split(pat="_") | join(sep=" ") | title }}
-    {% else -%}
-      {{ kind_config.title }}
-    {% endif -%}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
+  {% set kind_config = tx_config[kind] | default(value=false) -%}
+  {% if kind_config == false -%}
+    {{ kind | split(pat="_") | join(sep=" ") | title }}
+  {% else -%}
+    {{ kind_config.title }}
+  {% endif -%}
 {% endmacro %}
 
 {% macro get_taxonomy_kind_description(kind, default="") -%}
-    {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
-    {% set kind_config = tx_config[kind] | default(value=false) -%}
-    {% if kind_config -%}
-      {{ kind_config.description | default(value=default) }}
-    {% endif -%}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
+  {% set kind_config = tx_config[kind] | default(value=false) -%}
+  {% if kind_config -%}
+    {{ kind_config.description | default(value=default) }}
+  {% endif -%}
 {% endmacro %}
 
 {% macro get_taxonomy_kind_content(kind) %}
-    {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
-    {% set kind_config = tx_config[kind] | default(value=false) -%}
-    {% if kind_config and kind_config.content is defined -%}
-      {{ kind_config.content | markdown() | safe }}
-    {% endif -%}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
+  {% set kind_config = tx_config[kind] | default(value=false) -%}
+  {% if kind_config and kind_config.content is defined -%}
+    {{ kind_config.content | markdown() | safe }}
+  {% endif -%}
 {% endmacro %}
 
 {% macro get_taxonomy_kind_order(kind, terms) %}
@@ -189,41 +215,41 @@
 {% endmacro %}
 
 {% macro get_taxonomy_term_description(kind, term) %}
-    {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
-    {% set kind_config = tx_config[kind] | default(value=false) -%}
-    {% if kind_config and kind_config.terms is defined -%}
-      {% for t in kind_config.terms -%}
-        {% if t is not string and t.title == term -%}
-          {{t.description}}
-        {% endif -%}
-      {% endfor -%}
-    {% endif -%}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
+  {% set kind_config = tx_config[kind] | default(value=false) -%}
+  {% if kind_config and kind_config.terms is defined -%}
+    {% for t in kind_config.terms -%}
+      {% if t is not string and t.title == term -%}
+        {{t.description}}
+      {% endif -%}
+    {% endfor -%}
+  {% endif -%}
 {% endmacro %}
 
 {% macro get_taxonomy_term_content(kind, term) %}
-    {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last )  -%}
-    {% set kind_config = tx_config[kind] | default(value=false)  -%}
-    {% if kind_config and kind_config.terms is defined  -%}
-      {% for t in kind_config.terms  -%}
-        {% if t is not string and t.title == term and t.content is defined -%}
-          {{t.content | markdown() | safe}}
-        {% endif  -%}
-      {% endfor  -%}
-    {% endif  -%}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last )  -%}
+  {% set kind_config = tx_config[kind] | default(value=false)  -%}
+  {% if kind_config and kind_config.terms is defined  -%}
+    {% for t in kind_config.terms  -%}
+      {% if t is not string and t.title == term and t.content is defined -%}
+        {{t.content | markdown() | safe}}
+      {% endif  -%}
+    {% endfor  -%}
+  {% endif  -%}
 {% endmacro %}
 
 {% macro get_taxonomy_term_sort_by(kind, term) %}
-    {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
-    {% set kind_config = tx_config[kind] | default(value=false) -%}
-    {% set sort_by = "path" -%}
-    {% if kind_config and kind_config.terms is defined -%}
-      {% set_global override = kind_config.sort_by | default(value=sort_by) -%}
-      {% for t in kind_config.terms -%}
-        {% if t is not string and t.title == term and t.sort_by is defined -%}
-          {% set_global override = t.sort_by -%}
-        {% endif -%}
-      {% endfor -%}
-      {% set sort_by = override -%}
-    {% endif -%}
-    {{ sort_by }}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
+  {% set kind_config = tx_config[kind] | default(value=false) -%}
+  {% set sort_by = "path" -%}
+  {% if kind_config and kind_config.terms is defined -%}
+    {% set_global override = kind_config.sort_by | default(value=sort_by) -%}
+    {% for t in kind_config.terms -%}
+      {% if t is not string and t.title == term and t.sort_by is defined -%}
+        {% set_global override = t.sort_by -%}
+      {% endif -%}
+    {% endfor -%}
+    {% set sort_by = override -%}
+  {% endif -%}
+  {{ sort_by }}
 {% endmacro %}

@@ -1,0 +1,41 @@
+@use "sass:map";
+
+$poly-config-dark: () !default;
+
+$poly-config: $poly-config-dark;
+
+$poly-darkness: map.get($poly-config, "text-darkness") or 7%;
+$poly-lightness: map.get($poly-config, "background-lightness") or 3%;
+$_level: map.get($poly-config, "a11y-contrast") or "AAA";
+
+@import "./variables";
+
+
+$black: map.get($poly-config-dark, "black") or $poly-white !default;
+$black-bis: map.get($poly-config-dark, "black-bis") or darken($poly-white, 7%) !default;
+$black-ter: map.get($poly-config-dark, "black-ter") or darken($poly-white, 14%) !default;
+
+$grey-darker: map.get($poly-config-dark, "grey-darker") or
+  darken($poly-white, 21%) !default;
+
+$grey-dark: map.get($poly-config-dark, "grey-dark") or darken($poly-white, 29%) !default;
+$grey: map.get($poly-config-dark, "grey") or darken($poly-white, 48%) !default;
+
+$grey-light: map.get($poly-config-dark, "grey-light") or
+  lighten($poly-black, 100% - 71%) !default;
+$grey-lighter: map.get($poly-config-dark, "grey-lighter") or
+  lighten($poly-black, 100% - 86%) !default;
+$grey-lightest: map.get($poly-config-dark, "grey-lightest") or
+  lighten($poly-black, 100% - 93%) !default;
+
+$white-ter: map.get($poly-config-dark, "white-ter") or
+  lighten($poly-black, 100% - 96%) !default;
+$white-bis: map.get($poly-config-dark, "white-bis") or
+  lighten($poly-black, 100% - 98%) !default;
+$white: map.get($poly-config-dark, "white") or $poly-black !default;
+
+
+
+$card-background-color: $scheme-main-bis;
+$box-background-color: $card-background-color;
+$input-background-color: $card-background-color;

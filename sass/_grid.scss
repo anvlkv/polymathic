@@ -25,21 +25,12 @@
   }
 
   .poly-tile {
-    @extend .column;
+    @extend .column, .is-flex-grow-1;
 
     &.poly-tile-layout-default {
-      @extend .is-4-desktop, .is-6-tablet, .is-full-mobile;
+      @extend .is-3-fullhd, .is-4-widescreen, .is-4-desktop, .is-6-tablet, .is-full-mobile;
     }
   
-    &.poly-tile-layout-hero,
-    &.poly-tile-layout-banner {
-      @extend .is-6-desktop, .is-full-tablet, .is-full-mobile;
-    }
-
-    &.poly-tile-layout-default {
-      @extend .is-4-desktop, .is-6-tablet, .is-full-mobile;
-    }
-
     &.poly-tile-layout-hero,
     &.poly-tile-layout-banner {
       @extend .is-6-desktop, .is-full-tablet, .is-full-mobile;

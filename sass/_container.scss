@@ -30,6 +30,11 @@
     > blockquote,
     > pre {
       @extend .box, .mx-auto;
+      @include until($desktop) {
+        code {
+          white-space: break-spaces;
+        }
+      }
       @include from($desktop) {
         width: calc(60% - 0.75rem);
       }

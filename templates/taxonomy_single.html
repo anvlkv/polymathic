@@ -1,10 +1,16 @@
 {% extends "layout.html" %}
 
+{% block page_meta %}
+
+  {{ util::taxonomy_meta(tx=taxonomy, term=term) }}
+
+{% endblock %}
+
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
       {% block taxonomy_content %}
-        <article class="poly-page-main poly-grid">
+        <article class="poly-grid">
           {% include "partials/taxonomy-term-content.html" %}
         </article>
       {% endblock %}
