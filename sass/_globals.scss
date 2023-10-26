@@ -35,3 +35,11 @@ hr {
 body {
   margin: 0;
 }
+
+.poly-portrait {
+  img {
+    max-height: 90vh;
+    width: auto !important;
+    margin: 0 auto;
+  }
+}

@@ -137,8 +137,9 @@
       <div class="modal" id="content-asset-modal-{{name | slugify}}">
         <div class="modal-background"></div>
         <div class="modal-content">
-          <figure class="image">
-            {% set image_meta = get_image_metadata(path=asset)  -%}
+          {% set image_meta = get_image_metadata(path=asset)  -%}
+          {% set portrait = image_meta.height > image_meta.width -%}
+          <figure class="image{% if portrait %} poly-portrait{% endif %}">
             <img {{util::img_src(
               src=asset, 
               ratio=image_meta.width/image_meta.height,
