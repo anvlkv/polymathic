@@ -2,6 +2,7 @@
 
 .poly-navigation-blocks {
   @extend .container, .is-fluid, .px-0;
+  background: $poly-navigation-blocks-background;
   > section {
     display: contents;
     .poly-nav {

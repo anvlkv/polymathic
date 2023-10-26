@@ -15,7 +15,8 @@ $poly-font-family-print: map.get($poly-config, "font-family-print") or serif !de
 $poly-ui-transition-time: map.get($poly-config, "ui-transition-time") or 250ms !default;
 $poly-ui-transition-fn: map.get($poly-config, "ui-transition-fn") or ease-out !default;
 $poly-body-size: map.get($poly-config, "body-size") or 16px !default;
-$poly-body-size-print: map.get($poly-config, "body-size-print") or $poly-body-size * .82 !default;
+$poly-body-size-print: map.get($poly-config, "body-size-print") or
+  $poly-body-size * 0.82 !default;
 $poly-darkness: map.get($poly-config, "text-darkness") or 90% !default;
 $poly-accent-saturation: map.get($poly-config, "accent-saturation") or 70% !default;
 $poly-lightness: map.get($poly-config, "background-lightness") or 99% !default;
@@ -40,10 +41,7 @@ $poly-text: color.change(
   $lightness: 100% - $poly-darkness
 );
 
-$poly-link: color.adjust(
-  $poly-primary,
-  $hue: -1 * $poly-mono-range,
-);
+$poly-link: color.adjust($poly-primary, $hue: -1 * $poly-mono-range);
 
 @if color.saturation($poly-link) < $poly-accent-saturation {
   $poly-link: color.change($poly-link, $saturation: $poly-accent-saturation);
@@ -141,21 +139,37 @@ $poly-link-light: map.get($poly-config, "link-color-light") or
     $bold: true,
   ) !default;
 
-$poly-grid-pop: map.get($poly-config, "grid-pop-size") or .75rem !default;
-$poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 0 .1em .15em rgba($poly-black, .75) !default;
-$poly-hero-hover-background: map.get($poly-config, "hero-hover-background") or linear-gradient(
-  to bottom,
-  rgba($poly-link-light, 0),
-  rgba($poly-link-light, 0.25) 7%,
-  rgba($poly-link-light, 0.95)
-) !default;
-$poly-navigation-blocks-grid: map.get($poly-config, "navigation-blocks-grid") or (
-  mobile: 2,
-  tablet: 2,
-  desktop: 3,
-  widescreen: 4,
-  fullhd: 4 
-) !default;
+$poly-grid-pop: map.get($poly-config, "grid-pop-size") or 0.75rem !default;
+$poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 0 0.1em
+  0.15em rgba($poly-black, 0.75) !default;
+$poly-hero-hover-background: map.get($poly-config, "hero-hover-background") or
+  linear-gradient(
+    to bottom,
+    rgba($poly-link-light, 0),
+    rgba($poly-link-light, 0.25) 7%,
+    rgba($poly-link-light, 0.95)
+  ) !default;
+$poly-navigation-blocks-grid: map.get($poly-config, "navigation-blocks-grid") or
+  (
+    mobile: 2,
+    tablet: 2,
+    desktop: 3,
+    widescreen: 4,
+    fullhd: 4,
+  ) !default;
+
+$poly-navigation-blocks-background: map.get(
+    $poly-config,
+    "navigation-blocks-background"
+  )
+  or
+  conic-gradient(
+    from 0deg at 50% 88%,
+    $poly-background,
+    $poly-primary 60%,
+    $poly-link,
+    $poly-info
+  );
 
 // Update Bulma's variables to poly defaults;
 $family-primary: $poly-font-family;
