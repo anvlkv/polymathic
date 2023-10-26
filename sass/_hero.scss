@@ -110,3 +110,8 @@
     color: $text !important;
   }
 }
+
+.poly-asset-card {
+  @extend .poly-hero-card;
+  flex-direction: column !important;
+}
