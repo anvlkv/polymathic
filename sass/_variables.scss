@@ -1,5 +1,6 @@
 @use "sass:map";
 @use "sass:color";
+@use "sass:math";
 @use "../node_modules/bulma/sass/utilities/functions.sass" as bulma;
 @import "./a11y-colors";
 
@@ -44,7 +45,10 @@ $poly-text: color.change(
 $poly-link: color.adjust($poly-primary, $hue: -1 * $poly-mono-range);
 
 @if color.saturation($poly-link) < $poly-accent-saturation {
-  $poly-link: color.change($poly-link, $saturation: $poly-accent-saturation);
+  $poly-link: color.change(
+    $poly-link,
+    $saturation: $poly-accent-saturation,
+  );
 }
 
 $poly-info: color.adjust($poly-primary, $hue: $poly-mono-range);
@@ -129,7 +133,7 @@ $poly-info-light: map.get($poly-config, "info-color-light") or
     $level: $_level,
     $size: $_size,
     $bold: false,
-  )
+  );
 }
 
 $poly-link-dark: map.get($poly-config, "link-color-dark") or
@@ -150,15 +154,15 @@ $poly-link-light: map.get($poly-config, "link-color-light") or
     $bold: true,
   ) !default;
 
-  @if not map.get($poly-config, "link-color-light") {
-    $poly-link-light: a11y-color(
-      $fg: $poly-link-light,
-      $bg: $poly-link-dark,
-      $level: $_level,
-      $size: $_size,
-      $bold: false,
-    )
-  }
+@if not map.get($poly-config, "link-color-light") {
+  $poly-link-light: a11y-color(
+    $fg: $poly-link-light,
+    $bg: $poly-link-dark,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  );
+}
 
 $poly-grid-pop: map.get($poly-config, "grid-pop-size") or 0.75rem !default;
 $poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 0 0.1em
@@ -205,7 +209,8 @@ $info-light: $poly-info-light;
 $link: $poly-link;
 $link-dark: $poly-link-dark;
 $link-light: $poly-link-light;
-$code: map.get($poly-config, 'code-color') or a11y-color($poly-info-dark, $poly-background);
+$code: map.get($poly-config, "code-color") or
+  a11y-color($poly-info-dark, $poly-background);
 $body-size: $poly-body-size;
 $box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text, 0.15),
   0 0 0 1px $link;
