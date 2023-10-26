@@ -5,7 +5,7 @@
 {% set titles = titles | default(value=true) %}
 
 <div class="poly-grid">
-  {%- for image in content.assets -%}
+  {%- for image in content.assets | sort -%}
     {% set file_name = image | split(pat="/") | last -%}
     {% if exclude is not containing(file_name) -%}
       {% set id = "content-asset-modal-"~file_name | slugify -%}
