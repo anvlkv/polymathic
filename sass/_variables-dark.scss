@@ -34,8 +34,6 @@ $white-bis: map.get($poly-config-dark, "white-bis") or
   lighten($poly-black, 100% - 98%) !default;
 $white: map.get($poly-config-dark, "white") or $poly-black !default;
 
-
-
 $card-background-color: map.get($poly-config-dark, "card-background-color") or $scheme-main-ter !default;
 $box-background-color: map.get($poly-config-dark, "box-background-color") or $scheme-main-ter !default;
 $input-background-color: map.get($poly-config-dark, "input-background-color") or $scheme-main-ter !default;
