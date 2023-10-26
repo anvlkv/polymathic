@@ -48,11 +48,12 @@ $poly-link: color.adjust($poly-primary, $hue: -1 * $poly-mono-range);
 }
 
 $poly-info: color.adjust($poly-primary, $hue: $poly-mono-range);
+
 @if color.saturation($poly-info) < $poly-accent-saturation {
   $poly-info: color.change($poly-info, $saturation: $poly-accent-saturation);
 }
 
-$_size: strip-unit($poly-body-size);
+$_size: validate-font-size($poly-body-size);
 $_level: map.get($poly-config, "a11y-contrast") or "AA" !default;
 
 @if map.get($poly-config, "background-color") {
@@ -115,11 +116,21 @@ $poly-info-dark: map.get($poly-config, "info-color-dark") or
 $poly-info-light: map.get($poly-config, "info-color-light") or
   a11y-color(
     $fg: bulma.findLightColor($poly-info),
-    $bg: $poly-info-dark,
+    $bg: $poly-background,
     $level: $_level,
     $size: $_size,
     $bold: true,
   ) !default;
+
+@if not map.get($poly-config, "info-color-light") {
+  $poly-info-light: a11y-color(
+    $fg: $poly-info-light,
+    $bg: $poly-info-dark,
+    $level: $_level,
+    $size: $_size,
+    $bold: false,
+  )
+}
 
 $poly-link-dark: map.get($poly-config, "link-color-dark") or
   a11y-color(
@@ -133,11 +144,21 @@ $poly-link-dark: map.get($poly-config, "link-color-dark") or
 $poly-link-light: map.get($poly-config, "link-color-light") or
   a11y-color(
     $fg: bulma.findLightColor($poly-link),
-    $bg: $poly-link-dark,
+    $bg: $poly-background,
     $level: $_level,
     $size: $_size,
     $bold: true,
   ) !default;
+
+  @if not map.get($poly-config, "link-color-light") {
+    $poly-link-light: a11y-color(
+      $fg: $poly-link-light,
+      $bg: $poly-link-dark,
+      $level: $_level,
+      $size: $_size,
+      $bold: false,
+    )
+  }
 
 $poly-grid-pop: map.get($poly-config, "grid-pop-size") or 0.75rem !default;
 $poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 0 0.1em
@@ -184,7 +205,7 @@ $info-light: $poly-info-light;
 $link: $poly-link;
 $link-dark: $poly-link-dark;
 $link-light: $poly-link-light;
-$code: $poly-info-dark;
+$code: map.get($poly-config, 'code-color') or a11y-color($poly-info-dark, $poly-background);
 $body-size: $poly-body-size;
 $box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($poly-text, 0.15),
   0 0 0 1px $link;
