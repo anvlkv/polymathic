@@ -76,3 +76,17 @@
     {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain, bulma_dropdown=bulma_dropdown)}}
   </nav>
 {% endmacro %}
+
+{% macro next_previous(next=false, prev=false, next_title=false, prev_title=false, title="") %}
+  {% if next or prev %}
+    <nav class="poly-pair-nav">
+      {% if prev %}
+        <a class="poly-link nav-prev" href="{{prev}}" title="Previous: {{prev_title}}">Previous</a>
+      {% endif %}
+      <span class="nav-title">{{title}}</span>
+      {% if next %}
+        <a class="poly-link nav-next" href="{{next}}" title="Next: {{next_title}}">Next</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% endmacro %}

@@ -1,5 +1,23 @@
 .poly-page-aside {
-  nav {
+  
+  @extend .is-flex, .is-flex-direction-column, .is-justify-content-space-between;
+
+  .poly-container {
+    flex-basis: unset;
+  }
+
+  .poly-page-nav {
+    @extend .is-flex-shrink-0, .mb-0;  
+    @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch;
+    .poly-taxonomy-kind-link {
+      @extend .has-text-centered, .mb-1;
+    }
+    .poly-pair-nav + .poly-taxonomy-kind-link {
+      @extend .mt-3;
+    }
+  }
+
+  .poly-tx-nav {
     @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch;
     .poly-taxonomy-term-link {
       @extend .py-2, .px-1, .has-text-right-desktop, .has-text-weight-bold;
