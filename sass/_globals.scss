@@ -27,13 +27,11 @@ hr {
 
 .poly-load-style {
   visibility: visible !important;
-  > * {
-    overflow: hidden;
-  }
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 .poly-portrait {

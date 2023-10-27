@@ -88,6 +88,10 @@
     flex-basis: 50%;
     flex-grow: 1;
     flex-shrink: 0;
+    @include from($tablet) {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
   }
   .poly-content {
     flex-basis: 50%;

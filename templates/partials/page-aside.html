@@ -1,0 +1,105 @@
+{% import "macros/util.html" as util %}
+{% import "macros/navigation.html" as navigation %}
+{% import "macros/toc.html" as toc_links %}
+
+{%- set parent_section = get_section(path=page.ancestors | last) -%}
+{% set render_aside = page.extra.poly.aside | default(value=parent_section.extra.poly.page_asides | default(value=true)) != false -%}
+{% if render_aside -%}
+  {% set fallback_config = parent_section.extra.poly.page_asides | default(value=true) %}
+  {% set page_config = page.extra.poly.aside | default(value=true) %}
+  
+  {% set rendered_content = false %}
+  {% set render_content = page_config.content | default(value=fallback_config.content | default(value=false))%}
+  {% if render_content %}
+    {% set rendered_content = render_content | markdown %}
+  {% endif %}
+  
+  {% set_global rendered = "" %}
+  {% set render_toc = page_config.toc | default(value=fallback_config.toc | default(value=false))%}
+  {% if render_toc %}
+    {% set value = toc_links::macro(toc=page.toc) | trim %}
+    {% set_global rendered = rendered ~ value %}
+  {% endif %}
+
+  {% set render_section = page_config.section | default(value=fallback_config.section | default(value=true))%}
+  {% if render_section %}
+    {% set value = navigation::next_previous(next=page.higher.path | default(value=false), prev=page.lower.path | default(value=false), next_title=page.higher.title | default(value=false), prev_title=page.lower.title | default(value=false), title=parent_section.title) | trim %}
+    {% set_global rendered = rendered ~ value %}
+  {% endif %}
+  
+  {% set render_taxonomy = page_config.taxonomy | default(value=fallback_config.taxonomy | default(value=true)) %}
+  {% set render_term = page_config.term | default(value=fallback_config.term | default(value=true)) %}
+
+  {% if render_term %}
+    {% set_global order_tx = parent_section.extra.poly.use_taxonomies | default(value=[]) %}
+    {% for tx, terms in page.taxonomies %}
+      {% if order_tx is not containing(tx) %}
+        {% set_global order_tx = order_tx | concat(with=[tx])%}
+      {% endif %}
+    {% endfor %}
+    {% for tx in order_tx -%} 
+      {% if page.taxonomies[tx] and page.taxonomies[tx] | length > 0 -%}
+        {% if render_taxonomy %} 
+          {% set taxonomy = get_taxonomy(kind=tx) -%}
+          {% if taxonomy.kind.render == true %}
+            {% set value = preview::macro_tx(entry=taxonomy.kind, type="kind") | trim %}
+            {% set_global rendered = rendered ~ value %}
+          {% endif %}
+        {% endif %}
+        {% set taxonomy = get_taxonomy(kind=tx) -%}
+        {% set order = util::get_taxonomy_kind_order(kind=taxonomy.kind.name, terms=page.taxonomies[tx]) | trim | split(pat=",") -%}
+        {% for i in order -%}
+          {% set terms = page.taxonomies[tx] %}
+          {% set term = get_taxonomy_term(kind=tx, term=terms[i]) -%}
+          {% set title = term.name %}
+          {% set_global prev = false %}
+          {% set_global next = false %}
+          {% set sort_by = util::get_taxonomy_term_sort_by(kind=tx, term=term.name) | trim  -%}
+          {% set pages = term.pages | sort(attribute=sort_by)  -%}
+          {% for pg in pages %}
+            {% set cmp_prev = loop.index0 + 1 %}
+            {% set cmp_next = loop.index0 - 1 %}
+            {% if pages[cmp_prev] and pages[cmp_prev].path == page.path %}
+              {% set_global prev = pg %}
+            {% elif pages[cmp_next] and pages[cmp_next].path == page.path %}
+              {% set_global next = pg %}
+            {% endif %}
+          {% endfor %}
+          {% set value = navigation::next_previous(next=next.path | default(value=false), prev=prev.path | default(value=false), next_title=next.title | default(value=false), prev_title=prev.title | default(value=false), title=title) | trim %}
+          {% set_global rendered = rendered ~ value %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+  {% elif render_taxonomy %}
+    {% set_global order_tx = parent_section.extra.poly.use_taxonomies | default(value=[]) %}
+    {% for tx, terms in page.taxonomies %}
+      {% if order_tx is not containing(tx) %}
+        {% set_global order_tx = order_tx | concat(with=[tx])%}
+      {% endif %}
+    {% endfor %}
+    {% for tx in order_tx -%} 
+      {% if page.taxonomies[tx] and page.taxonomies[tx] | length > 0 -%}
+        {% set taxonomy = get_taxonomy(kind=tx) -%}
+        {% if taxonomy.kind.render == true %}
+          {% set value = preview::macro_tx(entry=taxonomy.kind, type="kind") | trim %}
+          {% set_global rendered = rendered ~ value %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {%- endif %}
+
+  {%- if rendered | length > 0 or rendered_content != false %}
+    <aside class="poly-page-aside">
+      {% if rendered_content -%}
+        <div class="poly-container">
+          {{ rendered_content | safe }}
+        </div>
+      {% endif -%}
+      {% if rendered | length > 0 %}
+        <nav class="poly-page-nav{% if render_toc %} is-flex-grow-1{% endif %}">
+          {{ rendered | safe }}
+        </nav>
+      {% endif %}
+    </aside>
+  {% endif -%}
+{% endif -%}

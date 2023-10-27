@@ -1,5 +1,6 @@
 .poly-header {
   @extend .container;
+  overflow-y: visible !important;
 
   &.is-fluid {
     @include until($desktop) {
@@ -16,15 +17,21 @@
       @extend .navbar-start;
       .poly-nav-section.poly-is-one {
         display: contents;
+        a {
+          @extend .navbar-item;
+        }
       }
       > .poly-nav-section:not(.poly-is-one) {
         @extend .navbar-item, .has-dropdown, .is-hoverable;
-        > a {
+        > .poly-section-link {
           @extend .navbar-link;
         }
-      }
-      a {
-        @extend .navbar-item;
+        .poly-navbar-dropdown {
+          @extend .navbar-dropdown;
+          a {
+            @extend .navbar-item;
+          }
+        }
       }
     }
   }
@@ -42,4 +49,12 @@
       @extend .container, .is-fullhd;
     }
   }
+  .poly-result-content {
+    @extend .container, .mx-6;
+  }
+}
+
+.poly-breadcrumbs-header {
+  @extend .container;
+  position: absolute;
 }

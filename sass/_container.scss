@@ -36,13 +36,7 @@
         }
       }
       @include from($desktop) {
-        width: calc(60% - 0.75rem);
-      }
-      @include from($widescreen) {
-        width: calc(65% - 0.75rem);
-      }
-      @include from($fullhd) {
-        width: calc(70% - 0.75rem);
+        max-width: $tablet;
       }
     }
     > p {
@@ -64,27 +58,18 @@
     }
   }
 
+
+  &.poly-page-main {
+    @extend .columns, .is-multiline, .is-mobile, .is-justify-content-center;
+
+    > * {
+      @extend .column, .is-full;
+      &.poly-container-block {
+        @extend .column, .is-3-fullhd, .is-4-widescreen, .is-4-desktop, .is-6-tablet, .is-12-mobile;
+      }
+    }
+  }
   .poly-container-block {
-    @extend .my-4;
-    display: block;
-    @include until($tablet) {
-      width: 100%;
-    }
-    @include from($tablet) {
-      float: right;
-      clear: both;
-      margin-left: 0.75rem !important;
-      width: 50%;
-    }
-    @include from($desktop) {
-      width: 40%;
-    }
-    @include from($widescreen) {
-      width: 35%;
-    }
-    @include from($fullhd) {
-      width: 30%;
-    }
     &.poly-link {
       @include hover() {
         .poly-hero-card {
@@ -97,11 +82,6 @@
           }
         }
       }
-    }
-    &:last-child {
-      float: none;
-      margin-left: auto !important;
-      margin-right: auto !important;
     }
   }
 

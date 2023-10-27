@@ -4,50 +4,66 @@
 {% import "macros/navigation.html" as navigation %}
 {% import "macros/footer.html" as footer %}
 
-
-{% set_global rendered_pages = []  -%}
-{% set order = util::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",")  -%}
-{% for i in order  -%}
-  {% set term = terms[i]  -%}
-  {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
-  {% set pages = term.pages | sort(attribute=sort_by)  -%}
-  <div class="poly-group-title">
-    {{preview::macro_tx(entry=term, type="term", parent=taxonomy)}}
-  </div>
-  {% if config.extra.poly.menu_order  -%}
-    {% for nav in config.extra.poly.menu_order  -%}
-      {% if nav is ending_with("_index.md") -%}
-        {% set section = get_section(path=nav, metadata_only=true)  -%}
-        {% if section.extra.poly.use_taxonomies and section.extra.poly.use_taxonomies is containing(taxonomy.name)  -%} 
-          {% set_global rendered_count = 0  -%}
-          {% for page in pages  -%}
-            {% if rendered_count < config.extra.poly.taxonomy_preview_count and page.ancestors is containing(section.relative_path) and rendered_pages is not containing(page.path)  -%}
-              {{preview::macro(entry=page, parent_section=section, type="page")}}
-              {% set_global rendered_count = rendered_count + 1  -%}
-              {% set_global rendered_pages = rendered_pages | concat(with=[page.path])  -%}
+<article class="poly-grid">
+  {% set_global rendered_pages = []  -%}
+  {% set order = util::get_taxonomy_kind_order(kind=taxonomy.name, terms=terms | map(attribute="name")) | trim | split(pat=",")  -%}
+  {% for i in order  -%}
+    {% set_global is_secondary = false  -%}
+    {% set term = terms[i]  -%}
+    {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
+    {% set pages = term.pages | sort(attribute=sort_by)  -%}
+    <div class="poly-group-title">
+      {{preview::macro_tx(entry=term, type="term", parent=taxonomy)}}
+    </div>
+    {% if config.extra.poly.menu_order  -%}
+      {% for nav in config.extra.poly.menu_order  -%}
+        {% if nav is ending_with("_index.md") -%}
+          {% set section = get_section(path=nav, metadata_only=true)  -%}
+          {% if section.extra.poly.use_taxonomies and section.extra.poly.use_taxonomies is containing(taxonomy.name)  -%} 
+            {% set_global rendered_count = 0  -%}
+            {% for page in pages  -%}
+              {% if rendered_count < config.extra.poly.taxonomy_preview_count and page.ancestors is containing(section.relative_path) and rendered_pages is not containing(page.path)  -%}
+                {{preview::macro(entry=page, parent_section=section, type="page")}}
+                {% set_global rendered_count = rendered_count + 1  -%}
+                {% set_global rendered_pages = rendered_pages | concat(with=[page.path])  -%}
+              {% endif  -%}
+            {% endfor  -%}
+            {% if rendered_count > 0  -%}
+              <div class="poly-group-footer">
+                {% set parent = section.ancestors | last -%}
+                {% if parent -%}
+                  {% set parent = get_section(path=parent, metadata_only=true) -%}
+                {% endif -%}
+                {{preview::macro(entry=section, type="section", plain=true, parent_section=parent)}}
+                <hr/>
+              </div>
             {% endif  -%}
-          {% endfor  -%}
-          {% if rendered_count > 0  -%}
-          <div class="poly-group-footer">
-            {% set parent = section.ancestors | last -%}
-            {% if parent -%}
-              {% set parent = get_section(path=parent, metadata_only=true) -%}
-            {% endif -%}
-            {{preview::macro(entry=section, type="section", plain=true, parent_section=parent)}}
-            <hr/>
-          </div>
-          {% endif  -%}
+          {% elif section.extra.poly.use_taxonomies -%}
+            {% set_global is_secondary = true  -%}
+          {% endif %}
         {% endif  -%}
-      {% endif  -%}
-    {% endfor  -%}
-  {% else  -%}
-    {% for page in term.pages  -%}
-      {% if rendered_count < config.extra.poly.taxonomy_preview_count and rendered_pages is not containing(page.path) -%}
-        {% set page_section = get_section(path=page.ancestors | last, metadata_only=true)  -%}
-        {{preview::macro(entry=page, parent_section=page_section, type="page")}}
-        {% set_global rendered_count = rendered_count + 1  -%}
-        {% set_global rendered_pages = rendered_pages | concat(with=[page.path])  -%}
-      {% endif  -%}
-    {% endfor  -%}
-  {% endif  -%}
-{% endfor %}
+      {% endfor  -%}
+    {% else %}
+      {% set_global rendered_count = 0 -%}
+      {% for page in pages  -%}
+        {% if rendered_count < config.extra.poly.taxonomy_preview_count and rendered_pages is not containing(page.path) -%}
+          {% set page_section = get_section(path=page.ancestors | last, metadata_only=true)  -%}
+          {{preview::macro(entry=page, parent_section=page_section, type="page")}}
+          {% set_global rendered_count = rendered_count + 1  -%}
+          {% set_global rendered_pages = rendered_pages | concat(with=[page.path])  -%}
+        {% endif  -%}
+      {% endfor  -%}
+    {% endif  -%}
+    {% if is_secondary %}
+      {% set_global rendered_count = 0 -%}
+      {% for page in pages  -%}
+        {% if rendered_count < config.extra.poly.taxonomy_preview_count and rendered_pages is not containing(page.path) -%}
+          {% set page_section = get_section(path=page.ancestors | last, metadata_only=true)  -%}
+          {{preview::macro(entry=page, parent_section=page_section, type="page")}}
+          {% set_global rendered_count = rendered_count + 1  -%}
+          {% set_global rendered_pages = rendered_pages | concat(with=[page.path])  -%}
+        {% endif  -%}
+      {% endfor  -%}
+    {% endif %}
+  {% endfor %}
+</article>

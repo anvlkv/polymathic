@@ -6,30 +6,37 @@
 
 {% endblock %}
 
+{% block breadcrumbs %}
+  {% if config.extra.poly.breadcrumbs %}
+    {% set_global links = [] %}
+    {% set_global titles = [] %}
+    {% for asc in section.ancestors %}
+      {% set section = get_section(path=asc, metadata_only=true) %}
+      {% set_global links = links | concat(with=[section.path]) %}
+      {% set_global titles = titles | concat(with=[section.title]) %}
+    {% endfor %}
+    {% set_global links = links | concat(with=[section.path]) %}
+    {% set_global titles = titles | concat(with=[section.title]) %}
+    {{navigation::breadcrumbs(links=links, titles=titles)}}
+  {% endif %}
+{% endblock %}
+
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
-      {% block section_pages %}
-        {% if section.pages | length > 0 or section.subsections | length > 0 or paginator is defined and paginator.pages | length > 0 %}
-          <article class="poly-grid">
-            {% include "partials/subsections-nav.html" %}
-            {% if section.subsections | length > 0 %}
-              <div class="poly-group-footer">
-                <hr/>
-              </div>
-            {% endif %}
-            {% include "partials/pages-nav.html" %}
-          </article>
-          {% endif %}
+      {% if section.pages | length > 0 or section.subsections | length > 0 or paginator is defined and paginator.pages | length > 0 %}
+        {% block section_pages %}
+          {% include "partials/section-pages.html" %}
         {% endblock %}
+      {% endif %}
       {% if section.content | length > 0 %}
-        <aside class="poly-page-aside">
-          {% block section_aside %}
+        {% block section_aside %}
+          <aside class="poly-section-aside">
             <article class="poly-container">
               {{section.content | safe}}
             </article>
-          {% endblock %}
-        </aside>
+          </aside>
+        {% endblock %}
       {% endif %}
     </section>
   </div>

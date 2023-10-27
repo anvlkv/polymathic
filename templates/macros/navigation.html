@@ -13,7 +13,7 @@
       {% endif -%}
       {% set_global contents = preview::macro(plain=plain, type="section", entry=section, parent_section=parent) -%}
       {% if bulma_dropdown %}
-        {% set_global contents = contents~'<nav class="navbar-dropdown">' -%}
+        {% set_global contents = contents~'<nav class="poly-navbar-dropdown">' -%}
       {% endif %}
       {% set_global entries_count = 1 %}
       {% if recursively == true %}
@@ -74,5 +74,33 @@
   <nav class="poly-nav" id="{{id}}">
     {% set nav_current_path = current_path | default(value="") -%}
     {{navigation::navigation_links(rendered_terms_input=[], menu=menu, recursively=recursively, nav_current_path=nav_current_path, plain=plain, bulma_dropdown=bulma_dropdown)}}
+  </nav>
+{% endmacro %}
+
+{% macro next_previous(next=false, prev=false, next_title=false, prev_title=false, title="") %}
+  {% if next or prev %}
+    <nav class="poly-pair-nav">
+      {% if prev %}
+        <a class="poly-link nav-prev" href="{{prev}}" title="Previous: {{prev_title}}">Previous</a>
+      {% endif %}
+      <span class="nav-title">{{title}}</span>
+      {% if next %}
+        <a class="poly-link nav-next" href="{{next}}" title="Next: {{next_title}}">Next</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% endmacro %}
+
+{% macro breadcrumbs(links, titles) %}
+  <nav class="poly-breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      {% for link in links %}
+      {% if loop.last %}
+        <li class="is-active"><a class="poly-link poly-active-link" aria-current="page">{{titles[loop.index0]}}</a></li>
+      {% else %}
+        <li><a class="poly-link" href="{{link}}">{{titles[loop.index0]}}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
   </nav>
 {% endmacro %}

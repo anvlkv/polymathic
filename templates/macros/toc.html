@@ -1,0 +1,10 @@
+{% macro macro(toc) %}
+  {% if toc | length > 0 %}
+    <nav class="poly-toc">
+      {% for header in toc -%}
+        <a class="poly-link poly-lvl-{{header.level}}" href="{{header.permalink}}">{{header.title}}</a>
+        {{ toc_links::macro(toc=header.children) | trim }}
+      {%- endfor -%}
+    </nav>
+  {% endif %}
+{% endmacro %}

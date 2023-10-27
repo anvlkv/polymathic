@@ -21,6 +21,7 @@ menu_order = false
 social_outlink = false
 license=false
 fluid_page=true
+breadcrumbs=true
 animate_duration = "800ms"
 animate_delay = "950ms"
 animate_repeat = 1

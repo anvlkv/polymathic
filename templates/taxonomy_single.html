@@ -6,21 +6,26 @@
 
 {% endblock %}
 
+{% block breadcrumbs %}
+  {% if config.extra.poly.breadcrumbs -%}
+    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim -%}
+    {% set path = "/"~taxonomy.slug %}
+    {% set root_section = get_section(path="_index.md", metadata_only=true) %}
+    {% set links = ["/", path, term.path] %}
+    {%- set titles = [root_section.title, taxonomy_title, term.name] -%}
+    {{navigation::breadcrumbs(links=links, titles=titles)}}
+  {% endif %}
+{% endblock %}
+
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
       {% block taxonomy_content %}
-        <article class="poly-grid">
-          {% include "partials/taxonomy-term-content.html" %}
-        </article>
+        {% include "partials/taxonomy-term-content.html" %}
       {% endblock %}
-      <aside class="poly-page-aside">
-        {% block taxonomy_aside %}
-          <article class="poly-container">
-            {% include "partials/taxonomy-term-aside.html" %}
-          </article>
-        {% endblock %}
-      </aside>
+      {% block taxonomy_aside %}
+        {% include "partials/taxonomy-term-aside.html" %}
+      {% endblock %}
     </section>
   </div>
 {% endblock %}

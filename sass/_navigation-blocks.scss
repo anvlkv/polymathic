@@ -70,3 +70,59 @@
     }
   }
 }
+
+.poly-pair-nav {
+  @extend .columns, .is-mobile, .is-align-items-center;
+  .poly-link, .nav-title {
+    @extend .column, .is-one-third, .is-block;
+  }
+  .nav-title{
+    @extend .has-text-centered;
+    &:first-child {
+      @extend .is-offset-one-third;
+    }
+  }
+  .nav-prev {
+    &::before {
+      @include arrow($link-dark);
+      transform: rotate(45deg);
+      display: inline-block;
+      position: relative;
+      top: unset;
+      margin-right: .25rem;
+    }
+  }
+  .nav-next {
+    @extend .has-text-right;
+    &::after {
+      @include arrow($link-dark);
+      transform: rotate(-135deg);
+      display: inline-block;
+      position: relative;
+      top: unset;
+      margin-left: .25rem;
+    }
+  }
+}
+
+.poly-toc {
+  @extend .is-flex, .is-flex-direction-column, .is-flex-grow-1, .is-flex-shrink-0;
+  .poly-toc {
+    @extend .pl-1, .is-flex-grow-0;
+  }
+  .poly-link{
+    $headers: (1: $black, 2: $grey-darker, 3: $grey-dark, 4: $grey, 5: $grey-light, 6: $grey-lighter);
+    @each $i, $color in $headers {
+      &.poly-lvl-#{$i} {
+        color: $color;
+        @if $i > 4 {
+          @extend .has-text-weight-semibold;
+        }
+      }
+    }
+  }
+}
+
+.poly-breadcrumbs {
+  @extend .breadcrumb, .is-right, .is-small;
+}
