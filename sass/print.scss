@@ -10,6 +10,7 @@ $body-size: $poly-body-size-print;
 @import "../node_modules/bulma/sass/helpers/spacing.sass";
 @import "../node_modules/bulma/sass/helpers/flexbox.sass";
 @import "../node_modules/bulma/sass/helpers/visibility.sass";
+@import "../node_modules/bulma/sass/helpers/color.sass";
 @import "../node_modules/bulma/sass/elements/title.sass";
 
 .poly-load-style {
@@ -60,6 +61,12 @@ blockquote {
   }
   .poly-active-link {
     @extend .title, .is-3, .subtitle, .has-text-primary;
+  }
+  .poly-logo-link {
+    @extend .has-text-primary;
+    * {
+      color: inherit;
+    }
   }
   border-bottom: 1px solid $primary-light;
 }
@@ -124,10 +131,10 @@ blockquote {
   }
 }
 
-.poly-hero-card {
+.poly-hero-card, .poly-asset-card {
   border: 1px solid $scheme-invert-ter;
   .poly-content {
-    @extend .p-3;
+    @extend .p-2;
     .title {
       @extend .mt-0;
       &:only-child {
@@ -181,6 +188,76 @@ blockquote {
 .poly-tile {
   > * {
     min-height: 100%;
+  }
+}
+
+.poly-pager {
+  @extend .is-flex, .mt-3;
+  flex-basis: 100%;
+  width:100%;
+  >a {
+    @extend .mr-1;
+  }
+  .pagination-list {
+    @extend .is-flex, .m-0;
+    li {
+      display: contents;
+      &:not(:first-child):not(:last-child) { 
+        .pagination-link:not(.is-current){
+          @extend .is-hidden;
+        }
+      }
+      &:not(:first-child) {
+        .pagination-link.is-current {
+          &::before{
+            content: " ..."
+          }
+        }
+      }
+      &:not(:last-child) {
+        .pagination-link.is-current {
+          &::after{
+            content: "... "
+          }
+        }
+      }
+      .pagination-link {
+        &.is-current {
+          @extend .has-text-weight-bold;
+        }
+      }
+    }
+  }
+}
+
+.modal {
+  .modal-close {
+    @extend .is-hidden;
+  }
+  img {
+    &::after {
+      content: attr(alt);
+    }
+  }
+}
+
+.poly-with-image {
+  background-image: var(--poly-background-desktop);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right center;
+}
+
+.control {
+  > *, select {
+    width: 100%;
+  }
+}
+.field.is-grouped {
+  display: flex;
+  justify-content: space-evenly;
+  p {
+    width: auto;
   }
 }
 
