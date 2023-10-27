@@ -32,10 +32,9 @@
         grid-template-columns: 1fr 1fr;
         @include until($tablet) {
           grid-template-columns: subgrid;
-          grid-row: span calc(var(--poly-rows) * 2);
         }
-        @include from($tablet) {
-          grid-row: span calc(var(--poly-rows) * 2 - 1);
+        @include until($desktop) {
+          grid-row: span calc(var(--poly-rows) * 2);
         }
 
         grid-template-rows: subgrid;
