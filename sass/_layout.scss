@@ -49,4 +49,7 @@
       @extend .container, .is-fullhd;
     }
   }
+  .poly-result-content {
+    @extend .container, .mx-6;
+  }
 }
