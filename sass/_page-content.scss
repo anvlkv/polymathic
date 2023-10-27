@@ -14,6 +14,16 @@
       &:only-child {
         @extend .container, .is-container, .is-fullhd;
       }
+      &:not(:only-child) {
+        @include from($desktop) {
+          @include until($fullhd + $fullhd / 12 * 3) {
+            padding-left: 3rem;
+            & + .poly-page-aside {
+              padding-right: 3rem;
+            }
+          }
+        }
+      }
     }
     .poly-page-main,
     .poly-grid {
@@ -40,7 +50,7 @@
         margin-top: $column-gap;
       }
     }
-    
+
     .poly-section-aside,
     .poly-term-aside,
     .poly-kind-aside,
