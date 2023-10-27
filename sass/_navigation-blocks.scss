@@ -104,3 +104,21 @@
     }
   }
 }
+
+.poly-toc {
+  @extend .is-flex, .is-flex-direction-column, .is-flex-grow-1, .is-flex-shrink-0;
+  .poly-toc {
+    @extend .pl-1;
+  }
+  .poly-link{
+    $headers: (1: $black, 2: $grey-darker, 3: $grey-dark, 4: $grey, 5: $grey-light, 6: $grey-lighter);
+    @each $i, $color in $headers {
+      &.poly-lvl-#{$i} {
+        color: $color;
+        @if $i > 4 {
+          @extend .has-text-weight-semibold;
+        }
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@
   {% set_global rendered = "" %}
   {% set render_toc = page_config.toc | default(value=fallback_config.toc | default(value=false))%}
   {% if render_toc %}
-    {% set value = toc_links::macro(toc=toc) | trim %}
+    {% set value = toc_links::macro(toc=page.toc) | trim %}
     {% set_global rendered = rendered ~ value %}
   {% endif %}
 
@@ -90,13 +90,13 @@
 
   {%- if rendered | length > 0 or rendered_content != false %}
     <aside class="poly-page-aside">
-      <div class="poly-container">
-        {% if rendered_content -%}
+      {% if rendered_content -%}
+        <div class="poly-container">
           {{ rendered_content | safe }}
-        {% endif -%}
-      </div>
+        </div>
+      {% endif -%}
       {% if rendered | length > 0 %}
-        <nav class="poly-page-nav">
+        <nav class="poly-page-nav{% if render_toc %} is-flex-grow-1{% endif %}">
           {{ rendered | safe }}
         </nav>
       {% endif %}
