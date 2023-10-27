@@ -36,13 +36,7 @@
         }
       }
       @include from($desktop) {
-        width: calc(60% - 0.75rem);
-      }
-      @include from($widescreen) {
-        width: calc(65% - 0.75rem);
-      }
-      @include from($fullhd) {
-        width: calc(70% - 0.75rem);
+        max-width: $tablet;
       }
     }
     > p {
