@@ -4,12 +4,10 @@
 
   .poly-group-title,
   .poly-group-footer {
-    @extend .column, .is-full, .p-0;
-    margin-left: $column-gap;
+    @extend .column, .is-full, .is-flex, .is-flex-wrap-wrap;
     > a {
+      @extend .button, .is-text;
       display: block;
-      padding: $column-gap;
-      border-radius: $card-radius;
       width: fit-content;
     }
   }
@@ -19,8 +17,13 @@
     margin-top: $column-gap;
   }
   .poly-group-footer {
+    @extend .is-justify-content-flex-end;
+    > a {
+      @extend .is-small;
+    }
     hr {
-      margin: $column-gap $column-gap + $poly-grid-pop 0 0;
+      @extend .m-0, .mt-3;
+      flex-basis: 100%;
     }
   }
 
