@@ -8,6 +8,8 @@ $body-size: $poly-body-size-print;
 @import "../node_modules/bulma/sass/base/generic.sass";
 @import "../node_modules/bulma/sass/helpers/typography.sass";
 @import "../node_modules/bulma/sass/helpers/spacing.sass";
+@import "../node_modules/bulma/sass/helpers/flexbox.sass";
+@import "../node_modules/bulma/sass/helpers/visibility.sass";
 @import "../node_modules/bulma/sass/elements/title.sass";
 
 .poly-load-style {
@@ -84,94 +86,86 @@ blockquote {
   }
 }
 
-.poly-sections-content,
 .poly-page-content {
+  @extend .mb-3;
   > section {
     display: flex;
     flex-direction: column;
     .poly-page-aside {
       order: -1;
-    }
-  }
-}
-
-.poly-sections-content {
-  > section {
-    > .poly-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: stretch;
-      justify-content: space-evenly;
-      gap: .75rem;
-
-      a {
-        display: block;
-        .title {
-          color: $link;
-          text-decoration: underline;
-          text-decoration-color: $grey-light;
-        }
-        &.poly-block-link {
-          flex-basis: 100%;
-          @extend .my-1;
-          .title {
-            @extend .mb-1;
-          }
-        }
-        &:not(.poly-block-link) {
-          flex-basis: 27%;
-          flex-grow: 0;
-          padding: 0.75rem;
-          border: 1px solid $grey;
-        }
-      }
-
-      hr {
-        flex-basis: 100%;
-        align-self: baseline;
+      nav {
+        @extend .is-flex, .is-justify-content-space-between, .is-flex-wrap-wrap;
       }
     }
   }
 }
+
+.poly-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  .poly-tile {
+    flex-basis: 25%;
+    &.poly-tile-layout-block,
+    &.poly-tile-layout-contents {
+      flex-basis: 100%;
+      flex-shrink: 0
+    }
+  }
+
+  .poly-group-footer, .poly-group-title {
+    flex-basis: 100%;
+  }
+  .poly-group-title {
+    @extend .title, .subtitle, .is-size-5;
+  }
+  .poly-group-footer {
+    text-align: right;
+  }
+}
+
+.poly-hero-card {
+  border: 1px solid $scheme-invert-ter;
+  .poly-content {
+    @extend .p-3;
+    .title {
+      @extend .mt-0;
+      &:only-child {
+        @extend .mb-0;
+      }
+    }
+  }
+  .poly-image {
+    @extend .m-0;
+  }
+}
+
 
 .poly-navigation-blocks {
-  @extend .mt-3;
-  .poly-nav,
-  .poly-section-nav-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-  .poly-section-nav-wrapper,
-  .poly-content {
-    flex-basis: 45%;
-    flex-shrink: 1;
-  }
-  .poly-content,
-  .poly-taxonomy-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    min-height: 100%;
-  }
-  .poly-section-link,
-  .poly-page-link {
-    display: contents;
-  }
+  @extend .my-3;
+  
+  border-bottom: 1px solid $primary;
 
-  .poly-navigation-title, .poly-taxonomy-term-link, .poly-taxonomy-kind-link {
-    @extend .title, .is-5;
-    color: $link !important;
-    text-decoration: underline;
-    text-decoration-color: $grey-light !important;
-    flex-basis: 2.75em;
-    &.poly-taxonomy-term-link {
-      @extend .subtitle;
+  .poly-nav {
+    @extend .is-flex, .is-flex-wrap-wrap, .is-align-content-stretch;
+    .poly-nav-section {
+      display: contents;
+    }
+    a {
+      flex-basis: 50%;
+      flex-shrink: 1;
+      position: relative;
+      &::after {
+        content: attr(href);
+        text-decoration: underline;
+        text-decoration-color: $grey-light;
+        display: inline;
+        position: absolute;
+        bottom: 2px;
+        left: 5px;
+      }
     }
   }
-  border-bottom: 1px solid $primary;
 }
 
 .poly-hero {
@@ -182,6 +176,12 @@ blockquote {
     color: $primary;
   }
   border-bottom: 2px solid $primary;
+}
+
+.poly-tile {
+  > * {
+    min-height: 100%;
+  }
 }
 
 body {
