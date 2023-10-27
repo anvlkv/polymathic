@@ -10,16 +10,10 @@
   <div class="poly-page-content">
     <section>
       {% block taxonomy_content %}
-        <article class="poly-grid">
-          {% include "partials/taxonomy-kind-content.html" %}
-        </article>
+        {% include "partials/taxonomy-kind-content.html" %}
       {% endblock %}
       {% block taxonomy_aside %}
-        <aside class="poly-page-aside">
-          <article class="poly-container">
-            {% include "partials/taxonomy-kind-aside.html" %}
-          </article>
-        </aside>
+        {% include "partials/taxonomy-kind-aside.html" %}
       {% endblock %}
     </section>
   </div>

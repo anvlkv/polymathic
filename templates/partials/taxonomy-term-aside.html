@@ -4,23 +4,26 @@
 {% import "macros/navigation.html" as navigation %}
 {% import "macros/footer.html" as footer %}
 
-{% block aside_content %}
-  {% set term_content = util::get_taxonomy_term_content(kind=taxonomy.name, term=term.name) | trim %}
-  {% if term_content | length > 0 %} 
-    {{term_content | safe}}
-  {% else %}
-    {% set term_description = util::get_taxonomy_term_description(kind=taxonomy.name, term=term.name) | trim %}
-    <h3>{{term.name}}</h3>
-    {% if term_description | length > 0 %} 
-      <p>{{term_description}}</p>
-    {% endif %}
-  {% endif %}
-{% endblock %}
 
-{% block aside_nav %}
-  <nav>
-    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim %}
-    {% set taxonomy_description = util::get_taxonomy_kind_description(kind=taxonomy.name, default=taxonomy_title) | trim %}
-    {{preview::macro_tx(entry=taxonomy, type="kind")}}
-  </nav>
-{% endblock %}
+<aside class="poly-page-aside">
+  <article class="poly-container">
+    {% block aside_content %}
+      {% set term_content = util::get_taxonomy_term_content(kind=taxonomy.name, term=term.name) | trim %}
+      {% if term_content | length > 0 %} 
+        {{term_content | safe}}
+      {% else %}
+        {% set term_description = util::get_taxonomy_term_description(kind=taxonomy.name, term=term.name) | trim %}
+        <h3>{{term.name}}</h3>
+        {% if term_description | length > 0 %} 
+          <p>{{term_description}}</p>
+        {% endif %}
+      {% endif %}
+    {% endblock %}
+    
+    {% block aside_nav %}
+      <nav class="poly-tx-nav">
+        {{preview::macro_tx(entry=taxonomy, type="kind")}}
+      </nav>
+    {% endblock %}
+  </article>
+</aside>

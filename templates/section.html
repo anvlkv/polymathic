@@ -9,27 +9,19 @@
 {% block layout_main %}
   <div class="poly-page-content">
     <section>
-      {% block section_pages %}
-        {% if section.pages | length > 0 or section.subsections | length > 0 or paginator is defined and paginator.pages | length > 0 %}
-          <article class="poly-grid">
-            {% include "partials/subsections-nav.html" %}
-            {% if section.subsections | length > 0 %}
-              <div class="poly-group-footer">
-                <hr/>
-              </div>
-            {% endif %}
-            {% include "partials/pages-nav.html" %}
-          </article>
-          {% endif %}
+      {% if section.pages | length > 0 or section.subsections | length > 0 or paginator is defined and paginator.pages | length > 0 %}
+        {% block section_pages %}
+          {% include "partials/section-pages.html" %}
         {% endblock %}
+      {% endif %}
       {% if section.content | length > 0 %}
-        <aside class="poly-page-aside">
-          {% block section_aside %}
+        {% block section_aside %}
+          <aside class="poly-page-aside">
             <article class="poly-container">
               {{section.content | safe}}
             </article>
-          {% endblock %}
-        </aside>
+          </aside>
+        {% endblock %}
       {% endif %}
     </section>
   </div>

@@ -4,8 +4,10 @@
 {% import "macros/navigation.html" as navigation %}
 {% import "macros/footer.html" as footer %}
 
-{% set_global rendered_pages = []  -%}
-{% if config.extra.poly.menu_order  -%}
+
+<article class="poly-grid">
+  {% set_global rendered_pages = []  -%}
+  {% if config.extra.poly.menu_order  -%}
     {% for nav in config.extra.poly.menu_order  -%}
       {% if nav is ending_with("_index.md") -%}
         {% set section = get_section(path=nav, metadata_only=true)  -%}
@@ -38,6 +40,7 @@
       {% endif  -%}
     {% endfor  -%}
   {% endif  -%}
+  
   {% set pages = term.pages  -%}
   {% if paginator  -%}
     {% set pages = paginator.pages  -%}
@@ -54,3 +57,4 @@
   {% if paginator and paginator.number_pagers > 1  -%}
     {{util::pager(pagination=paginator)}}
   {% endif  -%}
+</article>
