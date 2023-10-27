@@ -108,7 +108,7 @@
 .poly-toc {
   @extend .is-flex, .is-flex-direction-column, .is-flex-grow-1, .is-flex-shrink-0;
   .poly-toc {
-    @extend .pl-1;
+    @extend .pl-1, .is-flex-grow-0;
   }
   .poly-link{
     $headers: (1: $black, 2: $grey-darker, 3: $grey-dark, 4: $grey, 5: $grey-light, 6: $grey-lighter);
@@ -121,4 +121,8 @@
       }
     }
   }
+}
+
+.poly-breadcrumbs {
+  @extend .breadcrumb, .is-right, .is-small;
 }

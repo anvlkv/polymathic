@@ -6,6 +6,17 @@
 
 {% endblock %}
 
+{% block breadcrumbs %}
+  {% if config.extra.poly.breadcrumbs -%}
+    {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim -%}
+    {% set path = "/"~taxonomy.slug %}
+    {% set root_section = get_section(path="_index.md", metadata_only=true) %}
+    {% set links = ["/", path] %}
+    {%- set titles = [root_section.title, taxonomy_title] -%}
+    {{navigation::breadcrumbs(links=links, titles=titles)}}
+  {% endif %}
+{% endblock %}
+
 {% block layout_main %}
   <div class="poly-page-content">
     <section>

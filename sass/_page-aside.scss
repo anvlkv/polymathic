@@ -12,6 +12,9 @@
   .poly-page-nav {
     @extend .is-flex-shrink-0, .mb-0;  
     @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch;
+    > .poly-toc {
+      @extend .mb-6;
+    }
     .poly-taxonomy-kind-link {
       @extend .has-text-centered, .mb-1;
     }

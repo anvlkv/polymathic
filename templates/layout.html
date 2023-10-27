@@ -11,10 +11,15 @@
           {% endif %}
         </nav>
       </nav>
-    {% endblock %}
+    {% endblock layout_header %}
   </header>
+  {% if config.extra.poly.breadcrumbs %}
+    <header class="poly-breadcrumbs-header {% if config.extra.poly.fluid_page %}is-fluid{% else %}is-fullhd{% endif %}">
+      {% block breadcrumbs %}{% endblock breadcrumbs %}
+    </header>
+  {% endif %}
   <main class="poly-layout-main {% if config.extra.poly.fluid_page %}is-fluid{% else %}is-fullhd{% endif %}">
-    {% block layout_main %} {% endblock %}
+    {% block layout_main %} {% endblock layout_main %}
   </main>
   {% block footer %}
     {% set class = "is-fullhd" %}
@@ -22,5 +27,5 @@
       {% set class = "is-fluid" %}
     {% endif %}
     {{ footer::macro(id="poly-layout-footer", class=class) }}
-  {% endblock %}
+  {% endblock footer%}
 {% endblock %}

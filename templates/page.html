@@ -4,6 +4,20 @@
   {{ util::content_meta(content=page) }}
 {% endblock %}
 
+{% block breadcrumbs %}
+  {% if config.extra.poly.breadcrumbs %}
+    {% set_global links = [] %}
+    {% set_global titles = [] %}
+    {% for asc in page.ancestors %}
+      {% set section = get_section(path=asc, metadata_only=true) %}
+      {% set_global links = links | concat(with=[section.path]) %}
+      {% set_global titles = titles | concat(with=[section.title]) %}
+    {% endfor %}
+    {% set_global links = links | concat(with=[page.path]) %}
+    {% set_global titles = titles | concat(with=[page.title]) %}
+    {{navigation::breadcrumbs(links=links, titles=titles)}}
+  {% endif %}
+{% endblock %}
 
 {% block layout_main %}
   <div class="poly-page-content">

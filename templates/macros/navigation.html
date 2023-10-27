@@ -90,3 +90,17 @@
     </nav>
   {% endif %}
 {% endmacro %}
+
+{% macro breadcrumbs(links, titles) %}
+  <nav class="poly-breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      {% for link in links %}
+      {% if loop.last %}
+        <li class="is-active"><a class="poly-link poly-active-link" aria-current="page">{{titles[loop.index0]}}</a></li>
+      {% else %}
+        <li><a class="poly-link" href="{{link}}">{{titles[loop.index0]}}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endmacro %}

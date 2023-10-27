@@ -53,3 +53,8 @@
     @extend .container, .mx-6;
   }
 }
+
+.poly-breadcrumbs-header {
+  @extend .container;
+  position: absolute;
+}
