@@ -71,7 +71,7 @@ blockquote {
   border-bottom: 1px solid $primary-light;
 }
 
-.poly-navigation-footer{
+.poly-navigation-footer {
   border-top: 1px solid $primary-light;
 }
 
@@ -98,8 +98,15 @@ blockquote {
   > section {
     display: flex;
     flex-direction: column;
-    .poly-page-aside {
+    .poly-section-aside,
+    .poly-term-aside,
+    .poly-kind-aside {
       order: -1;
+    }
+    .poly-section-aside,
+    .poly-term-aside,
+    .poly-kind-aside,
+    .poly-page-aside {
       nav {
         @extend .is-flex, .is-justify-content-space-between, .is-flex-wrap-wrap;
       }
@@ -116,11 +123,12 @@ blockquote {
     &.poly-tile-layout-block,
     &.poly-tile-layout-contents {
       flex-basis: 100%;
-      flex-shrink: 0
+      flex-shrink: 0;
     }
   }
 
-  .poly-group-footer, .poly-group-title {
+  .poly-group-footer,
+  .poly-group-title {
     flex-basis: 100%;
   }
   .poly-group-title {
@@ -131,7 +139,8 @@ blockquote {
   }
 }
 
-.poly-hero-card, .poly-asset-card {
+.poly-hero-card,
+.poly-asset-card {
   border: 1px solid $scheme-invert-ter;
   .poly-content {
     @extend .p-2;
@@ -147,10 +156,9 @@ blockquote {
   }
 }
 
-
 .poly-navigation-blocks {
   @extend .my-3;
-  
+
   border-bottom: 1px solid $primary;
 
   .poly-nav {
@@ -194,30 +202,30 @@ blockquote {
 .poly-pager {
   @extend .is-flex, .mt-3;
   flex-basis: 100%;
-  width:100%;
-  >a {
+  width: 100%;
+  > a {
     @extend .mr-1;
   }
   .pagination-list {
     @extend .is-flex, .m-0;
     li {
       display: contents;
-      &:not(:first-child):not(:last-child) { 
-        .pagination-link:not(.is-current){
+      &:not(:first-child):not(:last-child) {
+        .pagination-link:not(.is-current) {
           @extend .is-hidden;
         }
       }
       &:not(:first-child) {
         .pagination-link.is-current {
-          &::before{
-            content: " ..."
+          &::before {
+            content: " ...";
           }
         }
       }
       &:not(:last-child) {
         .pagination-link.is-current {
-          &::after{
-            content: "... "
+          &::after {
+            content: "... ";
           }
         }
       }
@@ -249,7 +257,8 @@ blockquote {
 }
 
 .control {
-  > *, select {
+  > *,
+  select {
     width: 100%;
   }
 }

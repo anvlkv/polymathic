@@ -5,7 +5,7 @@
 {% import "macros/footer.html" as footer %}
 
 
-<aside class="poly-page-aside">
+<aside class="poly-term-aside">
   <article class="poly-container">
     {% block aside_content %}
       {% set term_content = util::get_taxonomy_term_content(kind=taxonomy.name, term=term.name) | trim %}

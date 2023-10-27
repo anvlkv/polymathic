@@ -1,9 +1,10 @@
 .poly-page-content {
   @extend .container, .is-container;
-  min-height: calc(100vh - 15rem);
+  min-height: $poly-min-page-height;
 
   > section {
     @extend .columns, .is-flex, .mb-4, .mt-6;
+    min-height: inherit;
     @include until($desktop) {
       flex-direction: column;
     }
@@ -24,18 +25,33 @@
         }
       }
     }
+    .poly-section-aside,
+    .poly-term-aside,
+    .poly-kind-aside {
+      order: -1;
+      @include until($desktop) {
+        border-bottom: 0.1px solid $grey-light;
+        margin-bottom: $column-gap;
+      }
+    }
+    .poly-page-aside {
+      @include until($desktop) {
+        border-top: 0.1px solid $grey-light;
+        margin-top: $column-gap;
+      }
+    }
+    
+    .poly-section-aside,
+    .poly-term-aside,
+    .poly-kind-aside,
     .poly-page-aside {
       @extend .column,
         .is-full-tablet,
         .is-one-third-desktop,
         .is-one-third-widescreen,
         .is-3-fullhd;
-      order: -1;
-      @include until($desktop) {
-        border-bottom: 0.1px solid $grey-light;
-        margin-bottom: $column-gap;
-      }
       @include from($desktop) {
+        order: -1;
         border-right: 0.1px solid $grey-light;
       }
       &:only-child {
