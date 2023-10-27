@@ -28,6 +28,7 @@
       order: -1;
       @include until($desktop) {
         border-bottom: .1px solid $grey-light;
+        margin-bottom: $column-gap;
       }
       @include from($desktop){
         border-right: .1px solid $grey-light;

@@ -1,5 +1,13 @@
 .poly-header {
   @extend .container;
+
+  &.is-fluid {
+    @include until($desktop) {
+      padding-left: $gap/2;
+      padding-right: $gap/2;
+    }
+  }
+
   .poly-navigation-container {
     @extend .navbar-menu;
     
