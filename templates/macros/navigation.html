@@ -13,7 +13,7 @@
       {% endif -%}
       {% set_global contents = preview::macro(plain=plain, type="section", entry=section, parent_section=parent) -%}
       {% if bulma_dropdown %}
-        {% set_global contents = contents~'<nav class="navbar-dropdown">' -%}
+        {% set_global contents = contents~'<nav class="poly-navbar-dropdown">' -%}
       {% endif %}
       {% set_global entries_count = 1 %}
       {% if recursively == true %}
