@@ -1,5 +1,5 @@
 .poly-grid {
-  @extend .columns, .is-multiline, .is-mobile, .mx-0;
+  @extend .columns, .is-multiline, .is-mobile, .mx-0, .is-align-self-flex-start;
   flex-grow: 1;
 
   .poly-group-title,
