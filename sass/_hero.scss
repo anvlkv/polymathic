@@ -5,16 +5,9 @@
     > header {
       @extend .hero-head;
       > nav {
-        @extend .navbar;
-        @include until($desktop) {
-          box-shadow: 0 0.01rem 0.125rem darken($background, 50%);
-          position: fixed;
-          background-color: $background;
-          width: 100%;
-        }
-        @include from($desktop) {
-          background-color: transparent !important;
-        }
+        @extend .navbar, .is-fixed-top;
+        box-shadow: 0 0.01rem 0.125rem darken($scheme-invert-ter, 50%);
+        background-color: rgba($primary-light, .42);
       }
     }
     .poly-hero-body {
@@ -27,16 +20,19 @@
       
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: left top;
+        background-position: center top;
         padding: 0;
       
         .poly-content {
           @extend .container;
           width: 100%;
-          background-color: $background;
           align-self: end;
           flex-direction: column;
           align-items: start;
+          .title, .subtitle {
+            @extend .has-text-primary-light;
+          }
+          text-shadow: $poly-hero-text-shadow;
         }
       }
 
