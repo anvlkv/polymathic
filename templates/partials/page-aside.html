@@ -56,6 +56,10 @@
           {% set_global next = false %}
           {% set sort_by = util::get_taxonomy_term_sort_by(kind=tx, term=term.name) | trim  -%}
           {% set pages = term.pages | sort(attribute=sort_by)  -%}
+          {% set is_reverse = util::get_taxonomy_term_reverse(kind=tx, term=term.name) | trim == "true"  -%}
+          {% if is_reverse %}
+            {% set pages = pages | reverse -%}
+          {% endif %}
           {% for pg in pages %}
             {% set cmp_prev = loop.index0 + 1 %}
             {% set cmp_next = loop.index0 - 1 %}

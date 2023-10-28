@@ -252,3 +252,19 @@
   {% endif -%}
   {{ sort_by }}
 {% endmacro %}
+
+{% macro get_taxonomy_term_reverse(kind, term) %}
+  {% set tx_config = load_data(path=config.extra.poly.taxonomy_config_path, required=false, format=config.extra.poly.taxonomy_config_path | split(pat=".") | last ) -%}
+  {% set kind_config = tx_config[kind] | default(value=false) -%}
+  {% set reverse = false -%}
+  {% if kind_config and kind_config.terms is defined -%}
+    {% set_global override = kind_config.reverse | default(value=reverse) -%}
+    {% for t in kind_config.terms -%}
+      {% if t is not string and t.title == term and t.reverse is defined -%}
+        {% set_global override = t.reverse -%}
+      {% endif -%}
+    {% endfor -%}
+    {% set reverse = override -%}
+  {% endif -%}
+  {{ reverse }}
+{% endmacro %}
