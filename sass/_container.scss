@@ -29,14 +29,16 @@
 
     > blockquote,
     > pre {
-      @extend .box, .mx-auto;
+      @extend .box;
       @include until($desktop) {
         code {
           white-space: break-spaces;
         }
       }
       @include from($desktop) {
-        max-width: $tablet;
+        flex-basis: $tablet !important;
+        margin-left: calc(calc(100% - $tablet) / 2) !important;
+        margin-right: calc(calc(100% - $tablet) / 2) !important;
       }
     }
     > p {
