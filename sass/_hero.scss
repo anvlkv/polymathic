@@ -65,6 +65,12 @@
   @include until($tablet) {
     flex-direction: column;
   }
+  @include from($desktop) {
+    @include until($widescreen) {
+      flex-direction: column;
+    }
+  }
+
   overflow: hidden;
   &.poly-with-image {
     @include backgrounds();
@@ -80,6 +86,13 @@
   }
   .poly-content {
     @extend .card-content;
+    flex-basis: 50%;
+    flex-grow: 1;
+    flex-shrink: .5;
+
+    .title:only-child {
+      @extend .mb-auto;
+    }
   }
   .poly-image {
     @extend .image;
@@ -92,11 +105,6 @@
       margin-top: auto;
       margin-bottom: auto;
     }
-  }
-  .poly-content {
-    flex-basis: 50%;
-    flex-grow: 1;
-    flex-shrink: .5;
   }
 }
 
