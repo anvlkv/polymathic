@@ -12,6 +12,10 @@
     {% set term = terms[i]  -%}
     {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
     {% set pages = term.pages | sort(attribute=sort_by)  -%}
+    {% set is_reverse = util::get_taxonomy_term_reverse(kind=taxonomy.name, term=term.name) | trim == "true"  -%}
+    {% if is_reverse %}
+      {% set pages = pages | reverse -%}
+    {% endif %}
     <div class="poly-group-title">
       {{preview::macro_tx(entry=term, type="term", parent=taxonomy)}}
     </div>

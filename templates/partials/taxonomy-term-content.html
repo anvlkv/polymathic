@@ -19,6 +19,10 @@
           {% endif  -%}
           {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
           {% set pages = pages | sort(attribute=sort_by)  -%}
+          {% set is_reverse = util::get_taxonomy_term_reverse(kind=taxonomy.name, term=term.name) | trim == "true"  -%}
+          {% if is_reverse %}
+            {% set pages = pages | reverse -%}
+          {% endif %}
           {% for page in pages  -%}
             {% if page.ancestors is containing(section.relative_path) and rendered_pages is not containing(page.path)  -%}
               {{preview::macro(entry=page, parent_section=section, type="page")}}
@@ -47,6 +51,10 @@
   {% endif  -%}
   {% set sort_by = util::get_taxonomy_term_sort_by(kind=taxonomy.name, term=term.name) | trim  -%}
   {% set pages = pages | sort(attribute=sort_by)  -%}
+  {% set is_reverse = util::get_taxonomy_term_reverse(kind=taxonomy.name, term=term.name) | trim == "true"  -%}
+  {% if is_reverse %}
+    {% set pages = pages | reverse -%}
+  {% endif %}
   {% for page in pages  -%}
     {% if rendered_pages is not containing(page.path) -%}
       {% set page_section = get_section(path=page.ancestors | last, metadata_only=true)  -%}
