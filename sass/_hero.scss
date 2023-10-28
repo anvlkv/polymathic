@@ -6,8 +6,8 @@
       @extend .hero-head;
       > nav {
         @extend .navbar, .is-fixed-top;
-        box-shadow: 0 0.01rem 0.125rem darken($scheme-invert-ter, 50%);
-        background-color: rgba($primary-light, .42);
+        box-shadow: 0 0.01rem 0.025rem rgba($scheme-invert-ter, 50%);
+        background-color: rgba($scheme-main-bis, .97);
       }
     }
     .poly-hero-body {
