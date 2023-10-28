@@ -19,7 +19,7 @@
           @include until($fullhd + $fullhd / 12 * 3) {
             padding-left: 3rem;
             & + .poly-page-aside {
-              padding-right: 3rem;
+              padding-right: 1rem;
             }
           }
         }
