@@ -131,8 +131,12 @@
 
 {% macro macro(entry, parent_section, type, plain=false) %}
   {% set nav_current_path = current_path | default(value="") -%}
+  {% set description = entry.description | default(value="") %}
+  {% if description | length == 0 %}
+    {% set description = false %}
+  {% endif %}
   {% if plain == true %}
-    {{preview::plain(type=type, href=entry.path, title=entry.title, description=entry.description, nav_current_path=nav_current_path) }}
+    {{preview::plain(type=type, href=entry.path, title=entry.title, description=description, nav_current_path=nav_current_path) }}
   {% else %}
     {% set hero = false -%}
     {% if entry.extra.poly.hero -%}
@@ -144,13 +148,13 @@
     {% endif -%}
     {% set layout = entry.extra.poly.thumbnail | default(value = fallback) -%}
     {% if layout == "contents" -%}
-      {{preview::contents(content=entry.content, type=type, path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+      {{preview::contents(content=entry.content, type=type, path=entry.path, hero=hero, title=entry.title, description=description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
     {% elif layout == "banner" -%}
-      {{preview::banner(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+      {{preview::banner(type=type,path=entry.path, hero=hero, title=entry.title, description=description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
     {% elif layout == "block" -%}
-      {{preview::block(type=type,path=entry.path, hero=hero, title=entry.title, description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+      {{preview::block(type=type,path=entry.path, hero=hero, title=entry.title, description=description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
     {% else -%}
-      {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title | default(value=""), description=entry.description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
+      {{preview::default(type=type,path=entry.path, hero=hero, title=entry.title | default(value=""), description=description, pop = entry.extra.poly.pop | default(value=false), nav_current_path=nav_current_path)}}
     {% endif -%}
   {% endif -%}
 {% endmacro %}
@@ -160,7 +164,7 @@
   {% set title = "" %}
   {% set description = "" %}
   {% set path = "" %}
-  {% if type == "kind" and entry.render == true -%}
+  {%- if type == "kind" and entry.render == true -%}
     {% set title = util::get_taxonomy_kind_title(kind=entry.name) | trim -%}
     {% set description = util::get_taxonomy_kind_description(kind=entry.name, default=title) | trim -%}
     {% set path = "/"~entry.slug %}
@@ -171,9 +175,12 @@
   {% else %}
     {{throw(message="unknown type: "~type)}}
   {% endif -%}
-  {% if plain %}
+  {% if description | length == 0 -%}
+    {% set description = false -%}
+  {% endif -%}
+  {% if plain -%}
     {{preview::plain(type="taxonomy-"~type, href=path, title=title, description=description, nav_current_path=nav_current_path)}}
-  {% else %}
+  {% else -%}
     {{preview::tx_card(type="taxonomy-"~type, href=path, title=title, description=description, nav_current_path=nav_current_path)}}
-  {% endif %}
+  {% endif -%}
 {% endmacro %}

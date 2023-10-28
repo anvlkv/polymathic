@@ -2,5 +2,8 @@
   @extend .navbar-brand;
   .poly-logo-link {
     @extend .navbar-item;
+    img + h2 {
+      @extend .ml-3;
+    }
   }
 }

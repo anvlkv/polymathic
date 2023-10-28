@@ -56,5 +56,7 @@
 
 .poly-breadcrumbs-header {
   @extend .container;
-  position: absolute;
+  @include from($tablet) {
+    position: absolute;
+  }
 }

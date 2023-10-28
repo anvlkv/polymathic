@@ -10,12 +10,12 @@
         @if $i < 6 {
           @extend .is-size-#{$i + 1}-tablet;
         } @else {
-          @extend .is-size-#{$i}-tablet;
+          @extend .is-size-6-tablet;
         }
         @if $i < 5 {
           @extend .is-size-#{$i + 2}-mobile;
         } @else {
-          @extend .is-size-#{$i}-mobile;
+          @extend .is-size-6-mobile;
         }
         width: 100%;
         color: inherit;
@@ -29,14 +29,16 @@
 
     > blockquote,
     > pre {
-      @extend .box, .mx-auto;
+      @extend .box;
       @include until($desktop) {
         code {
           white-space: break-spaces;
         }
       }
       @include from($desktop) {
-        max-width: $tablet;
+        flex-basis: $tablet !important;
+        margin-left: calc(calc(100% - $tablet) / 2) !important;
+        margin-right: calc(calc(100% - $tablet) / 2) !important;
       }
     }
     > p {
@@ -82,6 +84,10 @@
           }
         }
       }
+    }
+
+    > * {
+      min-height: 100%;
     }
   }
 
