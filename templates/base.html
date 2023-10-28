@@ -40,12 +40,16 @@
 
       {% if config.extra.poly.favicon %}
         {% for f in config.extra.poly.favicon %}
-          <link
-            rel="{{f.rel}}"
-            type="{{f.type}}"
-            sizes="{{f.size}}"
-            href="{{f.path}}"
-          />
+          {% if f.meta %}
+            <meta name="{{f.name}}" content="{{f.content}}" />
+          {% else %}
+            <link
+              {% if f.rel %}rel="{{f.rel}}"{% endif %}
+              {% if f.type %}type="{{f.type}}"{% endif %}
+              {% if f.size %}sizes="{{f.size}}"{% endif %}
+              href="{{f.path}}"
+            />
+          {% endif %}
         {% endfor %}
       {% endif %}
 
