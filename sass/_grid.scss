@@ -32,15 +32,15 @@
   }
 
   .poly-tile {
-    @extend .column, .is-flex-grow-1;
+    @extend .column;
 
+    &.poly-tile-layout-hero,
     &.poly-tile-layout-default {
       @extend .is-3-fullhd, .is-4-widescreen, .is-4-desktop, .is-6-tablet, .is-full-mobile;
     }
   
-    &.poly-tile-layout-hero,
     &.poly-tile-layout-banner {
-      @extend .is-4-fullhd, .is-6-widescreen, .is-4-desktop, .is-full-tablet, .is-full-mobile;
+      @extend .is-4-fullhd, .is-6-widescreen, .is-6-desktop, .is-full-tablet, .is-full-mobile;
     }
 
     &.poly-tile-layout-block,
