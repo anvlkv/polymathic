@@ -57,15 +57,7 @@
 }
 
 .poly-hero-card {
-  @extend .card, .is-flex;
-  @include until($tablet) {
-    flex-direction: column;
-  }
-  @include from($desktop) {
-    @include until($widescreen) {
-      flex-direction: column;
-    }
-  }
+  @extend .card;
 
   overflow: hidden;
   &.poly-with-image {
@@ -82,9 +74,6 @@
   }
   .poly-content {
     @extend .card-content;
-    flex-basis: 50%;
-    flex-grow: 1;
-    flex-shrink: .5;
 
     .title:only-child {
       @extend .mb-auto;
@@ -94,13 +83,7 @@
     @extend .image;
   }
   .poly-card-image {
-    flex-basis: 50%;
-    flex-grow: 1;
-    flex-shrink: 0;
-    @include from($tablet) {
-      margin-top: auto;
-      margin-bottom: auto;
-    }
+    @extend .card-image;    
   }
 }
 
@@ -124,5 +107,4 @@
 
 .poly-asset-card {
   @extend .poly-hero-card;
-  flex-direction: column !important;
 }
