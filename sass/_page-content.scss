@@ -25,8 +25,7 @@
         }
       }
     }
-    .poly-page-main,
-    .poly-grid {
+    .poly-page-main{
       &:not(:only-child) {
         @include from($fullhd) {
           max-width: $fullhd;
