@@ -4,7 +4,9 @@
 {% import "macros/navigation.html" as navigation %}
 {% import "macros/footer.html" as footer %}
 
-{% for sub in section.subsections -%}
-  {% set sub_section = get_section(path=sub) -%}
-  {{preview::macro(type="section", entry=sub_section, parent_section=section)}}
-{% endfor -%}
+<div class="poly-subgrid">
+  {% for sub in section.subsections | sort -%}
+    {% set sub_section = get_section(path=sub) -%}
+    {{preview::macro(type="section", entry=sub_section, parent_section=section)}}
+  {% endfor -%}
+</div>

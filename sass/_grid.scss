@@ -1,14 +1,36 @@
 .poly-grid {
-  @extend .columns, .is-multiline, .is-mobile, .mx-0;
   flex-grow: 1;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  @include from($tablet) {
+    grid-template-columns: repeat(2, 50%);
+  }
+  @include from($desktop) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include from($fullhd) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
   @include from($desktop) {
     align-self: flex-start;
   }
 
+  .poly-subgrid {
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: auto;
+    grid-auto-flow: dense;
+  }
+
   .poly-group-title,
   .poly-group-footer {
-    @extend .column, .is-full, .is-flex, .is-flex-wrap-wrap;
+    @extend .is-flex;
+    grid-column: 1/-1;
+    padding-left: $column-gap;
+    padding-right: $column-gap;
     > a {
       @extend .button, .is-text;
       display: block;
@@ -32,20 +54,19 @@
   }
 
   .poly-tile {
-    @extend .column;
-
-    &.poly-tile-layout-hero,
-    &.poly-tile-layout-default {
-      @extend .is-3-fullhd, .is-4-widescreen, .is-4-desktop, .is-6-tablet, .is-full-mobile;
+    &.poly-tile-layout-hero {
+      grid-row: span 2;
     }
   
     &.poly-tile-layout-banner {
-      @extend .is-4-fullhd, .is-6-widescreen, .is-6-desktop, .is-full-tablet, .is-full-mobile;
+      @include from($tablet) {
+        grid-column: span 2;
+      }
     }
 
     &.poly-tile-layout-block,
     &.poly-tile-layout-contents {
-      @extend .is-full, .p-0;
+      grid-column: 1/-1;
     }
   }
 }
