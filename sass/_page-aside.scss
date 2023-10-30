@@ -5,21 +5,26 @@
   
   @extend .is-flex, .is-flex-direction-column, .is-justify-content-space-between;
 
+  min-height: 100%;
+
   .poly-container {
     flex-basis: unset;
   }
 
   .poly-page-nav {
-    @extend .is-flex-shrink-0, .mb-0;  
-    @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch;
+    @extend .is-flex-shrink-0, .mb-0, .mt-auto;  
+    @extend .is-flex, .is-flex-direction-column, .is-align-items-stretch, .is-justify-content-flex-end;
     > .poly-toc {
-      @extend .mb-6;
+      @extend .mb-6, .is-flex-shrink-0;
     }
     .poly-taxonomy-kind-link {
-      @extend .has-text-centered, .mb-1;
+      @extend .has-text-centered, .mb-4, .is-flex-shrink-0;
     }
-    .poly-pair-nav + .poly-taxonomy-kind-link {
-      @extend .mt-3;
+    .poly-pair-nav {
+      @extend .mb-1;
+      & + .poly-taxonomy-kind-link {
+        @extend .mt-3, .is-flex-shrink-0;
+      }
     }
   }
 

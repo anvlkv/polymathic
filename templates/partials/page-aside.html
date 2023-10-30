@@ -18,7 +18,9 @@
   {% set render_toc = page_config.toc | default(value=fallback_config.toc | default(value=false))%}
   {% if render_toc %}
     {% set value = toc_links::macro(toc=page.toc) | trim %}
-    {% set_global rendered = rendered ~ value ~ "<hr/>" %}
+    {% if value | length > 0 %}
+      {% set_global rendered = rendered ~ value ~ "<hr/>" %}
+    {% endif %}
   {% endif %}
 
   {% set render_section = page_config.section | default(value=fallback_config.section | default(value=true))%}

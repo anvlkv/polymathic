@@ -77,7 +77,7 @@
     @extend .column, .is-one-third, .is-block;
   }
   .nav-title{
-    @extend .has-text-centered;
+    @extend .has-text-centered, .is-size-7;
     &:first-child {
       @extend .is-offset-one-third;
     }
