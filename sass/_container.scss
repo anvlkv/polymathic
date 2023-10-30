@@ -64,7 +64,7 @@
 
 
   &.poly-page-main {
-    @extend .columns, .is-multiline, .is-mobile, .is-justify-content-center;
+    @extend .columns, .is-multiline, .is-mobile, .is-justify-content-center, .is-align-content-flex-start;
 
     > * {
       @extend .column, .is-full;
