@@ -103,6 +103,13 @@
   .content {
     color: $text !important;
   }
+  > * {
+    @include from($fullhd) {
+      max-width: $desktop;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  }
 }
 
 .poly-asset-card {
