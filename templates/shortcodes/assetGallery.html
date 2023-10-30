@@ -4,34 +4,32 @@
 {% set content = page | default(value=section) %}
 {% set titles = titles | default(value=true) %}
 
-<div class="poly-grid">
-  {%- for image in content.assets | sort -%}
-    {% set file_name = image | split(pat="/") | last -%}
-    {% if exclude is not containing(file_name) -%}
-      {% set id = "content-asset-modal-"~file_name | slugify -%}
-      <a class="poly-asset-card-link poly-tile poly-tile-layout-default js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=image) | safe}}" {% endif %}>
-        <div class="poly-asset-card">
-          {% set alt = file_name | split(pat=".") | first | replace(from="_", to=" ") | title  -%}
-          <div class="poly-card-image">
-            <figure class="image is-16by9">
-              <img {{util::img_src(
-                src=util::poly_path(value=image, assets=content.assets) | trim, 
-                ratio=16.0/9.0,
-                sizes=[200, 400, 600, 900],
-              ) }} 
-              alt="{{alt}}">
-            </figure>
-          </div>
-          <!-- TODO: Handle other asset types ... -->
-          {% if titles -%}
-            <div class="poly-content">
-              <p class="title subtitle is-size-6">
-                {{alt}}
-              </p>
-            </div>
-          {% endif -%}
+{%- for image in content.assets | sort -%}
+  {% set file_name = image | split(pat="/") | last -%}
+  {% if exclude is not containing(file_name) -%}
+    {% set id = "content-asset-modal-"~file_name | slugify -%}
+    <div class="poly-container-block">
+      <a class="poly-asset-card js-modal-trigger" data-target="{{id}}" {% if image %} href="{{get_url(path=image) | safe}}" {% endif %}>
+        {% set alt = file_name | split(pat=".") | first | replace(from="_", to=" ") | title  -%}
+        <div class="poly-card-image">
+          <figure class="image is-16by9">
+            <img {{util::img_src(
+              src=util::poly_path(value=image, assets=content.assets) | trim, 
+              ratio=16.0/9.0,
+              sizes=[200, 400, 600, 900],
+            ) }} 
+            alt="{{alt}}">
+          </figure>
         </div>
-      </a>
-    {% endif -%}
-  {% endfor -%}
-</div>  
+        <!-- TODO: Handle other asset types ... -->
+        {% if titles -%}
+          <div class="poly-content">
+            <p class="title subtitle is-size-6">
+              {{alt}}
+            </p>
+          </div>
+        {% endif -%}
+        </a>
+      </div>
+  {% endif -%}
+{% endfor -%}
