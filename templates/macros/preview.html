@@ -26,7 +26,7 @@
         </div>
       {% endif -%}
       <div class="poly-content">
-        <p class="title is-5 subtitle">{{ title }}</p>
+        <p class="title is-5">{{ title }}</p>
         {% if description != false -%}
           <p>{{ description }}</p>
         {% endif -%}
@@ -48,7 +48,7 @@
   >
     <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
       <div class="poly-content">
-        <p class="title is-5 subtitle">{{ title }}</p>
+        <p class="title is-5">{{ title }}</p>
         {% if description != false -%}
           <p class="content">{{ description }}</p>
         {% endif -%}
@@ -70,7 +70,7 @@
   >
     <div class="poly-hero-card{% if hero != false %} poly-with-image{% endif %}">
       <div class="poly-content">
-        <p class="title is-5 subtitle">{{ title }}</p>
+        <p class="title is-5">{{ title }}</p>
         {% if description != false -%}
           <p class="content">{{ description }}</p>
         {% endif -%}
@@ -116,7 +116,7 @@
   <a {{util::link_attrs(type="card-"~type, href=href, title=description|default(value=title), current_url=nav_current_path, class=class_name)}}>
     <div class="poly-hero-card">
       <div class="poly-content">
-        <p class="title {{size}} subtitle">{{ title }}</p>
+        <p class="title {{size}}">{{ title }}</p>
         {% if description != false -%}
           <p class="content">{{ description }}</p>
         {% endif -%}

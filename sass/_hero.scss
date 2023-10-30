@@ -57,7 +57,7 @@
 }
 
 .poly-hero-card {
-  @extend .card;
+  @extend .card, .is-flex, .is-flex-direction-column;
 
   overflow: hidden;
   &.poly-with-image {
