@@ -42,3 +42,5 @@ $box-background-color: map.get($poly-config-dark, "box-background-color") or $sc
 $input-background-color: map.get($poly-config-dark, "input-background-color") or $scheme-main-ter !default;
 
 $shadow: map.get($poly-config-dark, "shadow") or 0 0.5em 1em -0.125em rgba($black, 0.1), 0 0px 0 1px rgba($black, 0.025) !default;
+
+$modal-background-background-color: map.get($poly-config-dark, "modal-background-background-color") or rgba($grey-lightest, 0.86)
