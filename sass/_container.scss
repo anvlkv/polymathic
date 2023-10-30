@@ -36,9 +36,11 @@
         }
       }
       @include from($desktop) {
-        flex-basis: $tablet !important;
         margin-left: calc(calc(100% - $tablet) / 2) !important;
         margin-right: calc(calc(100% - $tablet) / 2) !important;
+      }
+      @include from ($widescreen) {
+        flex-basis: $tablet !important;
       }
     }
     > p {
