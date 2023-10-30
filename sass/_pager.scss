@@ -1,5 +1,4 @@
 .poly-pager {
-  @extend .pagination;
-  @extend .column, .is-full;
+  @extend .pagination, .px-5;
   grid-column: 1/-1;
 }

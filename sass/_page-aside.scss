@@ -9,6 +9,10 @@
 
   .poly-container {
     flex-basis: unset;
+    > blockquote,
+    > pre {
+      @extend .mx-auto;
+    }
   }
 
   .poly-page-nav {

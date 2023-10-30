@@ -219,7 +219,7 @@
   {% if kind_config and kind_config.terms is defined -%}
     {% for t in kind_config.terms -%}
       {% if t is not string and t.title == term -%}
-        {{t.description}}
+        {{t.description | default(value="")}}
       {% endif -%}
     {% endfor -%}
   {% endif -%}
