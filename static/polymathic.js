@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function closeAllModals() {
-    (document.querySelectorAll(".modal") || []).forEach(($modal) => {
+    (document.querySelectorAll(".poly-modal") || []).forEach(($modal) => {
       closeModal($modal);
     });
   }
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ".modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button"
     ) || []
   ).forEach(($close) => {
-    const $target = $close.closest(".modal");
+    const $target = $close.closest(".poly-modal");
 
     $close.addEventListener("click", () => {
       closeModal($target);
