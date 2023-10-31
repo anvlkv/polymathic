@@ -133,7 +133,7 @@
     {% if asset is matching(".(png|jpeg|jpg|gif|webp)$") -%}
       {% set name = asset | split(pat="/") | last  -%}
       {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title -%}
-      <div class="modal" id="content-asset-modal-{{name | slugify}}">
+      <div class="poly-modal" id="content-asset-modal-{{name | slugify}}">
         <div class="modal-background"></div>
         <div class="modal-content">
           {% set image_meta = get_image_metadata(path=asset)  -%}

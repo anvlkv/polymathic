@@ -1,0 +1,9 @@
+.poly-modal {
+  @extend .modal;
+
+  .modal-close {
+    &::before, &::after{
+      background-color: rgba(invert($modal-background-background-color), 1);
+    }
+  }
+}
