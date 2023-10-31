@@ -5,6 +5,8 @@
     img + h2 {
       @extend .ml-3;
     }
-    font-family: $title-family;
+    @if $title-family {
+      font-family: $title-family
+    }
   }
 }
