@@ -1,0 +1,31 @@
+{% extends "layout.html" %} 
+
+{% block page_meta %}
+
+  {{ util::content_meta(content=section | default(value=page)) }}
+
+{% endblock %}
+
+{% block breadcrumbs %}
+  {% if config.extra.poly.breadcrumbs %}
+    {% include "partials/breadcrumbs.html" %}
+  {% endif %}
+{% endblock %}
+
+{% block layout_main %}
+<div class="poly-page-content">
+  <section class="is-flex-wrap-wrap">
+      {%- include "partials/timeline-content.html" -%}
+      {% set subj = section | default(value=page) -%}
+      {% if subj.content | length > 0 %}
+        {% block timeline_aside %}
+          <aside class="poly-timeline-aside">
+            <article class="poly-container">
+              {{subj.content | safe}}
+            </article>
+          </aside>
+        {% endblock %}
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}

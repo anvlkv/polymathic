@@ -1,0 +1,132 @@
+.poly-timeline {
+  display: grid !important;
+  grid-template-rows: auto;
+  @include from($tablet) {
+    grid-template-columns:
+      minmax(20%, 200px) repeat(
+        calc(var(--poly-timeline-max-overlap) + 1),
+        calc($column-gap + $poly-grid-pop)
+      )
+      1fr;
+  }
+
+  .poly-timeline-entry {
+    display: contents;
+
+    .poly-timeline-entry-content {
+      grid-column: 1;
+      @include from($tablet) {
+        grid-column: calc(var(--poly-timeline-overlap) + 2) / -1;
+        grid-row: calc(var(--poly-timeline-idx) * 2) / span
+          calc(var(--poly-timeline-span-rows) * 2);
+      }
+    }
+
+    .poly-vague-time,
+    time {
+      grid-column: 1;
+      @include from($tablet) {
+        grid-row: calc(var(--poly-timeline-idx) * 2) / span 2;
+      }
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      padding-right: $column-gap;
+      padding-left: $column-gap;
+
+      border-right: 0.2rem solid $grey;
+
+      &:first-child {
+        @extend .has-text-right;
+        position: relative;
+        &:not(.poly-vague-time) {
+          &::after {
+            content: "\2022";
+            position: absolute;
+            font-size: 4rem;
+            right: -0.7rem;
+            color: $grey;
+            @include until($tablet) {
+              line-height: 0;
+            }
+          }
+        }
+        @include until($tablet) {
+          grid-row: calc(var(--poly-timeline-idx) * 2 - 1);
+        }
+      }
+      &:last-child {
+        @extend .has-text-left;
+        > span {
+          &::before {
+            content: "\2014";
+          }
+        }
+        @include until($tablet) {
+          grid-row: calc(var(--poly-timeline-idx) * 2);
+        }
+      }
+      > span {
+        @extend .is-block, .title, .subtitle, .is-size-4;
+      }
+    }
+
+    .poly-vague-time {
+      border-right-style: dotted;
+    }
+
+    &.poly-timeline-span {
+      @include from($tablet) {
+        time {
+          grid-row: calc(var(--poly-timeline-idx) * 2) / span 1;
+          &:last-child {
+            grid-row: calc(var(--poly-timeline-idx) * 2 + 1) / span 1;
+          }
+        }
+      }
+
+      .poly-timeline-entry-content {
+        display: grid;
+        grid-template-rows: subgrid;
+        > * {
+          grid-row: 1 / span 2;
+          grid-column: 1;
+        }
+        &::after {
+          content: " ";
+          display: block;
+          grid-column: 1;
+          grid-row: 1 / span calc(var(--poly-timeline-span-rows) * 2 + 2);
+          background-color: rgba($poly-info, 0.35);
+          margin: $column-gap;
+          border-radius: $box-radius;
+        }
+      }
+    }
+    &.poly-timeline-vague {
+      @extend .has-text-weight-light;
+    }
+
+    &:first-child {
+      time,
+      .poly-vague-time {
+        align-self: flex-end;
+        height: 50%;
+        justify-content: flex-start;
+        &::after {
+          top: -50%;
+        }
+      }
+    }
+    &:last-child {
+      time,
+      .poly-vague-time {
+        align-self: flex-start;
+        height: 50%;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

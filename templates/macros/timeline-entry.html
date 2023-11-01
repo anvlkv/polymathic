@@ -1,0 +1,25 @@
+{% macro macro(has_span, is_vague, pg, start_date, end_date, p_section, format, overlap, span_rows, idx) %}
+  <div style="--poly-timeline-overlap: {{overlap}}; --poly-timeline-span-rows: {{span_rows}}; --poly-timeline-idx: {{idx}};" class="poly-timeline-entry{% if has_span %} poly-timeline-span{% endif %}{% if is_vague %} poly-timeline-vague{% endif %}">
+    {% if is_vague %}
+      <span class="poly-vague-time">
+        {% if pg.extra.poly.timeline.vague is string %}
+          <span>{{pg.extra.poly.timeline.vague | markdown(inline=true) | safe}}</span>
+        {% else %}
+          <span>&#8230;</span>
+        {% endif %}
+      </span>
+    {%- else %}
+      <time datetime="{{start_date | date}}">
+        <span>{{start_date | date(format=format)}}</span>
+      </time>
+    {% endif %}
+    <div class="poly-timeline-entry-content">
+      {{preview::macro(type="page", entry=pg, parent_section=p_section)}}
+    </div>
+    {% if has_span and is_vague == false %}
+      <time datetime="{{end_date | date}}">
+        <span>{{end_date | date(format=format)}}</span>
+      </time>
+    {% endif %}
+  </div>
+{% endmacro %}

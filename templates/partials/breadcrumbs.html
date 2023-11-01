@@ -1,0 +1,35 @@
+{% import "macros/util.html" as util %}
+{% import "macros/navigation.html" as navigation %}
+
+{%- set_global links = [] %}
+{% set_global titles = [] %}
+{%- if section -%}
+  {% for asc in section.ancestors %}
+    {% set section = get_section(path=asc, metadata_only=true) %}
+    {% set_global links = links | concat(with=[section.path]) %}
+    {% set_global titles = titles | concat(with=[section.title]) %}
+  {% endfor %}
+  {% set_global links = links | concat(with=[section.path]) %}
+  {% set_global titles = titles | concat(with=[section.title]) %}
+{%- elif page -%}
+  {% for asc in page.ancestors %}
+    {% set section = get_section(path=asc, metadata_only=true) %}
+    {% set_global links = links | concat(with=[section.path]) %}
+    {% set_global titles = titles | concat(with=[section.title]) %}
+  {% endfor %}
+  {% set_global links = links | concat(with=[page.path]) %}
+  {% set_global titles = titles | concat(with=[page.title]) %}
+{%- elif term -%}
+  {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim -%}
+  {% set path = "/"~taxonomy.slug %}
+  {% set root_section = get_section(path="_index.md", metadata_only=true) %}
+  {% set_global links = ["/", path, term.path] %}
+  {% set_global titles = [root_section.title, taxonomy_title, term.name] %}
+{%- else -%}
+  {% set taxonomy_title = util::get_taxonomy_kind_title(kind=taxonomy.name) | trim -%}
+  {% set path = "/"~taxonomy.slug %}
+  {% set root_section = get_section(path="_index.md", metadata_only=true) %}
+  {% set_global links = ["/", path] %}
+  {% set_global titles = [root_section.title, taxonomy_title] %}
+{%- endif -%}
+{{navigation::breadcrumbs(links=links, titles=titles)}}

@@ -1,0 +1,78 @@
+{% import "macros/util.html" as util %}
+{% import "macros/preview.html" as preview %}
+{% import "macros/timeline-entry.html" as timeline %}
+
+{% set subj = section | default(value=page) %}
+{% set_global pages = [] -%}
+{% for entry in subj.extra.poly.timeline.content -%}
+  {% if entry is ending_with("_index.md") -%}
+    {% set p_section = get_section(path=entry) -%}
+    {% for pg in p_section.pages %}
+      {% set_global pages = pages | concat(with=[pg]) -%}
+    {% endfor %}
+  {% else %}
+    {% set pg = get_page(path=entry) %}
+    {% set_global pages = pages | concat(with=[pg]) -%}
+  {% endif %}
+{% endfor %}
+
+{% set pages = pages | sort(attribute="date") %}
+
+{% set_global overlap = 0 %}
+{% set_global max_overlap = 0 %}
+{% set_global running_end = false %}
+{% set_global render =  [] %}
+{%- for pg in pages -%}
+  {% set p_section = get_section(path=pg.ancestors | last) -%}
+  {% set has_span = pg.extra.poly.timeline.end_date is defined or pg.extra.poly.timeline.start_date is defined -%}
+  {% set is_vague = pg.extra.poly.timeline.vague is defined -%}
+  {% set start_date = pg.extra.poly.timeline.start_date | default(value=pg.date) | date(format="%s") | int -%}
+  {% set end_date = pg.extra.poly.timeline.end_date | default(value=pg.date) | date(format="%s") | int -%}
+  {% set_global span = 1 %}
+  {% if has_span %}
+    {% for next_pg in pages | slice(start=loop.index) %}
+      {% set next_start_date = next_pg.extra.poly.timeline.start_date | default(value=next_pg.date) | date(format="%s") | int -%}
+      {% if next_start_date < end_date %}
+        {% set_global span = span + 1 %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if running_end %}
+    {% if running_end > start_date %}
+      {% if has_span or overlap == 0 %}
+        {% set_global overlap = overlap + 1 %}
+      {% endif %}
+      {% if max_overlap < overlap %}
+        {% set_global max_overlap = overlap %}
+      {% endif %}
+    {% elif overlap > 0 %}
+      {% set_global overlap = overlap - 1 %}
+    {% endif %}
+  {% endif %}
+  {% set idx = loop.index %}
+  {% if subj.extra.poly.timeline.reverse %}
+    {% set idx = pages | length - loop.index %}
+  {% endif %}
+  {% set entry = timeline::macro(has_span=has_span, is_vague=is_vague, pg=pg, start_date=start_date, end_date=end_date, p_section=p_section, format=subj.extra.poly.timeline.format | default(value="%d-%m-%Y"), overlap=overlap, span_rows=span, idx=idx) | trim %}
+  {%- set_global render = render | concat(with=[entry]) -%}
+
+  {% if running_end %}
+    {% if has_span and running_end < end_date %}
+      {% set_global running_end = end_date %}
+    {% elif has_span == false and running_end <= end_date %}
+      {% set_global running_end = false %}
+      {% set_global overlap = 0 %}
+    {% endif %}
+  {% elif has_span %}
+    {% set_global running_end = end_date %}
+  {% endif %}
+{%- endfor -%}
+
+{% if subj.extra.poly.timeline.reverse %}
+  {% set render = render | reverse %}
+{%- endif %}
+
+<div class="poly-page-main poly-timeline" style="--poly-timeline-max-overlap: {{max_overlap}}">
+  {{render | join(sep="") | safe}}
+</div>
