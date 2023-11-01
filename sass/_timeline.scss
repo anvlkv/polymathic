@@ -19,19 +19,20 @@
         grid-column: calc(var(--poly-timeline-overlap) + 2) / -1;
         grid-row: calc(var(--poly-timeline-idx) * 2) / span
           calc(var(--poly-timeline-span-rows) * 2);
-      }
-
-      .poly-tile-layout-hero {
-        .poly-hero-card {
-          @extend .is-flex-direction-row;
-          .poly-card-image {
-            &, & + .poly-content {
-              @extend .is-flex-grow-0, .is-align-self-stretch;
-              flex-basis: 50%;
+        
+        .poly-tile-layout-hero {
+          .poly-hero-card {
+            flex-direction: row !important;
+            .poly-card-image {
+              &, & + .poly-content {
+                @extend .is-flex-grow-0, .is-align-self-stretch;
+                flex-basis: 50%;
+              }
             }
           }
         }
       }
+
     }
 
     .poly-vague-time,
@@ -145,5 +146,8 @@
     grid-column: 1/-1;
     margin: calc($column-gap + $poly-grid-pop);
     grid-row: auto;
+    @include until($tablet) {
+      height: 100vw;
+    }
   }
 }
