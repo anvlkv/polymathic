@@ -73,6 +73,6 @@
   {% set render = render | reverse %}
 {%- endif %}
 
-<div class="poly-page-main poly-timeline" style="--poly-timeline-max-overlap: {{max_overlap}}">
+<article class="poly-page-main poly-timeline" style="--poly-timeline-max-overlap: {{max_overlap}}">
   {{render | join(sep="") | safe}}
-</div>
+</article>
