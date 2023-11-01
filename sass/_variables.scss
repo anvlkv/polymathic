@@ -167,8 +167,12 @@ $poly-link-light: map.get($poly-config, "link-color-light") or
   );
 }
 
-$poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 0 0.1em
-  0.15em rgba($poly-black, 0.75) !default;
+$poly-hero-text-shadow: map.get($poly-config, "hero-text-shadow") or 
+  0 1px .1px rgba($poly-black, 0.95), 
+  0 -1px .1px rgba($poly-black, 0.95),
+  -1px 0 .1px rgba($poly-black, 0.95),
+  1px 0 .1px rgba($poly-black, 0.95) !default;
+
 $poly-hero-hover-background: map.get($poly-config, "hero-hover-background") or
   linear-gradient(
     to bottom,

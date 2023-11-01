@@ -31,7 +31,7 @@
         </figure>
       </div>
     {% endif %}
-    <div class="poly-content" {% if color %}style="color:{{color}}; text-shadow:none;"{% endif %}>
+    <div class="poly-content{% if color %} poly-with-color{% endif %}" {% if color %}style="color:{{color}}; text-shadow:none;"{% endif %}>
       {{body | markdown(inline=true) | safe}}
     </div>
   </div>
