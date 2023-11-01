@@ -105,7 +105,8 @@
   {% set breakpoints = breakpoints | split(pat=",")%}
   sizes="{% for size in sizes %}{% if breakpoints[loop.index0] and loop.last == false %}({{breakpoints[loop.index0]}}) {{size}}w,{% else %}{{size}}w{% endif %}{% endfor %}"
   srcset="{% for size in sizes %}{% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill')%}{{image.url}} {{size}}w{% if loop.last == false%},{% endif %}{% endfor %}"
-  src="{{src}}"  
+  src="{{src}}"
+  loading="lazy"
 {% endmacro %}
 
 {% macro pager(pagination)%}

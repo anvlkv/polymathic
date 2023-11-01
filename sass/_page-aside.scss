@@ -1,11 +1,15 @@
 .poly-section-aside,
+.poly-timeline-aside,
 .poly-term-aside,
 .poly-kind-aside,
 .poly-page-aside {
   
   @extend .is-flex, .is-flex-direction-column, .is-justify-content-space-between;
 
-  min-height: 100%;
+  &:not(.poly-timeline-aside) {
+    min-height: 100%;
+  }
+
 
   @include until($desktop) {
     flex-basis: auto !important;

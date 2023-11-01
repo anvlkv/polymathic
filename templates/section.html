@@ -8,16 +8,7 @@
 
 {% block breadcrumbs %}
   {% if config.extra.poly.breadcrumbs %}
-    {% set_global links = [] %}
-    {% set_global titles = [] %}
-    {% for asc in section.ancestors %}
-      {% set section = get_section(path=asc, metadata_only=true) %}
-      {% set_global links = links | concat(with=[section.path]) %}
-      {% set_global titles = titles | concat(with=[section.title]) %}
-    {% endfor %}
-    {% set_global links = links | concat(with=[section.path]) %}
-    {% set_global titles = titles | concat(with=[section.title]) %}
-    {{navigation::breadcrumbs(links=links, titles=titles)}}
+    {% include "partials/breadcrumbs.html" %}
   {% endif %}
 {% endblock %}
 

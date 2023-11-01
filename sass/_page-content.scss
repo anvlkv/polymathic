@@ -25,7 +25,7 @@
         }
       }
     }
-    .poly-page-main{
+    .poly-page-main {
       &:not(:only-child) {
         @include from($fullhd) {
           max-width: $fullhd;
@@ -33,6 +33,11 @@
           margin-right: auto !important;
         }
       }
+    }
+    .poly-timeline-aside {
+      order: -1;
+      margin-bottom: $column-gap;
+      border-bottom: 0.1px solid $grey-light;
     }
     .poly-section-aside,
     .poly-term-aside,
@@ -50,6 +55,9 @@
       }
     }
 
+    .poly-timeline-aside {
+      @extend .column, .is-full;
+    }
     .poly-section-aside,
     .poly-term-aside,
     .poly-kind-aside,
