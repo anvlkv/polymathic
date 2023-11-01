@@ -67,11 +67,13 @@
     background-repeat: no-repeat;
     background-position: center center;
     .poly-content {
-      .title,
-      .content {
-        @extend .has-text-white;
+      &:not(.poly-with-color) {
+        .title,
+        .content {
+          color: $white;
+        }
+        text-shadow: $poly-hero-text-shadow;
       }
-      text-shadow: $poly-hero-text-shadow;
     }
   }
   .poly-content {
