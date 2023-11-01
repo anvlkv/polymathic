@@ -51,7 +51,7 @@
       {% set_global overlap = overlap - 1 %}
     {% endif %}
   {% endif %}
-  {% set idx = loop.index %}
+  {% set idx = loop.index0 %}
   {% if subj.extra.poly.timeline.reverse %}
     {% set idx = pages | length - loop.index0 %}
   {% endif %}

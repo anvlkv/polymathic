@@ -58,15 +58,12 @@
             content: "\2022";
             position: absolute;
             font-size: 64px;
-            right: -14px;
+            right: -12px;
+            width: 21px;
+            height: 21px;
             color: $grey;
-            @include until($tablet) {
-              line-height: 0;
-            }
+            line-height: 0;
           }
-        }
-        @include until($tablet) {
-          grid-row: calc(var(--poly-timeline-idx) * 2 - 1);
         }
       }
       &:last-child {
@@ -75,9 +72,6 @@
           &::before {
             content: "\2014";
           }
-        }
-        @include until($tablet) {
-          grid-row: calc(var(--poly-timeline-idx) * 2);
         }
       }
       > span {
@@ -127,9 +121,9 @@
         align-self: flex-end;
         height: 50%;
         justify-content: flex-start;
-        &::after {
-          top: -42px;
-        }
+        // &::after {
+        //   top: -42px;
+        // }
       }
     }
     &:last-child {
@@ -138,9 +132,9 @@
         align-self: flex-start;
         height: 50%;
         justify-content: flex-end;
-        &::after {
-          bottom: -42px;
-        }
+        // &::after {
+        //   bottom: -42px;
+        // }
       }
     }
   }
@@ -149,5 +143,6 @@
     @extend .button, .is-primary, .is-large;
     grid-column: 1/-1;
     margin: calc($column-gap + $poly-grid-pop);
+    grid-row: auto;
   }
 }
