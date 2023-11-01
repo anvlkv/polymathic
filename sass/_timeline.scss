@@ -20,6 +20,18 @@
         grid-row: calc(var(--poly-timeline-idx) * 2) / span
           calc(var(--poly-timeline-span-rows) * 2);
       }
+
+      .poly-tile-layout-hero {
+        .poly-hero-card {
+          @extend .is-flex-direction-row;
+          .poly-card-image {
+            &, & + .poly-content {
+              @extend .is-flex-grow-0, .is-align-self-stretch;
+              flex-basis: 50%;
+            }
+          }
+        }
+      }
     }
 
     .poly-vague-time,
@@ -45,8 +57,8 @@
           &::after {
             content: "\2022";
             position: absolute;
-            font-size: 4rem;
-            right: -0.7rem;
+            font-size: 64px;
+            right: -14px;
             color: $grey;
             @include until($tablet) {
               line-height: 0;
@@ -116,7 +128,7 @@
         height: 50%;
         justify-content: flex-start;
         &::after {
-          top: -50%;
+          top: -42px;
         }
       }
     }
@@ -126,7 +138,16 @@
         align-self: flex-start;
         height: 50%;
         justify-content: flex-end;
+        &::after {
+          bottom: -42px;
+        }
       }
     }
+  }
+
+  .poly-timeline-lazy {
+    @extend .button, .is-primary, .is-large;
+    grid-column: 1/-1;
+    margin: calc($column-gap + $poly-grid-pop);
   }
 }

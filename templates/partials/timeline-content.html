@@ -3,6 +3,7 @@
 {% import "macros/timeline-entry.html" as timeline %}
 
 {% set subj = section | default(value=page) %}
+{% set id = subj.extra.poly.timeline.id | default(value="poly-timeline") %}
 {% set_global pages = [] -%}
 {% for entry in subj.extra.poly.timeline.content -%}
   {% if entry is ending_with("_index.md") -%}
@@ -74,5 +75,23 @@
 {%- endif %}
 
 <article class="poly-page-main poly-timeline" style="--poly-timeline-max-overlap: {{max_overlap}}">
-  {{render | join(sep="") | safe}}
+  {% if subj.extra.poly.timeline.lazy_batch %}
+    {% set preview_count = subj.extra.poly.timeline.lazy_batch.preview %}
+    {% set lazy_count = subj.extra.poly.timeline.lazy_batch.batch %}
+    {% set lazy_text = subj.extra.poly.timeline.lazy_batch.text | default(value="Load more...") %}
+    {{ render | slice(start=0, end=preview_count) | join(sep="") | safe }}
+    <div class="poly-timeline-lazy-buffer is-hidden" id="{{id}}">
+      {{ render | slice(start=preview_count) | join(sep="") | safe }}
+    </div>
+    {% if render | length >= preview_count%}
+      <button class="poly-timeline-lazy js-load-more-trigger" data-source="{{id}}" data-lazy-batch="{{lazy_count}}">
+        {{lazy_text}}
+        <noscript>
+          (Please enable javaScript to use this functionality)
+        </noscript>
+      </button>
+    {% endif %}
+  {% else %}
+    {{render | join(sep="") | safe}}
+  {% endif %}
 </article>
