@@ -55,6 +55,10 @@
   {% if subj.extra.poly.timeline.reverse %}
     {% set idx = pages | length - loop.index %}
   {% endif %}
+  {% set offset = subj.extra.poly.timeline.offset.count | default(value=0) %}
+  {% if offset > 0 %}
+    {% set idx = idx - offset + 1 %}
+  {% endif %}
   {% set entry = timeline::macro(has_span=has_span, is_vague=is_vague, pg=pg, start_date=start_date, end_date=end_date, p_section=p_section, format=subj.extra.poly.timeline.format | default(value="%d-%m-%Y"), overlap=overlap, span_rows=span, idx=idx) | trim %}
   {%- set_global render = render | concat(with=[entry]) -%}
 
