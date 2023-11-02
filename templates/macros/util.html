@@ -137,9 +137,9 @@
     {% if asset is matching(".(png|jpeg|jpg|gif|webp)$") -%}
       {% set name = asset | split(pat="/") | last  -%}
       {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title -%}
-      <div class="poly-modal animate__animated animate__fadeInDown" id="content-asset-modal-{{name | slugify}}">
+      <div class="poly-modal animate__animated animate__fadeIn" id="content-asset-modal-{{name | slugify}}">
         <div class="modal-background"></div>
-        <div class="modal-content">
+        <div class="modal-content animate__animated animate__fadeInDown">
           {% set image_meta = get_image_metadata(path=asset)  -%}
           {% set portrait = image_meta.height > image_meta.width -%}
           <figure class="image{% if portrait %} poly-portrait{% endif %}">
