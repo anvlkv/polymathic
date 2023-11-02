@@ -30,6 +30,7 @@
     left: 0;
     top:0;
     background-image: $poly-hero-hover-background;
+    backdrop-filter: blur(0);
   }
   .poly-content{
     position: relative;
@@ -72,7 +73,7 @@
   }
 
   @include hover(
-    (color, background-color, box-shadow, text-decoration-color),
+    (color, background-color, box-shadow, text-decoration-color, backdrop-filter),
     1.5
   ) {
     .poly-hero-card, .poly-asset-card {
@@ -97,6 +98,7 @@
         &::before {
           @extend .animate__animated, .animate__fadeInUp;
           animation-play-state: running;
+          backdrop-filter: blur(10px);
         }
       }
     }

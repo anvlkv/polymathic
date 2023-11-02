@@ -24,6 +24,9 @@
           .poly-hero-card {
             flex-direction: row !important;
             .poly-card-image {
+              &, figure, img {
+                border-radius: 0;
+              }
               &, & + .poly-content {
                 @extend .is-flex-grow-0, .is-align-self-stretch;
                 flex-basis: 50%;
@@ -61,7 +64,7 @@
             font-size: 64px;
             right: -12px;
             width: 21px;
-            height: 21px;
+            height: 0;
             color: $grey;
             line-height: 0;
             font-family: none;
@@ -123,9 +126,6 @@
         align-self: flex-end;
         height: 50%;
         justify-content: flex-start;
-        // &::after {
-        //   top: -42px;
-        // }
       }
     }
     &:last-child {
@@ -134,14 +134,11 @@
         align-self: flex-start;
         height: 50%;
         justify-content: flex-end;
-        // &::after {
-        //   bottom: -42px;
-        // }
       }
     }
   }
 
-  .poly-timeline-lazy {
+  .poly-timeline-limit {
     @extend .button, .is-primary, .is-large;
     grid-column: 1/-1;
     margin: calc($column-gap + $poly-grid-pop);

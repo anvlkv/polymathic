@@ -6,4 +6,8 @@
       background-color: rgba(invert($modal-background-background-color), 1);
     }
   }
+
+  .modal-background {
+    backdrop-filter: blur(10px);
+  }
 }

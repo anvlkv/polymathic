@@ -19,6 +19,7 @@
               src=hero, 
               ratio=1.0/1.0,
               sizes=[600, 400, 300, 200],
+              lazy=true
             ) }} 
             alt="{{description|default(value=title ~ " preview image")}}"
             />
@@ -91,11 +92,13 @@
     {% endif -%}
   >
     <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
-      <div class="title is-6">
-        <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=nav_current_path)}}>
-          {{title}}
-        </a>
-      </div>
+      {% if title and title | length > 0 %}
+        <div class="title is-6">
+          <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=nav_current_path)}}>
+            {{title}}
+          </a>
+        </div>
+      {% endif %}
       <div class="poly-content">
         {{content | safe}}
       </div>

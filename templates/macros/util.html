@@ -21,6 +21,7 @@
   --poly-background-desktop: url({{image_ds.url}});
   --poly-background-tablet: url({{image_tb.url}});
   --poly-background-sm: url({{image_sm.url}});
+  --poly-background-fallback: url({{get_url(path=path)}});
 {% endmacro  %}
 
 {% macro debug(value) %} 
@@ -101,12 +102,14 @@
   {% endif -%}
 {% endmacro %}
 
-{% macro img_src(src, sizes, breakpoints='max-width: 769px, max-width: 960px, max-width: 1152px, max-width: 1344px', ratio) %}
+{% macro img_src(src, sizes, breakpoints='max-width: 769px, max-width: 960px, max-width: 1152px, max-width: 1344px', ratio, lazy=false, quality=90) %}
   {% set breakpoints = breakpoints | split(pat=",")%}
   sizes="{% for size in sizes %}{% if breakpoints[loop.index0] and loop.last == false %}({{breakpoints[loop.index0]}}) {{size}}w,{% else %}{{size}}w{% endif %}{% endfor %}"
-  srcset="{% for size in sizes %}{% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill')%}{{image.url}} {{size}}w{% if loop.last == false%},{% endif %}{% endfor %}"
+  srcset="{% for size in sizes %}{% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill', format='webp', quality=quality)%}{{image.url}} {{size}}w{% if loop.last == false%},{% endif %}{% endfor %}"
   src="{{src}}"
+  {% if lazy %}
   loading="lazy"
+  {% endif %}
 {% endmacro %}
 
 {% macro pager(pagination)%}
@@ -134,7 +137,7 @@
     {% if asset is matching(".(png|jpeg|jpg|gif|webp)$") -%}
       {% set name = asset | split(pat="/") | last  -%}
       {% set alt = name | split(pat=".") | first | replace(from="_", to=" ") | title -%}
-      <div class="poly-modal" id="content-asset-modal-{{name | slugify}}">
+      <div class="poly-modal animate__animated animate__fadeInDown" id="content-asset-modal-{{name | slugify}}">
         <div class="modal-background"></div>
         <div class="modal-content">
           {% set image_meta = get_image_metadata(path=asset)  -%}
@@ -144,6 +147,8 @@
               src=asset, 
               ratio=image_meta.width/image_meta.height,
               sizes=[769, 960, 1152, 1344],
+              lazy=true,
+              quality=100
             ) }} 
               alt="{{alt}}"
             />
