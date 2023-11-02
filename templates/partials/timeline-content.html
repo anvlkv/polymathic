@@ -74,24 +74,29 @@
   {% set render = render | reverse %}
 {%- endif %}
 
+{% set offset_applied = false %}
+{% set limit_applied = false %}
+
+{% if subj.extra.poly.timeline.offset %}
+  {% set render = render | slice(start=subj.extra.poly.timeline.offset.count) %}
+  {% set offset_applied = true %}
+{%- endif %}
+
+{% if subj.extra.poly.timeline.limit %}
+  {% set limit_applied = render | length > subj.extra.poly.timeline.limit.count %}
+  {% set render = render | slice(end=subj.extra.poly.timeline.limit.count) %}
+{%- endif %}
+
 <article class="poly-page-main poly-timeline" style="--poly-timeline-max-overlap: {{max_overlap}}">
-  {% if subj.extra.poly.timeline.lazy_batch %}
-    {% set preview_count = subj.extra.poly.timeline.lazy_batch.preview %}
-    {% set lazy_count = subj.extra.poly.timeline.lazy_batch.batch %}
-    {% set lazy_text = subj.extra.poly.timeline.lazy_batch.text | default(value="Load more...") %}
-    {{ render | slice(start=0, end=preview_count) | join(sep="") | safe }}
-    <div class="poly-timeline-lazy-buffer is-hidden" id="{{id}}">
-      {{ render | slice(start=preview_count) | join(sep="") | safe }}
-    </div>
-    {% if render | length >= preview_count%}
-      <button class="poly-timeline-lazy js-load-more-trigger" data-source="{{id}}" data-lazy-batch="{{lazy_count}}">
-        {{lazy_text}}
-        <noscript>
-          (Please enable javaScript to use this functionality)
-        </noscript>
-      </button>
-    {% endif %}
-  {% else %}
-    {{render | join(sep="") | safe}}
-  {% endif %}
+  {% if subj.extra.poly.timeline.offset and offset_applied == true -%}
+    <a class="poly-timeline-limit" href="{{subj.extra.poly.timeline.offset.url}}">
+      {{subj.extra.poly.timeline.offset.text | default(value="Previous")}}
+    </a>
+  {% endif -%}
+  {{render | join(sep="") | safe}}
+  {% if subj.extra.poly.timeline.limit and limit_applied == true -%}
+    <a class="poly-timeline-limit" href="{{subj.extra.poly.timeline.limit.url}}">
+      {{subj.extra.poly.timeline.limit.text | default(value="Next")}}
+    </a>
+  {% endif -%}
 </article>

@@ -61,34 +61,4 @@ document.addEventListener("DOMContentLoaded", () => {
       $target.classList.toggle("is-active");
     });
   });
-
-  /**
-   * 
-   * @param {HTMLDivElement} source 
-   * @param {number} batch 
-   */
-  function loadMore(source, batch) {
-    const allChildren = Array.from(source.children);
-    const loadNow = allChildren.splice(0, batch);
-    source.replaceChildren(...allChildren);
-    loadNow.forEach(el => {
-      source.parentElement.insertBefore(el, source)
-    });
-    return allChildren.length > 0
-  }
-
-  (document.querySelectorAll(".js-load-more-trigger") || []).forEach(($trigger) => {
-    const source = $trigger.dataset.source;
-    const batch = parseInt($trigger.dataset['lazy-batch'] || "10");
-    const $target = document.getElementById(source);
-  
-    $trigger.addEventListener("click", (e) => {
-      e.preventDefault();
-      const hasMore = loadMore($target, batch);
-      if (!hasMore) {
-        $trigger.remove();
-        $target.remove();
-      }
-    });
-  });
 });
