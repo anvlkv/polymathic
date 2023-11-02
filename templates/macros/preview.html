@@ -92,11 +92,13 @@
     {% endif -%}
   >
     <div class="poly-hero-block{% if hero != false %} poly-with-image{% endif %}">
-      <div class="title is-6">
-        <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=nav_current_path)}}>
-          {{title}}
-        </a>
-      </div>
+      {% if title and title | length > 0 %}
+        <div class="title is-6">
+          <a {{util::link_attrs(type=type, href=path, title=description|default(value=title), current_url=nav_current_path)}}>
+            {{title}}
+          </a>
+        </div>
+      {% endif %}
       <div class="poly-content">
         {{content | safe}}
       </div>
