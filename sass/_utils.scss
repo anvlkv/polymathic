@@ -1,21 +1,47 @@
 @use "sass:list";
 
 @mixin backgrounds($layers: ()) {
-  background-image: list.append($layers, var(--poly-background-fallback), $separator: comma);
+  background-image: list.append(
+    $layers,
+    var(--poly-background-fallback),
+    $separator: comma
+  );
 
-  background-image: list.append($layers, var(--poly-background-sm), $separator: comma);
-      
-  @include from($tablet) {
-    background-image: list.append($layers, var(--poly-background-tablet), $separator: comma);
+  @include mobile() {
+    background-image: list.append(
+      $layers,
+      var(--poly-background-sm),
+      $separator: comma
+    );
   }
-  @include from($desktop) {
-    background-image: list.append($layers, var(--poly-background-desktop), $separator: comma);
+
+  @include tablet() {
+    background-image: list.append(
+      $layers,
+      var(--poly-background-tablet),
+      $separator: comma
+    );
   }
-  @include from($widescreen) {
-    background-image: list.append($layers, var(--poly-background-widescreen), $separator: comma);
+  @include desktop() {
+    background-image: list.append(
+      $layers,
+      var(--poly-background-desktop),
+      $separator: comma
+    );
   }
-  @include from($fullhd) {
-    background-image: list.append($layers, var(--poly-background-fullhd), $separator: comma);
+  @include widescreen() {
+    background-image: list.append(
+      $layers,
+      var(--poly-background-widescreen),
+      $separator: comma
+    );
+  }
+  @include fullhd() {
+    background-image: list.append(
+      $layers,
+      var(--poly-background-fullhd),
+      $separator: comma
+    );
   }
 }
 
@@ -27,9 +53,17 @@
   }
 }
 
-@mixin hover($transition-props: (box-shadow, color, background-color), $multiplier: 1) {
-  &, * {
-    @include transition($props: $transition-props, $multiplier: $multiplier)
+@mixin hover(
+  $transition-props: (
+    box-shadow,
+    color,
+    background-color,
+  ),
+  $multiplier: 1
+) {
+  &,
+  * {
+    @include transition($props: $transition-props, $multiplier: $multiplier);
   }
   &:not(.poly-active-link):hover {
     @content;
