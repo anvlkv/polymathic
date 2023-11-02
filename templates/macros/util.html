@@ -34,14 +34,18 @@
 
 {% macro content_meta(content, root_title=true) %}
   <title>{{ content.title }}{% if config.title  and root_title == true %} | {{config.title}}{% endif %}</title>
+  <meta property="og:title" content="{{ content.title | default(value=config.title) }}" />
+  <meta property="twitter:title" content="{{ content.title | default(value=config.title) }}" />
   {% if content.description or config.description -%}
     {% set description = content.description | default(value=config.description) -%}
     <meta name="description" content="{{ description  }}" />
     <meta property="og:description" content="{{ description }}" />
+    <meta name="twitter:description" content="{{description}}">
   {% endif -%}
-  <meta property="og:title" content="{{ content.title | default(value=config.title) }}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{current_url | default(value=config.base_url)}}" />
+  <meta property="twitter:url" content="{{current_url | default(value=config.base_url)}}" />
+  <meta property="twitter:domain" content="{{config.base_url | split(pat="://") | last }}">
   {% if content.extra.poly.hero -%}
     {% set path = util::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim -%}
     {% set image_meta = get_image_metadata(path=path) -%}
@@ -58,11 +62,23 @@
       property="og:image"
       content="{{ image.url | safe }}"
     />
+    <meta
+      property="twitter:image"
+      content="{{ image.url | safe }}"
+    />
+    <meta name="twitter:card" content="summary_large_image">
   {% elif config.extra.poly.og_image -%}
     <meta
       property="og:image"
       content="{{ get_url(path=config.extra.poly.og_image) | safe }}"
     />
+    <meta
+      property="twitter:image"
+      content="{{ get_url(path=config.extra.poly.og_image) | safe }}"
+    />
+    <meta name="twitter:card" content="summary_large_image">
+  {% else %}
+    <meta name="twitter:card" content="summary">
   {% endif -%} 
 {% endmacro %}
 
