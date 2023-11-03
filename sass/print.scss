@@ -55,6 +55,30 @@ blockquote {
   }
 }
 
+.poly-logo-link {
+  @extend .is-flex;
+  img {
+    max-height: 2em;
+    width: auto;
+  }
+}
+
+.poly-breadcrumbs {
+  ul {
+    @extend .is-flex;
+    list-style: none;
+    li {
+      @extend .ml-3;
+      position: relative;
+      &:not(:first-child)::before {
+        position: absolute;
+        content: "/";
+        left: -.5rem;
+      }
+    }
+  }
+}
+
 .poly-header {
   a:not(.poly-active-link, .poly-logo-link) {
     display: none;
