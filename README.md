@@ -2,11 +2,13 @@
 
 <a href="https://www.producthunt.com/posts/polymathic?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-polymathic" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=422530&theme=light" alt="polymathic - Zola&#0032;portfolio&#0032;theme&#0032;for&#0032;those&#0032;with&#0032;many&#0032;talents | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
-polymathic is a [Zola](https://www.getzola.org/) portfolio theme. 
+polymathic is a [Zola](https://www.getzola.org/) portfolio (and not only) theme. 
 
 I made it for my own portfolio. The theme is called `polymathic`, inspired by individuals with a wide range of talents. The theme focuses on rich and consistent navigation experience, exposing the variety of topics to chose from, yet allowing the user to focus on a single thread of your story once they've made a choice. 
 
 Docs and theme demo are available here [main--polymathic-demo.netlify.app](https://main--polymathic-demo.netlify.app/) 
+
+__Be sure to chek the [demo repo](https://github.com/anvlkv/polymathic-demo/)__ and follow zola docs on [installing and using a theme](https://www.getzola.org/documentation/themes/installing-and-using-themes/#installing-a-theme)
 
 This theme uses [Bulma](https://bulma.io/) scss framework, making the theme styles highly customizable and enabling mobile first theme design.
 
