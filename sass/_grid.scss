@@ -41,6 +41,13 @@
   .poly-group-title {
     @extend .title, .subtitle, .is-size-5, .mb-0;
     margin-top: $column-gap;
+    &:has(+.poly-group-title),
+    &:has(+.poly-group-footer) {
+        display: none !important;
+    }
+    & +.poly-group-footer {
+        display: none !important;
+    }
   }
   .poly-group-footer {
     @extend .is-justify-content-flex-end;
@@ -57,7 +64,7 @@
     &.poly-tile-layout-hero {
       grid-row: span 2;
     }
-  
+
     &.poly-tile-layout-banner {
       @include from($tablet) {
         grid-column: span 2;
