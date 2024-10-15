@@ -24,7 +24,7 @@
   --poly-background-fallback: url({{get_url(path=path)}});
 {% endmacro  %}
 
-{% macro debug(value) %} 
+{% macro debug(value) %}
 <code>
   <pre>
     {{ value | json_encode(pretty=true) }}
@@ -49,7 +49,7 @@
   {% if content.extra.poly.hero -%}
     {% set path = util::poly_path(value=content.extra.poly.hero, assets=content.assets) | trim -%}
     {% set image_meta = get_image_metadata(path=path) -%}
-    {% if image_meta.height > 630 or image_meta.width > 1200 -%} 
+    {% if image_meta.height > 630 or image_meta.width > 1200 -%}
       {% set image = resize_image(path=path, width=1200, height=630, op='fill', format='webp') -%}
     {% else -%}
       {% set side = image_meta.width -%}
@@ -79,7 +79,7 @@
     <meta name="twitter:card" content="summary_large_image">
   {% else %}
     <meta name="twitter:card" content="summary">
-  {% endif -%} 
+  {% endif -%}
 {% endmacro %}
 
 {% macro taxonomy_meta(tx, term=false, root_title=true) %}
@@ -105,7 +105,7 @@
       property="og:image"
       content="{{ get_url(path=config.extra.poly.og_image) | safe }}"
     />
-  {% endif -%} 
+  {% endif -%}
 {% endmacro %}
 
 {% macro link_attrs(type=false, href, title=false, current_url=false, class=false) %}
@@ -123,9 +123,6 @@
   sizes="{% for size in sizes %}{% if breakpoints[loop.index0] and loop.last == false %}({{breakpoints[loop.index0]}}) {{size}}w,{% else %}{{size}}w{% endif %}{% endfor %}"
   srcset="{% for size in sizes %}{% set image = resize_image(path=src, width=size, height=size / ratio | int, op='fill', format='webp', quality=quality)%}{{image.url}} {{size}}w{% if loop.last == false%},{% endif %}{% endfor %}"
   src="{{src}}"
-  {% if lazy %}
-  loading="lazy"
-  {% endif %}
 {% endmacro %}
 
 {% macro pager(pagination)%}
@@ -160,12 +157,12 @@
           {% set portrait = image_meta.height > image_meta.width -%}
           <figure class="image{% if portrait %} poly-portrait{% endif %}">
             <img {{util::img_src(
-              src=asset, 
+              src=asset,
               ratio=image_meta.width/image_meta.height,
               sizes=[769, 960, 1152, 1344],
               lazy=true,
               quality=100
-            ) }} 
+            ) }}
               alt="{{alt}}"
             />
           </figure>
